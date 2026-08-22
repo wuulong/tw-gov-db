@@ -827,7 +827,7 @@ json_ld_output = entity.to_jsonld()
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
 * **專案代號**：`GOV-300` (方案 A 權威機關簡碼 `300000000A`)
-* **當前版本**：`v0.2`
+* **當前版本**：`v0.2.1`
 * **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.0_overview_and_spec_governance.md`
 
 ---
@@ -858,10 +858,10 @@ json_ld_output = entity.to_jsonld()
 │ 5. 跨部會核心協同情境與資料鏈結 (Core Synergy Scenarios & Data Pipeline)│
 │    - 3~5 個跨部會碰撞情境 (如 農務氣象寒害預警 / 國土違規變更聯防)      │
 │                                                                        │
-│ 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)        │
-│    - Prompt 提示詞範例: 指引 LLM 精確查詢該部會資料                   │
-│    - Workflow 工作流定義: 自動化作業步驟 (YAML/MD 流程摘要)          │
-│    - Agent Skill 附件連結: 指向專屬 Skill (如 .agent/skills/ 附件)   │
+│ 6. AI Agent 雙向 Prompt 契約與導航資訊 (Bi-directional Prompt Contracts) │
+│    - 母專案對外 Prompt: book/04_synergy_contracts/prompts/PROMPT_...   │
+│    - 子專案對內 Prompt: synergies/PROMPT_TO_MASTER_G300.md             │
+│    - Agent Skill 附件連結: 指向專屬 Skill (.agent/skills/ 附件)       │
 │                                                                        │
 │ 7. 介面合約與工具鏈對接規範 (Interface Contracts & Toolchain)          │
 │    - DomainRegistryResolver 直連 Core DB 及調用子專案 CLI 介面        │
@@ -943,6 +943,21 @@ json_ld_output = entity.to_jsonld()
 | **基石三：水系氣象** | `station_id` / `river_id` | `station_registry` / `river_registry` | 450 個氣象測站寒害資料與農藝作物產區進行 WGS84 空間碰撞 |
 | **基石四：法人企業** | `farmers_assoc_id` | `npo_registry` | 全台 342 家農漁會法人統編與信用部/推廣課對照整合 |
 | **基石五：時間時序** | `harvest_date` | `calendar_registry` / `clean_datetime` | 清洗民國年 (`113/08/22` ➔ `2024-08-22`) 並對齊颱風假與農業天然災害救助 |
+
+---
+
+## 🏛️ 2.2 母專案 GOV-300 必須實作之基石服務與介面規格 (G300 Implementation Requirements)
+
+做為權威 Synergy 協同合約，本專案 `GOV-A19` 規範母專案 `GOV-300` 必須實作並暴露以下 4 大通用基石服務：
+
+1. **`G300-REQ-001`：發布者 OID 動態歸併服務 (`align_publisher_oid`)**
+   - **G300 實作責任**：`GOV-300` 的 `BaseDomainAdapter` 必須提供對 `master_agencies.sqlite` 的模糊比對與 OID 反查能力，支援 A19 將「農糧署中區分署」等文字別名精確歸併至權威 OID（如 `2.16.886.101...`），比對信心分數須 $\ge 0.8$。
+2. **`G300-REQ-002`：門牌與行政區號通用反查服務 (`admin_codes`)**
+   - **G300 實作責任**：`GOV-300` 的 `universal_keys.sqlite` 必須提供 `admin_codes` 表，支援 A19 以「縣市名 + 鄉鎮區名」（如 `臺北市中正區`）在 $< 1\text{ms}$ 內反查 6 碼門牌區號 (`630001`)。
+3. **`G300-REQ-003`：全台氣象測站 WGS84 空間對接服務 (`station_registry`)**
+   - **G300 實作責任**：`GOV-300` 必須維護 450 個氣象測站 (`station_registry`) 之 WGS84 經緯度座標與 `station_id`，並提供 `DomainRegistryResolver` 的跨庫連線介面，供 A19 發動寒害預警時計算周邊 20km 內受影響之休閒農場。
+4. **`G300-REQ-004`：跨部會 CLI 命令發動與連線服務 (`run_domain_cli`)**
+   - **G300 實作責任**：`GOV-300` 的 `DomainRegistryResolver` 必須實作 `run_domain_cli(domain_code, cmd, args)` 與 `get_domain_core_db_connection()` 介面，支援母大腦或其他子專案以統一格式發動 A19 之 `pesticide` 或 `frost-alert` 命令。
 
 ---
 
@@ -1048,9 +1063,13 @@ sequenceDiagram
 
 ---
 
-## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
+## 6. AI Agent 雙向 Prompt 契約與導航資訊 (Bi-directional Prompt Contracts)
 
-### 6.1 Agent Prompt 提示詞範例
+### 6.1 雙向 Prompt 契約實體檔案
+- 📡 **母專案寫給 A19 的 Prompt 契約**：[book/04_synergy_contracts/prompts/PROMPT_TO_SUBMODULE_A19.md](prompts/PROMPT_TO_SUBMODULE_A19.md)
+- 📡 **A19 寫給母專案的對接 Prompt 契約**：位於子專案 `synergies/PROMPT_TO_MASTER_G300.md`
+
+### 6.2 Agent Prompt 提示詞範例
 ```text
 [System Prompt for GOV-A19 Query]
 你是一個精通台灣農業部開放資料的 AI Agent。當使用者詢問農藥安全採收期或農會輔導資訊時：
@@ -1066,6 +1085,15 @@ sequenceDiagram
 
 ## 7. 介面合約與工具鏈對接規範 (Interface Contracts)
 
+### 7.1 雙邊對接整合測試成功驗證紀錄 (Integration Pass Record)
+* **驗證時間**：2026-08-22
+* **驗證狀態**：🟢 **100% PASS (全路徑整合對接綠燈合龍)**
+* **實測數據摘要**：
+  - **4 階連線驗證**：直連 `db/agro.db` (102 Table)、`BaseDomainAdapter.align_publisher_oid("農業部")` 成功歸併 OID (`2.16.886.101.20003.20064`)、臺北市中正區 6 碼門牌 (`630001`) 與 `C0A980` 臺北氣象站經緯度空間對合成功。
+  - **跨庫檢索效能**：跨 DB (universal_keys ↔ agro.db) 單次連鎖檢索 P99 平均延遲為 **`0.0095 ms`** (遠高於門檻 $< 10\text{ms}$)。
+  - **驗證日誌與報告**：[WT_GOV_300_A19_INTEGRATION.md](../../sys_eng/00_buildlogs/WT_GOV_300_A19_INTEGRATION.md)
+
+### 7.2 程式碼連線介面範例
 透過 `DomainRegistryResolver` 進行跨專案程式碼與 DB 直連：
 ```python
 from src.core.domain_registry_resolver import DomainRegistryResolver
@@ -1859,11 +1887,14 @@ graph LR
 | **`[REQ-001]`** (別名與清洗) | **`[SPC-013]`** 歷史軌跡與反饋 | **`[DSN-S06]`** `history_trail` | **`[TCV-007]`** `data_correction_feedback` | 別名歸併與 ISO-8601 時間清洗 |
 | **`[REQ-008]`** (跨庫整合完成) | **`[SPC-014]`** 子模組整合完成測試 | **`[DSN-S08]`** 跨部會整合架構 | **`[TCV-008]`** 多模組碰撞整合完成網 | 三重跨庫碰撞 ($P99 < 10\text{ms}$) |
 
+* **`[SPC-014]` / `[DSN-S08]`**：跨部會子模組納入與 4 階整合對接測試規格 (含 P99 延遲 $< 10\text{ms}$ 評估)。
+* **`[SPC-015]` / `[DSN-S09]`**：跨視窗 AI Agent 雙向 Prompt 契約協議與交接機制 (Bi-directional Prompt Contracts Protocol)。
+
 ---
 
 ## 🧪 6.2 全自動化單元測試網與跨部會整合完成整合測試網
 
-本專案將測試視為「規格與設計驅動的剛性防線」，建立起包含**通用基石單元測試網**與**跨部會整合完成整合測試網**的雙重驗證陣容。
+本專案將測試視為「規格與設計驅動的強制防線」，建立起包含**通用基石單元測試網**與**跨部會整合完成整合測試網**的雙重驗證陣容。
 
 ### 6.2.1 4 大階梯式跨部會整合完成整合測試 (Chain Integration Pipeline)
 當有新部會子模組加入時，測試管線依序發動以下 4 大階梯測試：

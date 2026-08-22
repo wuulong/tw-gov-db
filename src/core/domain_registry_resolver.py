@@ -108,8 +108,13 @@ class DomainRegistryResolver:
 
         db_path = self.get_shared_db_path(target_db_name)
         if not db_path.exists():
-            # 備援嘗試本地 repo 內之路徑
-            db_path = Path(info["local_repo_path"]) / "ontology" / target_db_name
+            # 備援嘗試本地 repo 內之路徑 (優先 db/ 其次 ontology/)
+            repo_base = Path(info["local_repo_path"])
+            db_path_sub = repo_base / "db" / target_db_name
+            if db_path_sub.exists():
+                db_path = db_path_sub
+            else:
+                db_path = repo_base / "ontology" / target_db_name
 
         conn = sqlite3.connect(str(db_path))
         conn.row_factory = sqlite3.Row
