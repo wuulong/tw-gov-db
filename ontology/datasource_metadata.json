@@ -1,0 +1,118 @@
+{
+  "spec_version": "0.2",
+  "updated_at": "2026-08-22T08:34:00+08:00",
+  "project": "tw-gov-db",
+  "description": "tw-gov-db 全政府資料治理與語意中繼底座 資料來源追溯與匯入管線清冊 (統一整合 JSON/YAML 格式)",
+  "datasources": [
+    {
+      "dataset_id": "DS_MASTER_AGENCIES",
+      "target_table": "master_agencies",
+      "dataset_title": "全台灣政府機關 OID 機關名錄程式碼",
+      "provider_agency": "數位發展部",
+      "provider_oid": "2.16.886.101.20003.20067",
+      "source_url": "sys_eng/01_requirements/政府機關唯一識別程式碼.csv",
+      "source_format": "CSV",
+      "ingestion_mode": "FULL",
+      "ingestion_script": "tw-gov-db/src/bootstrap/bootstrap_aligner.py",
+      "records_count": 7956,
+      "attributes": {
+        "license": "Open Government Data License",
+        "description": "公文機關名錄權威檔"
+      }
+    },
+    {
+      "dataset_id": "DS_PUBLISHER_ALIASES",
+      "target_table": "publisher_aliases",
+      "dataset_title": "data.gov.tw 開放資料發布機關名冊",
+      "provider_agency": "國家發展委員會",
+      "provider_oid": "2.16.886.101.20003.20002",
+      "source_url": "data/open-data/gov_opendata_platform.db",
+      "source_format": "SQLITE",
+      "ingestion_mode": "ALIGNMENT",
+      "ingestion_script": "tw-gov-db/src/bootstrap/bootstrap_aligner.py",
+      "records_count": 708,
+      "attributes": {
+        "match_rates": {
+          "exact": 703,
+          "parent_fallback": 81,
+          "abbreviation": 12
+        }
+      }
+    },
+    {
+      "dataset_id": "DS_DOMAIN_DEPLOYMENTS",
+      "target_table": "domain_deployments",
+      "dataset_title": "tw-agro-db 農業部主題專案實體展開冊",
+      "provider_agency": "農業部",
+      "provider_oid": "2.16.886.101.20003.20064",
+      "source_url": "events-2026Q3/agro-db-in/tw-agro-db",
+      "source_format": "DIRECTORY",
+      "ingestion_mode": "REGISTRATION",
+      "ingestion_script": "tw-gov-db/scripts/master_agencies_cli.py",
+      "records_count": 1,
+      "attributes": {
+        "subdomain_version": "0.7.0"
+      }
+    },
+    {
+      "dataset_id": "DS_ADMIN_CODES",
+      "target_table": "admin_codes",
+      "dataset_title": "全國行政區劃程式碼表",
+      "provider_agency": "內政部戶政司",
+      "provider_oid": "2.16.886.101.20003.20007",
+      "source_url": "https://opdadm.moi.gov.tw/api/v1/no-auth/resource/api/dataset/admin_code",
+      "source_format": "CSV",
+      "ingestion_mode": "SEED",
+      "ingestion_script": "tw-gov-db/scripts/init_universal_keys.py",
+      "records_count": 27,
+      "attributes": {
+        "total_expected_count": 390
+      }
+    },
+    {
+      "dataset_id": "DS_RIVER_REGISTRY",
+      "target_table": "river_registry",
+      "dataset_title": "主要河川與水系程式碼對照表",
+      "provider_agency": "經濟部水利署",
+      "provider_oid": "2.16.886.101.20003.20009",
+      "source_url": "https://opendata.wra.gov.tw/api/v2/1d4d24f4-4745-40e3-b51c-8c422aae4fd7",
+      "source_format": "JSON",
+      "ingestion_mode": "SEED",
+      "ingestion_script": "tw-gov-db/scripts/universal_keys_ingester.py",
+      "records_count": 23,
+      "attributes": {
+        "total_expected_count": 138
+      }
+    },
+    {
+      "dataset_id": "DS_CORPORATE_REGISTRY",
+      "target_table": "corporate_registry",
+      "dataset_title": "公司設立與商業登記清冊",
+      "provider_agency": "經濟部商業發展署",
+      "provider_oid": "2.16.886.101.20003.20009",
+      "source_url": "https://data.gcis.nat.gov.tw/od/data/api/5F64D864-6D36-4D50-A540-8918B42E469C",
+      "source_format": "JSON_API",
+      "ingestion_mode": "PASS_THROUGH_CACHE",
+      "ingestion_script": "tw-gov-db/src/core/virtual_and_cache_managers.py",
+      "records_count": 0,
+      "attributes": {
+        "cache_strategy": "Pass-Through Cache (tw-med-db pattern)"
+      }
+    },
+    {
+      "dataset_id": "DS_AGENCY_MANDATES",
+      "target_table": "agency_mandates",
+      "dataset_title": "中央機關處務規程與組織法規",
+      "provider_agency": "法務部/數位發展部",
+      "provider_oid": "2.16.886.101.20003.20018",
+      "source_url": "events-2026Q3/law_meta_in/scripts/law_cli.py",
+      "source_format": "POSTGRES_VIRTUAL",
+      "ingestion_mode": "VIRTUAL_ADAPTER",
+      "ingestion_script": "tw-gov-db/src/core/virtual_and_cache_managers.py",
+      "records_count": 0,
+      "attributes": {
+        "virtual_strategy": "External law_db MCP / law_cli.py Adapter"
+      }
+    }
+  ]
+}
