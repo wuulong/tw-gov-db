@@ -1,20 +1,20 @@
 # 🏛️ tw-gov-db: 全台灣政府開放資料通用基石對照庫 (GOV-300)
 
-[![Version](https://img.shields.io/badge/version-v0.2-blue.svg)](https://github.com/wuulong/tw-gov-db)
+[![Version](https://img.shields.io/badge/version-v0.2.1-blue.svg)](VERSION.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Spec Compliance](https://img.shields.io/badge/SE--6D-100%25%20PASS-brightgreen.svg)](book/00_toc.md)
 
 `tw-gov-db` (代號 **`GOV-300`** / 方案 A 權威行政院機關簡碼 `300000000A`) 是全台灣政府開放資料 (data.gov.tw) 作為語意對照、實體連結與 GraphRAG 零幻覺 Grounding 的**開源通用基石對照庫 (Mother Core Infrastructure)**。
 
-本專案解決跨部會資料孤島、發布單位別名混亂、舊民國年格式偏離標準、巨量體積障礙與缺少空間對合鍵 6 大現實痛點，為全台灣政府資料治理與部會子專案 (`GOV-A19` 農業部、`GOV-A13` 內政部、`GOV-A09` 經濟部) 提供統一的語意基石與三層式 Co-work 介面。
+本專案解決跨部會資料孤島、發布單位別名混亂、舊民國年格式偏離標準、巨量體積障礙與缺少空間對合鍵 6 大現實痛點，為全台灣政府資料治理與部會子專案 (`GOV-A19` 農業部 `tw-agro-db v0.7.1` 相容對接、`GOV-A13` 內政部、`GOV-A09` 經濟部) 提供統一的語意基石與三層式 Co-work 介面。
 
 ---
 
-## 📚 開源技術專書與圖鑑
+## 📚 開源技術專書與版本看板
 
-全書章節與寫作意圖請參閱開源目錄：
 * 📘 **[開源專書圖鑑目錄 (book/00_toc.md)](book/00_toc.md)**：《台灣政府開放資料通用基石圖鑑：從權威機關到跨部會基石的資料治理體系》
+* 🏷️ **[版本演進與對接相容性看板 (VERSION.md)](VERSION.md)**：記錄 `v0.2.1` 版號變更與 `tw-agro-db v0.7.1` 跨部會對接測試 100% PASS 綠燈相容矩陣。
 
 ---
 
@@ -78,9 +78,14 @@ print(cli_output)
 ```text
 tw-gov-db/
 ├── README.md                           ◄── 本說明文件
+├── VERSION.md                          ◄── 版本演進與跨專案相容性矩陣 (v0.2.1)
 ├── domain_map_config.json              ◄── 跨專案領域對照地圖 (軟連結)
+├── modules/                            ◄── 子專案範本藍圖專區
+│   └── template_blueprint/             ◄── 跨部會子專案複製起步模板 (8 大範本)
 ├── book/                               ◄── 開源技術專書與圖鑑
-│   └── 00_toc.md                       ◄── 專書完整目錄與章節寫作意圖
+│   ├── 00_toc.md                       ◄── 專書完整目錄與章節寫作意圖
+│   ├── FULL_BOOK_TAIWAN_GOV_DB.md      ◄── 154KB 全書大一統合訂本
+│   └── 04_synergy_contracts/prompts/   ◄── 雙向 Prompt 契約 (PROMPT_TO_SUBMODULE_A19.md)
 ├── ontology/                           ◄── 數據庫 Schema 與軟連結實體庫
 │   ├── datasource_metadata.json        ◄── 資料來源追溯中繼檔 (含 12 大資料集來源)
 │   ├── schema.sql                      ◄── 100% 全量實體庫 DDL 腳本
@@ -91,7 +96,7 @@ tw-gov-db/
 │   └── core/                           ◄── 5 Pillars GovBaseEntity, BaseDomainAdapter, DomainRegistryResolver
 ├── scripts/                            ◄── CLI 工具與自動化腳本
 ├── docs/                               ◄── CLI 工具速查手冊
-└── tests/                              ◄── 100% PASS 單元測試套件
+└── tests/                              ◄── 100% PASS 單元與跨部會對接測試套件
 ```
 
 ---
