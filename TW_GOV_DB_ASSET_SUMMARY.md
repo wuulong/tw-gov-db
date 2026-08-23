@@ -27,10 +27,10 @@ tw-gov-db/
 │       └── domain_registry_resolver.py ◄── 三層式 Co-work 導航解析器 (支援 GOV-300, GOV-A19 等)
 ├── scripts/                            ◄── ETL 匯入與管理 CLI 工具
 │   ├── init_universal_keys.py          ◄── 通用基石庫全量資料寫入腳本
-│   ├── master_agencies_cli.py          ◄── 權威機關 OID 與別名查詢 CLI
+│   ├── govdb_cli.py          ◄── 權威機關 OID 與別名查詢 CLI
 │   └── universal_keys_ingester.py      ◄── 基石資料入庫轉換器
 ├── docs/                               ◄── CLI 手冊與檔案
-│   └── manuals/master_agencies_cli.md
+│   └── manuals/govdb_cli.md
 └── tests/                              ◄── 100% 合規自動化單元測試套件
     ├── test_five_pillars.py            ◄── 五大基石校驗測試 (PASS 4/4)
     └── test_domain_registry_resolver.py ◄── 跨專案 CLI/DB/Library 導航測試 (PASS)

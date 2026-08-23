@@ -158,7 +158,7 @@
 * 🎯 **本章寫作意圖**：提供可直接查閱與複製的工具箱、圖表索引與參考手冊。
   - **附錄 A：GOV-300 全庫 DDL 腳本與完整 Schema 字典**
     - 🎯 *寫作意圖*：提供 `schema.sql` 全庫 DDL 腳本與欄位型態速查表。
-  - **附錄 B：`opendata_cli.py` 與 `master_agencies_cli.py` 指令速查手冊**
+  - **附錄 B：`opendata_cli.py` 與 `govdb_cli.py` 指令速查手冊**
     - 🎯 *寫作意圖*：提供命令列工具 CLI 參數、子命令 (含 `zipcode`) 與範例輸出手冊。
   - **附錄 C：`gov-db-wizard` Agent 技能調用手冊**
     - 🎯 *寫作意圖*：提供 `.agent/skills/gov-db-wizard/SKILL.md` 之 Agent 指令與 Python 調用範例。
@@ -298,7 +298,7 @@
 ├────────────────────────────────────────────────────────────────────────┤
 │ Layer 3: 工具鏈與介面層 (Core SDK, CLI & Agent Wizard)                │
 │   - Core SDK: GovBaseEntity, BaseDomainAdapter, DomainRegistryResolver  │
-│   - CLI 工具: opendata_cli.py (門牌/Zipcode 反查), master_agencies_cli.py  │
+│   - CLI 工具: opendata_cli.py (門牌/Zipcode 反查), govdb_cli.py  │
 │   - Agent 技能: gov-db-wizard ( Antigravity Agentic Skill)             │
 ├────────────────────────────────────────────────────────────────────────┤
 │ Layer 2: 通用基石與權威中繼層 (Baseline Cornerstones & Master Registry)│

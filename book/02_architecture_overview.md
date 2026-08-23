@@ -23,7 +23,7 @@
 ├────────────────────────────────────────────────────────────────────────┤
 │ Layer 3: 工具鏈與介面層 (Core SDK, CLI & Agent Wizard)                │
 │   - Core SDK: GovBaseEntity, BaseDomainAdapter, DomainRegistryResolver  │
-│   - CLI 工具: opendata_cli.py (門牌/Zipcode 反查), master_agencies_cli.py  │
+│   - CLI 工具: opendata_cli.py (門牌/Zipcode 反查), govdb_cli.py  │
 │   - Agent 技能: gov-db-wizard ( Antigravity Agentic Skill)             │
 ├────────────────────────────────────────────────────────────────────────┤
 │ Layer 2: 通用基石與權威中繼層 (Baseline Cornerstones & Master Registry)│

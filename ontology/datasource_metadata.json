@@ -48,7 +48,7 @@
       "source_url": "events-2026Q3/agro-db-in/tw-agro-db",
       "source_format": "DIRECTORY",
       "ingestion_mode": "REGISTRATION",
-      "ingestion_script": "tw-gov-db/scripts/master_agencies_cli.py",
+      "ingestion_script": "tw-gov-db/scripts/govdb_cli.py",
       "records_count": 1,
       "attributes": {
         "subdomain_version": "0.7.0"
