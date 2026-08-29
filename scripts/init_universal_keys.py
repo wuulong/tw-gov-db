@@ -2,14 +2,31 @@
 # -*- coding: utf-8 -*-
 """
 [metadata]
-title: 全政府五大基石 10 大權威資料庫初始化腳本 (10 Pillars Universal Keys DB Init)
+name: init_universal_keys.py
+title: 全政府五大基石 10 大權威資料庫初始化腳本 (CGS v2.0)
 description: 初始化 universal_keys.sqlite 資料庫，包含行政區、地籍、郵遞區號、水系、測站、公司、NPO法人與辦公日曆表。
 category: database
-dependencies: sqlite3
+manual: scripts/manuals/init_universal_keys.md
+dependencies: sqlite3, pathlib, os, sys, json
+cgs_version: 2.0
 """
 
 import sqlite3
+import os
+import sys
+import json
+import argparse
+from datetime import datetime
 from pathlib import Path
+
+# 顯式宣告 CGS 規格版號 (Rule 1)
+__cli_spec_version__ = "2.0"
+
+# 動態工作區根目錄定錨 (Rule 9 / CGS v2.0 Pillar ⑨)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+WORKSPACE_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "..", ".."))
+
+MANUAL_PATH = os.path.join(WORKSPACE_ROOT, "scripts", "manuals", "init_universal_keys.md")
 
 DB_PATH = Path(__file__).resolve().parents[1] / "ontology" / "universal_keys.sqlite"
 
