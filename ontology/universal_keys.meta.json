@@ -1,0 +1,43 @@
+{
+  "dgs_version": "2.0",
+  "db_name": "universal_keys.sqlite",
+  "rel_path": "events-2026Q3/gov-db-in/tw-gov-db/ontology/universal_keys.sqlite",
+  "category": "MajorReservoirs",
+  "title": "universal_keys.sqlite 資料庫",
+  "description": "收錄 8 個表格之 SQLite 資料庫",
+  "version": "1.0.0",
+  "domain_tags": [
+    "重症",
+    "admin_codes",
+    "環境部",
+    "corporate_registry",
+    "universal_keys",
+    "cadastral_registry",
+    "river_registry",
+    "開放資料",
+    "農業",
+    "station_registry",
+    "生醫",
+    "政府",
+    "衛福部",
+    "醫療"
+  ],
+  "tables": [
+    "admin_codes",
+    "river_registry",
+    "station_registry",
+    "corporate_registry",
+    "cadastral_registry",
+    "zipcode_registry",
+    "npo_registry",
+    "calendar_registry"
+  ],
+  "udf_requirements": [
+    "regex_match",
+    "calc_jaccard_similarity"
+  ],
+  "engine_config": {
+    "journal_mode": "WAL",
+    "synchronous": "NORMAL"
+  }
+}

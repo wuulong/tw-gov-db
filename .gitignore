@@ -1,0 +1,32 @@
+# ==============================================================================
+# 🛡️ tw-gov-db Git 忽略與版本控制防線 (.gitignore)
+# ==============================================================================
+
+# 1. 系統與編輯器暫存
+.DS_Store
+*.tmp
+*.log
+
+# 2. Python 編譯快取與測試快取
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# 3. 實體報告快取與下載巨量檔案 (Cache & Downloads)
+data/reports/cache/
+data/reports/catalogs_cache/
+data/raw/
+*.pdf
+*.xml
+*.zip
+
+# 4. 本機 ETL 產製之 SQLite 實體資料庫 (DB Binaries)
+ontology/*.sqlite
+ontology/*.db
+db/*.sqlite
+db/*.db
+!ontology/*.meta.json
+
+# 5. 重構與臨時備份檔
+modules/gXX_template_blueprint/

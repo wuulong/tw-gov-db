@@ -55,8 +55,15 @@ class DomainRegistryResolver:
         raise KeyError(f"未在 domain_map_config.json 中註冊該領域代號或 ID: {domain_id_or_code}")
 
     def get_shared_db_path(self, db_filename: str) -> Path:
-        shared_dir = Path(self.map_data.get("shared_db_dir", "/Volumes/D2024/data/gov-db-in/db"))
-        return shared_dir / db_filename
+        """取得共享資料庫路徑 (優先順序: 1. 環境變數 GOV_DB_SHARED_DIR 2. 外接硬碟 3. 本地 fallback)"""
+        # 1. 優先讀取環境變數 GOV_DB_SHARED_DIR
+        env_dir = os.environ.get("GOV_DB_SHARED_DIR")
+        if env_dir and Path(env_dir).exists():
+            return Path(env_dir) / db_filename
+
+        # 2. 次優先讀取外接硬碟預設路徑 /Volumes/D2024/data/gov-db-in/db
+        ext_dir = Path(self.map_data.get("shared_db_dir", "/Volumes/D2024/data/gov-db-in/db"))
+        return ext_dir / db_filename
 
     def bootstrap_domain_python_path(self, target_domain_id: str):
         """強韌化功能: 自動將目標 Domain 專案之 src 加入 sys.path，實現免安裝 import 跨專案呼叫"""
