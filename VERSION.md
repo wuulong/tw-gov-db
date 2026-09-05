@@ -2,7 +2,7 @@
 
 * **目前最新版本**：`v0.2.1`
 * **發布日期**：2026-08-22
-* **歸檔路徑**：[VERSION.md](VERSION.md)
+* **歸檔路徑**：[VERSION.md](events-2026Q3/gov-db-in/tw-gov-db/VERSION.md)
 
 ---
 

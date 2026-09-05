@@ -285,7 +285,10 @@ def main():
     # 6. status / tables / views
     subparsers.add_parser("status", aliases=["tables", "views"], parents=[parent_parser], help="掃描並顯示所有資料庫之 Table/View 筆數統計")
 
-    # 7. schema
+    # 8. g10 / miner / report_miner
+    subparsers.add_parser("g10", aliases=["miner", "report_miner"], parents=[parent_parser], help="G10 報告探勘與典藏庫狀態")
+
+    # 9. schema
     subparsers.add_parser("schema", parents=[parent_parser], help="輸出 JSON Schema 與路由地圖")
 
     # 8. version
@@ -354,6 +357,17 @@ def main():
                 print(f"🔍 搜尋 '{args.query}' 結果 ({len(data)} 筆):")
                 for item in data:
                     print(f" • [{item['org_code'] or '無代碼'}] {item['agency_name']} (OID: {item['agency_oid']})")
+
+        elif cmd in ["g10", "miner", "report_miner"]:
+            gov_src = str(Path(__file__).resolve().parents[1] / "src")
+            if gov_src not in sys.path:
+                sys.path.insert(0, gov_src)
+            from modules.g10_report_miner.g10_core import get_db_summary
+            summary = get_db_summary()
+            if args.json:
+                print(json.dumps(summary, ensure_ascii=False, separators=(',', ':')))
+            else:
+                print(f"📊 G10 gov-report-miner 狀態摘要: 報告索引 {summary['total_reports']} 筆, 已快取 {summary['cached_reports']} 筆, 暫存 {summary['staged_reports']} 筆")
 
         elif cmd in ["tree", "hierarchy"]:
             tree = get_agency_tree(args.target)

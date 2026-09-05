@@ -9,7 +9,7 @@
 
 ## 📚 專書目錄地圖與章節寫作意圖 (Writing Intentions)
 
-### **[第 0 章：全書目錄與導覽](00_toc.md)**
+### **[第 0 章：全書目錄與導覽](events-2026Q3/gov-db-in/tw-gov-db/book/00_toc.md)**
 * 🎯 **本章寫作意圖**：為全書提供全景導覽地圖，明確標示受控版本號 (`v0.2.1`) 與開源聲明，讓讀者與 AI Agent 在第 1 秒即可定位所需的資料治理模組與開源技術資產。
 
 ---
@@ -91,12 +91,14 @@
 
 ---
 
-### **[第 4 章：跨部會 Synergy 協同合約與 Spec 權責文檔治理專章](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
-* 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責文檔治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
+### **[第 4 章：跨部會 Synergy 協同合約與 Spec 權責文件治理專章](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
+* 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責文件治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
   - **[4.0 母子專案 Spec 權責劃分、生命週期與 AI 導航規範](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
     - 🎯 *寫作意圖*：解構第 4 章 8 大寫作結構區塊、AI Agent 導航框架與兩階段生命週期治理機制 (`[SPC-012]`)。
   - **[4.A19 GOV-A19 農業部 (tw-agro-db) 跨專案協同合約](04_synergy_contracts/4.A19_spec_gov_a19_synergy.md)**
     - 🎯 *寫作意圖*：**【實體子專案已建立】** 完整示範！收錄農業部 Spec 摘要框架、`agro_cli.py` 連結、342 農會歸併、6 碼門牌反查、450 氣象站寒害預警與 `agro-db-wizard` Agent Skill 附件。
+  - **[4.A21 GOV-A21 金管會 (tw-fsc-db) 跨專案協同合約](04_synergy_contracts/4.A21_spec_gov_a21_synergy.md)**
+    - 🎯 *寫作意圖*：**【實體子專案已建立】** 收錄金管會全景 Spec 摘要、`fsc_cli.py` 手冊連結、2,609 家金融機構 OID/門牌歸併、499 筆處分書與司法防詐穿透聯防合約。
   - **[4.A13 GOV-A13 內政部 (tw-moi-db) 跨專案協同合約](04_synergy_contracts/4.A13_spec_gov_a13_synergy.md)**
     - 🎯 *寫作意圖*：**【未建立，母專案孵化演練 1】** 示範！收錄內政部 Spec 摘要草案、`moi_cli.md` 手冊、7,748 村里邊界與地籍段號 (`cadastral_id`) 特農區違規聯防。
   - **[4.A09 GOV-A09 經濟部 (tw-moea-db) 跨專案協同合約](04_synergy_contracts/4.A09_spec_gov_a09_synergy.md)**
@@ -105,7 +107,7 @@
 ---
 
 ### **[第 5 章：七大類別實戰 Playbook 與 Agent 協同指南](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
-* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
+* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
   - **[5.0 七大類別實戰 Playbook 導覽與 4 大業務結構規範](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
     - 🎯 *寫作意圖*：介紹本章 7 大業務類別光譜與 4 大業務寫作結構規範。
   - **[5.1 【政府行政類】第一線基層公務人員 Playbook](05_stakeholder_playbooks/5.1_civil_servant_playbook.md)**
@@ -115,13 +117,13 @@
   - **[5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook](05_stakeholder_playbooks/5.3_ai_architect_playbook.md)**
     - 🎯 *寫作意圖*：解決 LLM 缺乏公部門語意與歷史改制知識、產生地理與組織幻覺的痛點，透過 Schema.org 語意物件與 `gov-db-wizard` 發動 100% 零幻覺 GraphRAG。
   - **[5.4 【企業法務/風控類】企業法務與合規官 Playbook](05_stakeholder_playbooks/5.4_legal_compliance_playbook.md)**
-    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
+    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
   - **[5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook](05_stakeholder_playbooks/5.5_esg_consultant_playbook.md)**
     - 🎯 *寫作意圖*：解決工廠只有文字地址、國土分區只有地籍段號無法比對的痛點，1 秒將門牌轉地碼並空間套疊特定農業區與水質保護區，10 秒產出 GRI/ISO 綠色合規報告。
   - **[5.6 【調查媒體類】資料新聞記者 Playbook](05_stakeholder_playbooks/5.6_data_journalist_playbook.md)**
     - 🎯 *寫作意圖*：解決跨部會資料庫撕裂、追查公共議題缺乏證據鏈的痛點，透過 OID 組織樹與企業統編發動全自動實體勾稽，繪出具權威背書之調查報導關聯圖譜。
   - **[5.7 【公民社群類】公民科技開源貢獻者 Playbook](05_stakeholder_playbooks/5.7_civic_tech_playbook.md)**
-    - 🎯 *寫作意圖*：解決民間修復好的資料無法回流政府發布源頭的痛點，透過自動生成 `data_correction_feedback.json` 回饋 `data.gov.tw`，打通公私協同治理閉環。
+    - 🎯 *寫作意圖*：解決民間修復好的資料無法回流政府發布源頭的痛點，透過自動生成 `data_correction_feedback.json` 回饋 `data.gov.tw`，貫通連線公私協同治理完整迴路。
 
 ---
 
@@ -134,11 +136,11 @@
   - **6.3 軟體定義地圖 (SDM) 與 QGIS 全台行政區、水系空間視覺化**
     - 🎯 *寫作意圖*：介紹如何運用 QGIS 軟體定義地圖 (SDM) 將 `admin_codes` 與 `river_registry` 空間資料動態渲染為高畫質主題圖。
   - **6.4 專案自動化維運與開源部署指南**
-    - 🎯 *寫作意圖*：提供外接硬碟 `/Volumes/D2024/data/gov-db-in/db` 與軟連結 (`ln -s`) 之運維復原手冊。
+    - 🎯 *寫作意圖*：提供外接硬碟 `/Volumes/D2024/data/gov-db-in/db` 與軟連結 (`ln -s`) 之維運復原手冊。
 
 ---
 
-### **[第 7 章：結語與跨部會生態展望](07_conclusion.md)**
+### **[第 7 章：結語與跨部會生態系展望](07_conclusion.md)**
 * 🎯 **本章寫作意圖**：總結階段性成果，並展望跨部會資料大聯盟之未來地圖。
   - **7.1 結語：打破跨部會資料孤島的通用基石底座**
     - 🎯 *寫作意圖*：總結 `GOV-300` 作為全台灣政府資料治理通用基石的技術貢獻與階段性里程碑。

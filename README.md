@@ -1,6 +1,6 @@
 # 🏛️ tw-gov-db: 全台灣政府開放資料通用基石對照庫 (GOV-300)
 
-[![Version](https://img.shields.io/badge/version-v0.2.1-blue.svg)](VERSION.md)
+[![Version](events-2026Q3/gov-db-in/tw-gov-db/VERSION.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Spec Compliance](https://img.shields.io/badge/SE--6D-100%25%20PASS-brightgreen.svg)](book/00_toc.md)
@@ -14,7 +14,7 @@
 ## 📚 開源技術專書與版本看板
 
 * 📘 **[開源專書圖鑑目錄 (book/00_toc.md)](book/00_toc.md)**：《台灣政府開放資料通用基石圖鑑：從權威機關到跨部會基石的資料治理體系》
-* 🏷️ **[版本演進與對接相容性看板 (VERSION.md)](VERSION.md)**：記錄 `v0.2.1` 版號變更與 `tw-agro-db v0.7.1` 跨部會對接測試 100% PASS 綠燈相容矩陣。
+* 🏷️ **[版本演進與對接相容性看板 (VERSION.md)](events-2026Q3/gov-db-in/tw-gov-db/VERSION.md)**：記錄 `v0.2.1` 版號變更與 `tw-agro-db v0.7.1` 跨部會對接測試 100% PASS 綠燈相容矩陣。
 
 ---
 
