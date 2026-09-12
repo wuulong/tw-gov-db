@@ -2,7 +2,7 @@
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
 * **專案代號**：`GOV-300` (方案 A 權威機關簡碼 `300000000A`)
-* **當前版本**：`v0.2.1`
+* **當前版本**：`v0.3.0`
 * **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/03_db_glossary.md`
 
 ---
@@ -225,40 +225,48 @@ erDiagram
   );
   ```
 
-### 3.8 水系河川主檔表 (`river_registry`) [基石三]
+### 3.8 水系河川拓樸註冊主檔表 (`river_registry`) [基石三]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **122 條** 國家標準水系與主幹流域程式碼 (`river_id`，如 `1300` 淡水河水系、`1510` 濁水溪水系)。
+  完整收錄與同步自 **WRA-Civ (Water Resources Agency - Civilian Extended Topology)** 之全台 **1,394+ 條水脈**（727 筆水利署官方 6 碼權威編碼 + 667 筆民間山區野溪延伸連字號編碼）。具備 `@` 分隔之拓樸路徑 (`topology_path`)，支援微秒級親緣上下游樹遍歷（Ancestors / Descendants），為全台跨機關事件流提供水系空間對齊。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
-  - **被 `station_registry` 引用**：氣象與水質監測站點透過 `river_id` 歸屬至流域。
-  - **與經濟部水利署 (`tw-moea-db`) 連結**：連結水庫集水區、淹水潛勢圖與河川污染防治資料集。
+  - **被 `station_registry` 引用**：氣象局、水利署、環境部測站透過 `river_code` 歸屬至主流或各級支流。
+  - **與經濟部水利署 (`tw-moea-db`) 連結**：透過管線 `g50 hydrate` 將全台淹水警戒、河川防汛與水質監測資料注入 `plugins.gov_db.hydrology` 拓樸結構。
+  - **與 G20 行政區劃 (`admin_codes`) 空間碰撞**：透過水系屬性中的 `primary_county` 或流域範圍，一秒完成行政與自然流域的跨域 JOIN。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE river_registry (
-      river_id VARCHAR(16) PRIMARY KEY,    -- 水系程式碼 (如 1300 淡水河水系)
-      river_name VARCHAR(64) NOT NULL,     -- 水系名稱
-      main_stream VARCHAR(64),             -- 主幹流
-      basin_area_sqkm FLOAT,               -- 流域面積 (平方公里)
-      attributes_json TEXT
+      river_code VARCHAR(32) PRIMARY KEY,        -- 雙層編碼 (官方6碼如 130000，民間延伸如 130000-C04)
+      river_name VARCHAR(64) NOT NULL,           -- 水系/支流名稱 (如 頭前溪、油羅溪)
+      main_stream_code VARCHAR(32),              -- 所屬主流程式碼 (如 130000)
+      parent_code VARCHAR(32),                   -- 直接父級河川程式碼
+      is_civilian INTEGER DEFAULT 0,             -- 是否為民間自然野溪延伸 (0: 官方, 1: 民間)
+      topology_path TEXT NOT NULL,               -- 親緣拓樸路徑 (如 130000@130000-C04)
+      river_order INTEGER DEFAULT 1,             -- 河川級次 (1: 主流, 2: 一級支流, ...)
+      attributes_json TEXT,                      -- 半結構化屬性 (主管河川分署、所屬縣市、長度等)
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
+  CREATE INDEX IF NOT EXISTS idx_river_topo ON river_registry(topology_path);
+  CREATE INDEX IF NOT EXISTS idx_river_main ON river_registry(main_stream_code);
   ```
 
-### 3.9 氣象與環境監測站點主檔表 (`station_registry`) [基石三]
+### 3.9 水文與環境監測站點主檔表 (`station_registry`) [基石三]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **450 個** 中央氣象署與環境部官方測站，提供 WGS84 經緯度座標 (`latitude`, `longitude`)。
+  收錄中央氣象署、環境部與經濟部水利署之水文、雨量與水位監測站點，提供 WGS84 經緯度座標 (`latitude`, `longitude`)，並綁定至對應的 WRA-Civ 水系編碼。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
-  - **與 `river_registry` 連結**：外鍵 `river_id` 標註水文站點流域。
-  - **與農業部災防網 (`tw-agro-db`) 連結**：將氣象局低溫寒害測站資料與農藝作物產區進行 WGS84 空間碰撞。
+  - **與 `river_registry` 連結**：外鍵 `river_code` 標註水文測站之精確支流或主流位置。
+  - **與農業部災防網 (`tw-agro-db`) 連結**：將水情即時監測與農藝作物產區進行水系集水區尺度之空間碰撞。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE station_registry (
-      station_id VARCHAR(32) PRIMARY KEY,  -- 測站程式碼 (如 466920 臺北氣象站)
-      station_name VARCHAR(64) NOT NULL,   -- 測站名稱
-      station_type VARCHAR(32) NOT NULL,   -- 類型 (WEATHER 氣象, WATER_QUALITY 水質)
-      latitude FLOAT NOT NULL,             -- WGS84 緯度
-      longitude FLOAT NOT NULL,            -- WGS84 經度
-      river_id VARCHAR(16),                -- 鄰近水系
-      attributes_json TEXT,
-      FOREIGN KEY(river_id) REFERENCES river_registry(river_id)
+      station_id VARCHAR(32) PRIMARY KEY,        -- 測站識別碼 (如 C0D570)
+      station_name VARCHAR(64) NOT NULL,         -- 測站名稱 (如 內灣雨量站)
+      station_type VARCHAR(32) NOT NULL,         -- 類型 (RAINFALL 雨量, WATER_LEVEL 水位, WEATHER 氣象)
+      latitude FLOAT NOT NULL,                   -- WGS84 緯度
+      longitude FLOAT NOT NULL,                  -- WGS84 經度
+      river_code VARCHAR(32),                    -- 綁定之 WRA-Civ 水系程式碼
+      attributes_json TEXT,                      -- 測站設備、所屬單位等半結構化資料
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(river_code) REFERENCES river_registry(river_code)
   );
   ```
 

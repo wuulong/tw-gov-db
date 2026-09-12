@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 r"""
 [metadata]
-name: g30_cli.py
+name: g10_cli.py
 title: G30 全政府跨部會法規處務規程與虛擬圖譜 CLI 工具
 description: G30 全政府跨部會法規處務規程與虛擬圖譜 CLI 工具，支援組科職掌自動配對、law_cli PCode 直連、JIT 輕量動態組織變異推導、歷史演進圖譜審核與隨時修補。
 category: gov_meta
 spec: events-2026Q3/gov-db-in/tw-gov-db/docs/specs/SPECIFICATION_g30.md
-manual: scripts/manuals/g30_cli.md
+manual: scripts/manuals/g10_cli.md
 dependencies: sqlite3, json, sys, os, re
 cgs_version: 2.4
 compat: posix
 pipe_recipes:
   - cat: 歷史機關清洗 ➔ 現行機關對位
-    cmd: opendata_cli agencies "河川" -j | jq -r '.[].機關名稱' | g30_cli resolve-org --stdin -j
+    cmd: opendata_cli agencies "河川" -j | jq -r '.[].機關名稱' | g10_cli resolve-org --stdin -j
   - cat: 業務關鍵字 ➔ 職掌法條直連
-    cmd: echo "農水路工程改善" | g30_cli match-mandate --stdin -j | jq -r '.[0] | "\(.pcode) \(.law_article)"' | xargs law_cli get
+    cmd: echo "農水路工程改善" | g10_cli match-mandate --stdin -j | jq -r '.[0] | "\(.pcode) \(.law_article)"' | xargs law_cli get
   - cat: 待修補組織審查 ➔ 批次檢視
-    cmd: g30_cli genealogy --status NEEDS_PATCH -j | jq -r '.[].predecessor_name' | head -n 10
+    cmd: g10_cli genealogy --status NEEDS_PATCH -j | jq -r '.[].predecessor_name' | head -n 10
 """
 import sys
 import os
@@ -351,7 +351,7 @@ def cmd_patch(args):
             data.get("event_type", "UPGRADE"),
             data.get("effective_date", datetime.now().strftime("%Y-%m-%d")),
             data.get("legal_basis", "手動修補補釘"),
-            data.get("source_text", "由 g30_cli.py patch 手動新增"),
+            data.get("source_text", "由 g10_cli.py patch 手動新增"),
             "VERIFIED",
             "patch_cli",
             datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -579,11 +579,11 @@ def cmd_resolve_org(args):
                 print(f"🔴 [JIT 提示] 查無歷史變異紀錄: {resolved['query']}")
 
 def cmd_schema(args):
-    """CGS v2.4 Schema Protocol: Output canonical JSON schema for g30_cli."""
+    """CGS v2.4 Schema Protocol: Output canonical JSON schema for g10_cli."""
     schema_dict = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": "G30MandateIndexerSchema",
-        "description": "Schema definition for g30_cli.py (CGS v2.4)",
+        "description": "Schema definition for g10_cli.py (CGS v2.4)",
         "version": "2.4",
         "subcommands": {
             "resolve-org": {

@@ -27,7 +27,7 @@ govdb_cli = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(govdb_cli)
 
 search_publisher_alias = govdb_cli.search_publisher_alias
-from modules.g10_report_miner.g10_core import search_grb_projects
+from modules.g01_report_miner.g01_core import search_grb_projects
 
 
 

@@ -1,118 +1,127 @@
-# G30 全政府跨部會法規處務規程與虛擬圖譜模組 (g30_mandate_indexer) 業務與系統規格書
+# G30 全政府水系流域與水情測站維度器模組 (g30_hydrology_indexer) 業務與系統規格書
 
-- **模組名稱**: `g30_mandate_indexer`
-- **所屬專案 / 權威程式碼**: `tw-gov-db` / `GOV-300` (通用基石對照庫)
+- **模組名稱**: `g30_hydrology_indexer`
+- **所屬專案 / 權威代號**: `tw-gov-db` / `GOV-300` (全政府通用基石對照庫)
 - **規範版本**: `v2.4` (CGS Pipeline-Native UNIX Standard)
-- **基石定位**: 基石一 (Cornerstone 1: 權威機關 OID、處務規程與組織演進圖譜)
+- **基石定位**: 基石三 (Cornerstone 3: 水系與環境 Hydrology & Environmental Sensors)
+- **水文拓樸權威來源 (Upstream SSOT)**: WRA-Civ (Civilian Water Resources Agency Hydrology System / 1,397+ 筆水脈拓樸)
+- **對齊標準**: 經濟部水利署水文編碼規範、環境部水質監測站標準、中央氣象署自動雨量站編碼
 
 ---
 
-## 🏛️ 業務功能本位 4 大實戰情境 (4 Core Business Scenarios)
+## 🏛️ 業務功能本位 5 大核心情境 (5 Core Business Scenarios)
 
-### 1. 法規文字全量文本解析與演進圖譜抽取 (Law-Text Genealogy Parser & Rating Taxonomy)
-* **業務痛點**: 政府未提供全量 OID 演進歷史 Log。從全國法規資料庫 (law_db) 提取的組織改制資訊，可能僅包含中文名稱與生效日，缺乏 OID，若直接丟棄會損失資料；若誤標權威會造成 AI 幻覺。另外，四級與附屬機關（如第一至第十河川局）數量極其龐雜，若將所有細部機關逐筆刻入 DB，會造成資料庫膨脹與維護負擔。
-* **業務規格與實作機制 (JIT 輕量化動態組織變異解析)**:
-  - 全量掃描《行政院組織法》、《各部會組織法》與《條例廢止公告》。
-  - **極簡骨幹與 JIT 變異說明機制 (JIT Genealogy Resolution Architecture)**：
-    - **Macro 骨幹落庫**：資料庫 `agency_genealogy` 僅記錄抽象高階變異原則（如：`前身：經濟部水利署各河川局` ➔ `繼承：經濟部水利署各河川分署`，`112年9月26日`）。
-    - **`description_rule` 變異說明欄位**：在 DB 中以結構化欄位記載變動說明（如：*「依據《經濟部水利署各河川分署辦事細則》(PCode: J0010063)，原各河川局第一至第十局於 112-09-26 統一改稱各河川分署」*）。
-    - **執行期 JIT 動態下鑽**：在應用層執行期，當查詢到個體附屬機關（如「第二河川局」）時，系統查閱抽象變異規則並 JIT 提示改制資訊，需要細節時再動態透過 `law_cli` 或 OID 圖鑑下鑽，達成 DB 極致輕量化與零維護負擔。
-  - 實裝 **雙維度評級與信心度 (Confidence Rating) 架構**：即使只有中文名稱，依然可以作為獨立條目落庫（標註 `TEXT_ONLY`, 信心度 `0.7`, 狀態 `NEEDS_PATCH`），待後續補齊 OID 後升級為 `FULL_MATCH` (`1.0`, `VERIFIED`)。
-
-### 2. 現行內部組科處務規程與既有 `law_cli.py` 直連 (Entity Master Profile & Law CLI Bridge)
-* **業務痛點**: 開放資料集標註發布機關（如「農業部農糧署」），但無法自動定位其內部主管組科與法定職掌。
+### 1. 全國水系雙層編碼與 WRA-Civ 親緣拓樸樹 (Hydrological Topology & Double-Layer Coding)
+* **業務痛點**:
+  跨部會資料庫（經濟部水利署、農業部農田水利署、環境部水保署）在記錄水系時存在嚴重斷層：官方公告河川僅 122 條幹流，而絕大多數山區土石流、農田灌排與生態系系樣區均位於「無官方 6 碼的小溪或野溪支流」，導致資料無法關聯與溯源。
 * **業務規格與實作機制**:
-  - 在 `master_agencies.sqlite` 建置 `agency_mandates` 實體表（含 `law_name`, `law_article`, `pcode` 欄位）。
-  - 直接引用本機專案既有之 `law_cli.py` 兵器庫 (PCode 檢索) 實現 0MB 虛擬開銷連線，無縫檢索《處務規程》與《辦事細則》條文全文（如 PCode: `M0010061` 《農業部處務規程》）。
+  - 全面接軌 **WRA-Civ 水系親緣拓樸體系** 作為單一真實來源 (SSOT)。
+  - **雙層編碼支援**:
+    - **官方 6 碼權威編碼 (`is_civilian: 0`)**: 如 `130000` (頭前溪主流)、`151000` (濁水溪)。
+    - **民間連字號延伸編碼 (`is_civilian: 1`)**: 如 `130000-C04` (鹿寮坑溪)、`130000-C04-C01` (王爺坑溪)。
+  - **親緣路徑樹 (`topology_path`)**:
+    - 採用 `@` 符號連接親緣鏈 (如 `0@130000@130000-C04@130000-C04-C01`)。
+    - 支援微秒級上下游雙向追溯 (Upstream Source & Downstream Mainstream)。
 
-### 3. 開放資料集/關鍵字 AI 主管科室自動配對引擎 (Mandate Auto-Classifier & Metrics)
-* **業務痛點**: 人工判定數萬筆開放資料集究竟屬於哪一個主管科室耗時費力且標準不一。
-* **衍生業務指標與配對引擎**:
-  - **職掌匹配信心度指標 (Mandate Confidence Score, MCS)**：依據文本相似度與處務規程關鍵字，計算 0.0~1.0 信心度。
-  - **自動歸屬品質評級**: 🟢 HIGH (>=0.85 命中特定科室) / 🟡 MEDIUM (>=0.6 命中司局級) / 🔴 LOW (<0.6 待人工稽核)。
+### 2. 本機微型拓樸引擎與外部套件解耦 (Lightweight Micro Topology Engine & Decoupling)
+* **業務痛點**:
+  `RiverExploration` (WRA-Civ) 包含龐大的 3D 幾何、OSM 爬蟲與專書產製套件。若 `tw-gov-db` 強制依賴其 Library，在獨立容器或精簡環境中將引發依賴地獄與崩潰。
+* **業務規格與實作機制**:
+  - **資料層全量收納**: 將 WRA-Civ 1,397+ 筆水脈核心欄位同步快取至 `universal_keys.sqlite` 之 `river_registry`，確保離線與單兵環境自給自足。
+  - **程式碼輕量適配**: G30 內部實裝純 Python 微型拓樸引擎 (`river_topology.py`，約 80 行)，自主實現上下游查詢與樹狀展開，不盲目拷貝外部程式碼。
+  - **環境自適應與優雅降級**:
+    - 提供 `--no-wra` 與 `DISABLE_WRA_CIV=1` 顯式禁用開關。
+    - 外部有 `river_cli` 時支援動態擴充高階幾何；無外部套件時自動降級至本地獨立基石模式，保證 100% 穩定不掛死。
 
-### 4. 異質發布單位別名對齊與權威 OID 歸併 (Publisher Alias Alignment)
-* **業務情境**: 針對 data.gov.tw 上 6 萬筆資料集中出現的異質別名（如「行政院農業委員會農糧署」），透過正則與字串信心度 (0.8~1.0)，100% 歸併對齊到現行官方 OID (`master_agencies`)。
+### 3. 水理、空間與機關跨基石聯防 (Hydro-Spatial-Agency Triad Linkage)
+* **業務痛點**:
+  水文是自然地理邊界，而政府治理是行政區劃邊界（如一條溪流跨越多個鄉鎮市區）。水利署各河川分署管轄範圍與地方公所防災責任難以精確對照整合。
+* **業務規格與實作機制**:
+  - 繼承 WRA-Civ 權威的「四階縣市歸屬仲裁」(`primary_county`)。
+  - 對齊 **G20 (`admin_codes`)** 國家行政區碼，明確標註水脈地緣。
+  - 對齊 **G30 (`master_agencies`)**，自動標註水利署一河局至十河局的管轄分署 OID。
 
----
+### 4. 全政府水情測站智慧關聯 (Universal Sensor Anchoring)
+* **業務痛點**:
+  氣象署雨量站、水利署水位站、環境部水質站各自獨立，沒有統一關聯至標準河川程式碼。
+* **業務規格與實作機制**:
+  - 維護 `universal_keys.sqlite` 內的 `station_registry` (450+ 測站)。
+  - 提供 `stations` 子命令，可沿著任意野溪或幹流追溯出所有所屬或鄰近觀測站，供 G40 豪雨時序與防災應變使用。
 
-## 🧠 法規文本演進解析演演算法說明 (Law Genealogy Extraction Algorithm)
-
-本模組的核心演演算法 **`LawGenealogyParser`** 負責從 `law_db` (全國法規資料庫) 文本中抽取組織改制事件，演演算法運作邏輯如下：
-
-```
-[全國法規資料庫 (law_db / law_cli.py)]
-       │
-       ▼
- ┌─────────────────────────────────────────────────────────────┐
- │ Step 1: 組織法規特徵篩選 (Law Filter)                       │
- │ • 鎖定標題含 "組織法", "組織條例", "處務規程" 或狀態為 "廢止"   │
- └─────────────────────────────┬───────────────────────────────┘
-                               │
-                               ▼
- ┌─────────────────────────────────────────────────────────────┐
- │ Step 2: 正規表示法與語意範本提取 (Pattern Extraction)         │
- │ • 範本 A (廢止失效): r"(?P<old>.*組織條例)於.*(?P<new>.*組織法)通過生效後失效" │
- │ • 範本 B (升格改制): r"(?P<old>.*)於中華民國(?P<date>.*)升格為(?P<new>.*)"     │
- │ • 範本 C (廢止移撥): r"廢止(?P<old>.*)，業務由(?P<new>.*)承受"                │
- └─────────────────────────────┬───────────────────────────────┘
-                               │
-                               ▼
- ┌─────────────────────────────────────────────────────────────┐
- │ Step 3: OID 雙向對齊與評級分類 (OID Alignment & Rating)     │
- │ • 以 <old> / <new> 字串查詢 master_agencies 與 GDS.csv     │
- │   - 若兩端 OID 皆命中 ➔ completeness="FULL_MATCH", conf=1.0, status="VERIFIED"│
- │   - 若僅單邊命中     ➔ completeness="PARTIAL_MATCH", conf=0.85, status="PENDING_REVIEW"│
- │   - 若兩端均無 OID   ➔ completeness="TEXT_ONLY", conf=0.7, status="NEEDS_PATCH"│
- └─────────────────────────────┬───────────────────────────────┘
-                               │
-                               ▼
-                 [寫入 master_agencies.sqlite]
-```
+### 5. WRA-Civ 版本感知與冪等原子同步 (Version Drift & Atomic Sync)
+* **業務痛點**:
+  民間探勘與社群調查持續演進，WRA-Civ 會不定期發布新版水脈與更正拓樸。基石庫必須具備受控的同步與版本漂移防護。
+* **業務規格與實作機制**:
+  - 內建 `sync-rivers` 子命令，以 SHA-256 內容指紋偵測上游更新。
+  - 採 SQLite 交易保護 (`BEGIN TRANSACTION ... COMMIT`) 進行冪等原子寫入 (Upsert)。
+  - 具備軟刪除防護 (Soft-delete): 上游移除或重新編碼的水脈標記為 `DEPRECATED`，保留歷史資料關聯相容性。
 
 ---
 
-## 📊 SQLite Schema 結構與通用表定質 (master_agencies.sqlite)
+## 📊 SQLite Schema 結構 (universal_keys.sqlite)
 
-### `agency_genealogy` (歷史演進圖譜審核表)
+### 1. `river_registry` (全台灣水系與流域拓樸主檔表 - 增強版)
 ```sql
-CREATE TABLE IF NOT EXISTS agency_genealogy (
-    genealogy_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    predecessor_name VARCHAR(128) NOT NULL,   -- 前身機關名稱 (如 "行政院農業委員會")
-    predecessor_oid VARCHAR(128),              -- 前身機關 OID (可為空)
-    successor_name VARCHAR(128) NOT NULL,     -- 繼承機關名稱 (如 "農業部")
-    successor_oid VARCHAR(128),                -- 繼承機關 OID (可為空)
-    event_type VARCHAR(32) NOT NULL,           -- UPGRADE, MERGE, SPLIT, RENAME
-    effective_date VARCHAR(16),                -- 生效日期 (如 "2023-08-01")
-    law_name VARCHAR(128) NOT NULL,            -- 法規全稱 (如 "農業部組織法")
-    law_article VARCHAR(32),                    -- 法規條次 (如 "第 1 條")
-    pcode VARCHAR(16),                          -- 既有 law_cli 法規程式碼
-    source_text TEXT,                          -- 文本分析原始摘要
-    
-    -- 完整度與審核狀態
-    completeness_level VARCHAR(32) NOT NULL,   -- FULL_MATCH, TEXT_ONLY, PARTIAL_MATCH
-    confidence_score FLOAT DEFAULT 0.5,        -- 0.0 ~ 1.0
-    review_status VARCHAR(32) DEFAULT 'PENDING_REVIEW', -- PENDING_REVIEW, VERIFIED, NEEDS_PATCH, REJECTED
-    
-    reviewed_by VARCHAR(64),
-    reviewed_at TIMESTAMP,
-    attributes_json TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS river_registry (
+    river_code VARCHAR(32) PRIMARY KEY,      -- 6碼官方編號 (130000) 或民間延伸碼 (130000-C04)
+    river_name VARCHAR(128) NOT NULL,        -- 河流/溪流正式名稱 (如 頭前溪、鹿寮坑溪)
+    basin_name VARCHAR(64),                  -- 所屬大流域幹流名稱 (如 頭前溪水系)
+    parent_code VARCHAR(32),                 -- 母水脈程式碼 (匯入之水脈)
+    topology_path VARCHAR(256) NOT NULL,     -- WRA-Civ 拓樸親緣路徑 (如 0@130000@130000-C04)
+    stream_order INTEGER DEFAULT 1,          -- 河階/支流層次 (幹流=1, 一級支流=2...)
+    is_civilian BOOLEAN DEFAULT 0,           -- 0: 水利署官方公告, 1: 民間延伸野溪
+    primary_county VARCHAR(32),              -- 仲裁歸屬縣市 (如 新竹縣)
+    admin_code VARCHAR(8),                   -- 對齊 G20 國家行政區碼
+    confluence_lon FLOAT,                    -- 匯流點經度
+    confluence_lat FLOAT,                    -- 匯流點緯度
+    status VARCHAR(16) DEFAULT 'ACTIVE',     -- 狀態 (ACTIVE 正常, DEPRECATED 已廢止/整併)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX IF NOT EXISTS idx_river_name ON river_registry(river_name);
+CREATE INDEX IF NOT EXISTS idx_river_topo ON river_registry(topology_path);
+CREATE INDEX IF NOT EXISTS idx_river_basin ON river_registry(basin_name);
+CREATE INDEX IF NOT EXISTS idx_river_county ON river_registry(primary_county);
+```
+
+### 2. `station_registry` (環境/氣象/水文測站主檔表)
+```sql
+CREATE TABLE IF NOT EXISTS station_registry (
+    station_id VARCHAR(64) PRIMARY KEY,      -- 測站程式碼 (如 C0A980)
+    station_name VARCHAR(128) NOT NULL,      -- 測站名稱
+    station_type VARCHAR(32),                -- 類型 (WEATHER, WATER_LEVEL, WATER_QUALITY, RAINFALL)
+    agency_name VARCHAR(128),                -- 所屬機關 (中央氣象署, 水利署, 環境部)
+    river_code VARCHAR(32),                  -- 所屬/鄰近河川程式碼 (外鍵關聯 river_registry)
+    admin_code VARCHAR(8),                   -- 所在行政區程式碼 (外鍵關聯 admin_codes)
+    latitude FLOAT,
+    longitude FLOAT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_station_river ON station_registry(river_code);
+CREATE INDEX IF NOT EXISTS idx_station_type ON station_registry(station_type);
 ```
 
 ---
 
-## 🛠️ CGS v2.4 CLI 命令規格 (`g30_cli.py`)
+## 🧮 演演演算法規格 (Algorithm Specifications)
 
-- `g30_cli.py resolve-org [QUERY] [--stdin] [-j]`: **JIT 執行期輕量動態組織推導**，輸入歷史或舊版機關（如「第二河川局」、「南區工程處」），動態對位為現行權威機關與官方 OID。支援 `--stdin` UNIX 管道流式處理。
-- `g30_cli.py backfill-oid [-j]`: 自動比對官方 6,937 筆 OID 字典，批次回填 `successor_oid` 至 `agency_genealogy` 資料表。
-- `g30_cli.py parse-laws [--save] [-j]`: 執行 `LawGenealogyParser` 雙軌演算法全量解析法規與廢止令，抽取評級條目。
-- `g30_cli.py alias [QUERY] [-j]`: 將異質發布單位別名對齊至權威 OID。
-- `g30_cli.py match-mandate [QUERY] [--stdin] [-j]`: 傳入關鍵字或資料集名稱，自動配對主管組科與 MCS 信心度。
-- `g30_cli.py genealogy [--status STATUS] [--pending] [--verified] [-j]`: 查詢演進對照表與完整度狀態（支援 `--status NEEDS_PATCH`）。
-- `g30_cli.py patch-oid <ID> --oid <OID> [--target predecessor|successor]`: 為 `TEXT_ONLY` 條目補充填入 OID。
-- `g30_cli.py patch [--id ID] [INPUT_JSON]`: 透過 JSON 修補或新增組織演進規則；支援 `--id` 更新現有規則欄位。
-- `g30_cli.py verify <ID> [--reject]`: 審核核可或駁回條目。
-- `g30_cli.py schema`: 輸出符合 Draft-2020-12 標準之 CGS v2.4 自我描述 JSON Schema。
-- `g30_cli.py status [-j]`: 模組健康度與待補充/待審核統計。
+### 1. 微型親緣拓樸路徑解析演演演算法 (Topology Path Resolution)
+* **親緣格式**: `0@BASIN@STREAM_1@STREAM_2@...`
+* **祖先追溯 (Ancestors / Downstream Search)**:
+  - 對 `topology_path` 進行 `@` 字串拆解，排除根結點 `0` 與當前節點，其餘元素即為由大幹流到直接母溪的直系祖先序列。時間複雜度 $O(1)$。
+* **子孫展開 (Descendants / Upstream Search)**:
+  - 利用 SQL B-Tree 前綴匹配：`SELECT * FROM river_registry WHERE topology_path LIKE ? AND river_code != ?`，傳入 `current_path + "@%"`。時間複雜度 $O(\log N)$。
+
+### 2. Plugins 命名空間注水演演演算法 (Plugin Hydration)
+* 當讀取外部 WRA-Civ JSONL 時，主結構保持不可變性，僅於 `plugins.gov_db` 注入基石中繼資料：
+  ```json
+  "plugins": {
+    "gov_db": {
+      "g20_admin_code": "10004080",
+      "g30_competent_agency": "經濟部水利署第二河川分署",
+      "g30_agency_oid": "2.16.886.101.20003.20007.20015",
+      "g50_monitoring_stations_count": 3
+    }
+  }
+  ```

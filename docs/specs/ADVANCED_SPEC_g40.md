@@ -1,100 +1,75 @@
-# G40 全政府時間、辦公日曆與時序維度器 高級延伸與跨部會協同規格書 (ADVANCED_SPEC.md)
+# G40 高級延伸與跨模組協同規格書 (ADVANCED_SPEC_g60)
 
-- **模組名稱**: `g40_temporal_indexer`
-- **所屬專案**: `tw-gov-db` (`GOV-300` 全政府通用基石對照庫)
-- **核心目標**: 定義 G40 時間與時序維度器如何穿透同專案其他模組（G10 採購、G20 空間水系、G30 組織演進），並提供給跨部會主題專案（GOV-A19 農業部、GOV-A21 金管會）作為統一的 UNIX Pipe-Native 流式時序轉接樞紐。
-
----
-
-## 💡 UNIX Pipe-Native 深度發想與串接配方 (Pipe Recipes)
-
-在 CGS v2.4 標準下，`g40_cli.py` 扮演全生態系系系「**時序篩網 (Temporal Sieve)**」與「**時間軸對齊器 (Timeline Aligner)**」角色，深度發想以下 5 大管線配方：
-
-### 配方 1：開放資料異質民國年清洗 ➔ 現行機關對位 ➔ 空間正規化 (三基石連鎖)
-* **情境**: 取得一筆原始開放資料，同時含有異質民國年「112/08/15」、舊機關名「二河局」與門牌地址。
-```bash
-echo '{"date": "112/08/15", "agency": "第二河川局", "addr": "新竹市東區中央路"}' \
-  | jq -r '.date' | pa g40 clean-date --stdin -j \
-  | jq -r '.agency' | pa g30 resolve-org --stdin -j \
-  | jq -r '.addr' | pa g20 align-address --stdin -j
-```
-* **價值**: 100 毫秒內將一筆未清洗的混亂政府資料，完成「標準時間戳 + 權威機關 OID + 標準 6 碼行政區地籍」的三位一體淬煉。
-
-### 配方 2：農業部重大災損申報 ➔ 颱風天災假與降雨測站碰撞 (G40 ↔ G20 ↔ GOV-A19)
-* **情境**: 驗證農民災損申報日是否恰好落在歷史颱風停班停課日或連續暴雨期間。
-```bash
-pa agro a10 search "高粱災損" -j \
-  | jq -r '.[].申報日期' \
-  | pa g40 check --stdin -j \
-  | jq 'select(.is_holiday == true or .holiday_category == "TYPHOON_LEAVE")'
-```
-
-### 配方 3：政府採購標案履約天數與法定營業日計算 (G40 ↔ G10)
-* **情境**: 計算特定標案自決標日至驗收日之間，扣除所有週末與國定假日的「真實法定工作日數」。
-```bash
-pa gov g10 fetch-tender "T113-001" -j \
-  | jq -r '[.award_date, .completion_date] | "\(.[0]) \(.[1])"' \
-  | xargs pa g40 range --working-days-only -j \
-  | jq '.total_working_days'
-```
-
-### 配方 4：金管會上市櫃財報發布日 ➔ 營業日/開盤日判定 (G40 ↔ GOV-A21)
-* **情境**: 檢驗財報發布或重大資訊揭露是否於非交易日發布。
-```bash
-pa fsc announcements --date "1130501" -j \
-  | jq -r '.[].announcement_date' \
-  | pa g40 check --stdin -j \
-  | jq 'select(.is_working_day == false) | "\(.date_str) 為非營業日: \(.description)"'
-```
-
-### 配方 5：跨年度會計年度批次切片 ➔ 法規處務規程時間軸對照 (G40 ↔ G30)
-* **情境**: 展開「112年度」所有日期，比對水利署組改基準日「112-09-26」前後之資料歸屬。
-```bash
-pa g40 bucket "112年度" -j \
-  | jq -r '.days[]' \
-  | while read d; do \
-      if [[ "$d" < "2023-09-26" ]]; then echo "$d: 舊制河川局"; else echo "$d: 新制河川分署"; fi; \
-    done | head -n 10
-```
+- **模組名稱**: `g40_corporate_indexer`
+- **所屬專案**: `tw-gov-db` / `GOV-300` (全政府通用基石對照庫)
+- **規範版本**: `CGS v2.4` (Pipeline-Native UNIX Standard)
+- **關聯基石**: 基石四 (Cornerstone 4: 法人與企業 Corporate & NPO)
 
 ---
 
-## 🔗 跨模組業務穿透架構 (Cross-Module Synergy Architecture)
+## 🚀 1. 設計哲學與 UNIX Pipe 原生哲學 (Pipeline-Native Philosophy)
 
-```mermaid
-flowchart TD
-    RAW[異質政府資料串流] -->|stdin| G40[G40 時序維度器 clean-date]
-    G40 -->|ISO-8601 CST| ROUTE{時序分流仲裁}
-    
-    ROUTE -->|上班日/營業日| G10[G10 採購履約天數計算]
-    ROUTE -->|停班停課/天災| G20[G20 水系測站雨量碰撞]
-    ROUTE -->|改制生效日對照| G30[G30 機關演進動態切換]
-    ROUTE -->|財報揭露交易日| A21[GOV-A21 金管會開盤日對齊]
-    ROUTE -->|農時節氣與災損| A19[GOV-A19 農業部災損通報]
-```
+G40 不僅是一個靜態資料查詢器，更是全政府管線（UNIX Pipeline）中處理「主體身分標籤」的神經濾網。
+
+1. **非阻塞 Stdin 探測器 (Non-blocking Stdin Probe)**：
+   - 採用 `select.select` 或 `sys.stdin.isatty()` 雙檢機制。
+   - 優先讀取命令列引數；當無命令列引數且存在管道輸入時，以串流模式秒級處理，杜絕行程掛起。
+2. **標準串流分離 (Clean Stream Separation)**：
+   - `stdout`：僅輸出單行緊湊 JSON (Compact JSON) 或 Tab 分隔值 (TSV)。
+   - `stderr`：輸出進度資訊、快取命中率與診斷日誌。
+3. **離線優先與斷線自適應降級 (Offline-First Graceful Degradation)**：
+   - 任何網路異常（如連線商業發展署 API 超時）不得導致 CLI 崩潰，自動標註 `cache_hit: false, source: "OFFLINE_VALIDATED"` 並回傳演演演算法檢驗結果。
 
 ---
 
-## 📐 前瞻跨庫檢視契約 (Future Cross-Module SQL View Contract)
+## 🔗 2. 5 大跨部會 UNIX Pipeline 實戰配方 (Pipeline Recipes)
 
-```sql
--- 跨部會業務活動時序與辦公日曆穿透檢視
-CREATE VIEW IF NOT EXISTS v_g40_activity_calendar_lens AS
-SELECT 
-    c.date_str,
-    c.year,
-    c.minguo_year,
-    c.is_holiday,
-    c.is_working_day,
-    c.holiday_category,
-    c.description AS holiday_desc,
-    CASE 
-        WHEN c.date_str >= '2023-09-26' THEN 'MOE_WRA_NEW_ERA' 
-        ELSE 'MOE_WRA_LEGACY_ERA' 
-    END AS wra_era_tag,
-    CASE 
-        WHEN c.date_str >= '2023-08-01' THEN 'MOA_NEW_ERA' 
-        ELSE 'COA_LEGACY_ERA' 
-    END AS agro_era_tag
-FROM calendar_registry c;
-```
+### 配方一：政府電子採購標案文字串流 ➔ 統編萃取與驗證
+* **情境**：從政府採購公告或 PDF 轉文字中，快速抽取所有合法統編。
+* **管線指令**：
+  ```bash
+  cat tender_announcement.txt | ./pa g60 pipe --extract-tax-id | jq .
+  ```
+* **效果**：G40 自動以正則過濾出所有 8 碼數字候選者，通過 `ban_validator` 演演演算法排除無效偽碼，輸出合法企業統編陣列。
+
+### 配方二：農業部災損申報不規範名冊 ➔ 農會主檔消歧義標準化
+* **情境**：農業部 (GOV-A19) 各鄉鎮災損統計寫著「板農」、「新埔農會」，需對齊正式官方編號。
+* **管線指令**：
+  ```bash
+  echo -e "板農\n新埔農會\n吉安鄉農會超市" | ./pa g60 resolve -j | jq -r '.[] | [.input, .npo_id, .canonical_name] | @tsv'
+  ```
+* **效果**：輸出標準 TSV，精準對齊到 `新北市板橋區農會`、`新竹縣新埔鎮農會` 與 `花蓮縣吉安鄉農會`。
+
+### 配方三：食安裁罰黑名單 (衛福部 A18) ➔ 統編反查與地緣分析 (G20)
+* **情境**：從裁罰清單讀取統編，反查企業註冊地址並提取行政區程式碼對齊 G20。
+* **管線指令**：
+  ```bash
+  ./pa meddb sanctions --limit 10 | jq -r '.[].tax_id' | ./pa g60 lookup | jq -r '.[].admin_code' | ./pa g20 admin
+  ```
+* **效果**：跨部會穿透：衛福部裁罰商 ➔ G40 統編登記行政區 ➔ G20 空間地緣分布。
+
+### 配方四：金管會金融機構 (A21) ➔ 統編合法性快篩
+* **情境**：驗證特許金融機構資料庫中 2,609 家法人之統一編號是否 100% 符合財政部規範。
+* **管線指令**：
+  ```bash
+  ./pa fsc institutions -j | jq -r '.[].tax_id' | ./pa g60 check --strict
+  ```
+* **效果**：標註符合舊制或新制規範之機構比率。
+
+### 配方五：跨模組聯合主體快照 (Master Identity Fingerprint)
+* **情境**：給定任一主體名稱或程式碼，同時整合 G30（主管機關）、G40（法人主檔）、G20（地緣）。
+* **管線指令**：
+  ```bash
+  ./pa g60 lookup 22570177 --with-agency
+  ```
+
+---
+
+## 🛡️ 3. 容錯機制與新舊制切換原則
+
+| 情境 | 處理策略 |
+| :--- | :--- |
+| **8 碼為空或長度不符** | 直接拋出 `INVALID_FORMAT`，不進入加權計算。 |
+| **2023 新制特例** | 標註 `valid_by_current=true, valid_by_legacy=false`，利於稽核追蹤。 |
+| **第七位為 7 的特例號碼** | 標註 `has_special_rule_7=true`，並列出兩種 Checksum 分支計算過程。 |
+| **GCIS API 離線/超時** | 超時限制 3 秒；離線時回退至本機演演演算法與 Seed 快取，不阻斷管線。 |

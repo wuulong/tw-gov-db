@@ -2,22 +2,22 @@
 # -*- coding: utf-8 -*-
 r"""
 [metadata]
-name: g40_cli.py
+name: g50_cli.py
 title: G40 全政府時間、辦公日曆與時序維度器 CLI 工具
 description: G40 全政府時間、辦公日曆與時序維度器 CLI 工具，支援全政府民國年/西元年極速清洗、行政院核定辦公日曆與營業日判定、會計年度時序分桶與天災假時空碰撞。
 category: gov_meta
 spec: events-2026Q3/gov-db-in/tw-gov-db/docs/specs/SPECIFICATION_g40.md
-manual: scripts/manuals/g40_cli.md
+manual: scripts/manuals/g50_cli.md
 dependencies: sqlite3, json, sys, os, re, datetime
 cgs_version: 2.4
 compat: posix
 pipe_recipes:
   - cat: 開放資料異質民國年清洗 ➔ 現行機關對位 ➔ 空間正規化
-    cmd: echo "112/08/15" | g40_cli clean-date --stdin -j
+    cmd: echo "112/08/15" | g50_cli clean-date --stdin -j
   - cat: 農業災損申報日 ➔ 辦公日曆與天災假檢驗
-    cmd: echo "2024-10-31" | g40_cli check --stdin -j
+    cmd: echo "2024-10-31" | g50_cli check --stdin -j
   - cat: 政府採購標案 ➔ 履約法定工作日數計算
-    cmd: g40_cli range 2024-01-01 2024-01-31 --working-days-only -j
+    cmd: g50_cli range 2024-01-01 2024-01-31 --working-days-only -j
 """
 import sys
 import os
@@ -774,11 +774,11 @@ def cmd_status(args):
 
 
 def cmd_schema(args):
-    """Output canonical JSON schema for g40_cli (CGS v2.4)."""
+    """Output canonical JSON schema for g50_cli (CGS v2.4)."""
     schema_dict = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "title": "G40TemporalIndexerSchema",
-        "description": "Schema definition for g40_cli.py (CGS v2.4)",
+        "description": "Schema definition for g50_cli.py (CGS v2.4)",
         "version": "2.4",
         "subcommands": {
             "clean-date": {

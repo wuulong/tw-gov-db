@@ -11,7 +11,7 @@ from pathlib import Path
 import unittest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MODULE_DIR = PROJECT_ROOT / "src" / "modules" / "g60_corporate_indexer"
+MODULE_DIR = PROJECT_ROOT / "src" / "modules" / "g40_corporate_indexer"
 PYTHON_BIN = "/Users/wuulong/opt/anaconda3/envs/m2504/bin/python"
 
 if str(MODULE_DIR) not in sys.path:
@@ -21,7 +21,7 @@ from ban_validator import BanValidator
 from npo_resolver import NpoResolver
 
 
-class TestG60CorporateIndexer(unittest.TestCase):
+class TestG40CorporateIndexer(unittest.TestCase):
 
     def test_ban_validator_legacy_and_new_rule(self):
         """測試 1: 統編雙軌加權檢查碼驗證 (舊制、2023新制、第7位為7特例、偽碼)"""
@@ -77,13 +77,13 @@ class TestG60CorporateIndexer(unittest.TestCase):
 
     def test_g60_cli_commands(self):
         """測試 4: g60_cli 常用命令與純淨 JSON 輸出"""
-        cli_path = MODULE_DIR / "g60_cli.py"
+        cli_path = MODULE_DIR / "g40_cli.py"
 
         # status
         p = subprocess.run([PYTHON_BIN, str(cli_path), "status", "-j"], capture_output=True, text=True)
         self.assertEqual(p.returncode, 0)
         data = json.loads(p.stdout)
-        self.assertEqual(data["module"], "g60_corporate_indexer")
+        self.assertEqual(data["module"], "g40_corporate_indexer")
         self.assertEqual(data["cgs_version"], "2.4")
 
         # check
@@ -106,7 +106,7 @@ class TestG60CorporateIndexer(unittest.TestCase):
 
     def test_g60_cli_pipeline_stdin(self):
         """測試 5: UNIX Pipe Stdin 串流輸入"""
-        cli_path = MODULE_DIR / "g60_cli.py"
+        cli_path = MODULE_DIR / "g40_cli.py"
 
         # 1. 批量 check via stdin
         input_data = "04595257\n12345678\n96979933"

@@ -6,8 +6,8 @@ title: 全政府法人、企業與農漁會維度器 CLI (G60)
 description: 提供 8 碼統一編號新舊制雙軌校驗、長文本統編萃取濾網、全台農漁會拓樸消歧義與 Pass-Through 快取查詢控制台。
 category: cli
 dependencies: sqlite3, select, sys, json
-spec: scripts/specs/g60_cli.spec.md
-manual: scripts/manuals/g60_cli.md
+spec: scripts/specs/g40_cli.spec.md
+manual: scripts/manuals/g40_cli.md
 compat: posix_windows
 """
 
@@ -162,7 +162,7 @@ def execute_status(db_path: Optional[str] = None) -> Dict[str, Any]:
     conn.close()
 
     return {
-        "module": "g60_corporate_indexer",
+        "module": "g40_corporate_indexer",
         "cgs_version": __cli_spec_version__,
         "version": __version__,
         "database_path": str(DEFAULT_DB_PATH if not db_path else db_path),
@@ -189,7 +189,7 @@ def build_parser() -> argparse.ArgumentParser:
     common_parser.add_argument("--db", type=str, default=None, help="自訂 universal_keys.sqlite 資料庫路徑")
 
     parser = argparse.ArgumentParser(
-        prog="g60_cli.py",
+        prog="g40_cli.py",
         parents=[common_parser],
         description="G60 全政府法人、企業與農漁會維度器控制台 (CGS v2.4 Pipeline-Native)",
         formatter_class=argparse.RawDescriptionHelpFormatter
@@ -236,9 +236,9 @@ def main():
     # 處理 --version
     if args.version:
         if args.json:
-            print(json.dumps({"module": "g60_corporate_indexer", "version": __version__, "cgs_version": __cli_spec_version__}, ensure_ascii=False))
+            print(json.dumps({"module": "g40_corporate_indexer", "version": __version__, "cgs_version": __cli_spec_version__}, ensure_ascii=False))
         else:
-            print(f"g60_cli.py v{__version__} (CGS v{__cli_spec_version__})")
+            print(f"g40_cli.py v{__version__} (CGS v{__cli_spec_version__})")
         sys.exit(0)
 
     # 處理 --schema
@@ -255,7 +255,7 @@ def main():
 
     if not args.subcommand or args.subcommand == "manual":
         # 顯示說明
-        manual_path = MODULE_DIR.parents[3] / "scripts" / "manuals" / "g60_cli.md"
+        manual_path = MODULE_DIR.parents[3] / "scripts" / "manuals" / "g40_cli.md"
         if manual_path.exists():
             with open(manual_path, "r", encoding="utf-8") as f:
                 print(f.read())

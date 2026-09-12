@@ -2,7 +2,7 @@
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
 * **專案代號**：`GOV-300` (方案 A 權威機關簡碼 `300000000A`)
-* **當前版本**：`v0.2.1`
+* **當前版本**：`v0.3.0`
 * **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/06_system_engineering_and_sdm.md`
 
 ---
@@ -95,7 +95,7 @@ graph TD
     DB1["universal_keys.sqlite<br>(admin_codes 480 行政區劃)"] --> SDM["SDM 腳本<br>(qgis_project_architect.py)"]
     DB2["universal_keys.sqlite<br>(river_registry 122 條水系)"] --> SDM
     DB3["universal_keys.sqlite<br>(station_registry 450 氣象站)"] --> SDM
-    SDM --> QGS["自動生成 QGIS 專案檔<br>(gov_basemap_v0.2.1.qgs)"]
+    SDM --> QGS["自動生成 QGIS 專案檔<br>(gov_basemap_v0.3.0.qgs)"]
     QGS --> RENDER["產出全台高畫質地籍、水系與氣象防禦主題圖"]
 ```
 

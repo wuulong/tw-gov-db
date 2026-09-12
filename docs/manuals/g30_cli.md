@@ -1,100 +1,83 @@
----
-title: G30_CLI
-section: 1
-date: 2026-09-12
-header: BMAD-PA User Commands
-footer: CGS v2.4 Specification
----
+# g30_cli(1) -- 全台灣水系水文拓樸維度器控制台
 
-# 📖 使用者手冊：`g30_cli.py` G30 全政府法規處務規程與虛擬圖譜 CLI 工具
+## SYNOPSIS
+`python src/modules/g30_hydrology_indexer/g30_cli.py` [*GLOBAL_FLAGS*] *COMMAND* [*ARGS...*]  
+`python src/modules/g30_hydrology_indexer/g30_cli.py` `search` [*KEYWORD...*]  
+`python src/modules/g30_hydrology_indexer/g30_cli.py` `trace` [*--direction down|up*] [*RIVER_CODE*]  
+`python src/modules/g30_hydrology_indexer/g30_cli.py` `stations` [*--type rainfall|waterlevel|all*] [*RIVER_CODE*]  
+`python src/modules/g30_hydrology_indexer/g30_cli.py` `hydrate` [*--no-wra*] [*--in-place*] [*FILE...*]  
+`python src/modules/g30_hydrology_indexer/g30_cli.py` `sync-rivers` [*--upstream-jsonl PATH*] [*--force*]  
+`python src/modules/g30_hydrology_indexer/g30_cli.py` `status`  
 
-`g30_cli.py` 是針對 `tw-gov-db` (`GOV-300`) 之 `g30_mandate_indexer` 模組所研發的高效 CLI 工具，完全遵循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範。支援跨部會歷史機關動態對位、組科職掌配對、OID 字典批次回填與法規採礦管線。
+*(若於整合開發環境中，亦可使用本機快捷路由器 `./pa g30 ...`)*
 
----
+## DESCRIPTION
+**g30_cli.py** (G30) 是台灣全政府通用基石對照庫 (`tw-gov-db` / `GOV-300`) 的核心水文維度器模組，對應**基石三 (基石三 (Cornerstone 3: 水系與環境 Hydrology & River Topology): 水系與環境 Hydrology & River Topology)**。
 
-## 🚀 1. 命令列使用方式 (CLI Usage)
+本工具遵循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範，並直接接軌台灣水利署與民間野溪延伸拓樸標準 **WRA-Civ (Water Resources Agency - Civilian Extended Topology)**：
+1. **雙層編碼架構支援**：
+   - 官方 6 碼權威編碼 (`is_civilian: 0`，如 `130000` 頭前溪主流、`151000` 濁水溪）。
+   - 民間連字號延伸編碼 (`is_civilian: 1`，如 `130000-C04-C01` 代表頭前溪四級支流深山野溪）。
+2. **微秒級親緣拓樸樹遍歷**：
+   - 基於 `@` 分隔路徑 (`topology_path`) 實現純 SQL 前綴比對，百微秒內解析主流向下游（Ancestors / Downstream）或向源頭上游子樹（Descendants / Upstream）。
+3. **外部跨部會資料流厚化 (Hydration)**：
+   - 透過標準輸入輸出將全政府事件流、採購標案、水質測站資料注入 `plugins.gov_db.hydrology` 拓樸結構，而不污染各部會既有核心 Schema。
+4. **自主無依賴優雅降級**：
+   - 本地 `universal_keys.sqlite` 完整備份 1,394+ 筆台灣水脈資料。當外部環境缺少 `river_cli` 或指定 `--no-wra` 時，以純 Python 微拓樸引擎自主運作，絕不中斷服務。
+5. **上游異動偵測與原子同步**：
+   - 支援 `sync-rivers` 檢測上游 WRA-Civ JSONL 雜湊異動並執行事務性原子同步。
 
-基本語法：
-```bash
-python events-2026Q3/gov-db-in/tw-gov-db/src/modules/g30_mandate_indexer/g30_cli.py [子命令] [選項]
-```
+## COMMANDS
+* `search` [*KEYWORD...*]:
+  模糊搜尋水系名稱、主流或民間支流。
+* `trace` [*--direction down|up*] [*RIVER_CODE*]:
+  追蹤指定水脈的親緣拓樸路徑。預設 `down` 追溯流向出海口的主幹歷程（Ancestors）；`up` 查詢所有向源侵蝕的支流流域（Descendants）。
+* `stations` [*--type rainfall|waterlevel|all*] [*RIVER_CODE*]:
+  列出綁定在指定水系的雨量與水位水文監測站點。
+* `hydrate` [*--no-wra*] [*--in-place*] [*FILE...*]:
+  將外部 JSON/JSONL 資料串流注入水文拓樸屬性（於 `plugins.gov_db.hydrology` 欄位）。
+* `sync-rivers` [*--upstream-jsonl PATH*] [*--force*]:
+  從上游 WRA-Civ 拓樸註冊表 JSONL 執行增量與雜湊偵測同步至本機 `universal_keys.sqlite`。
+* `status`:
+  檢視 G30 模組就緒狀態、收錄水系筆數、官方/民間比例與測站數量。
 
-### 1. JIT 執行期輕量動態組織推導 (`resolve-org`)
-支援精準歷史機關比對與跨部會巨觀推導（如「第二河川局」➔「經濟部水利署第二河川分署」），並自動附帶現行官方 OID。
+## GLOBAL OPTIONS
+* `-j`, `--json`:
+  以單行緊湊 JSON 格式輸出，利於 jq 與 Unix Pipe 串流處理。
+* `-q`, `--quiet`:
+  靜音模式，抑制診斷與進度提示。
+* `--pretty`:
+  格式化縮排輸出 JSON 結構。
+* `-h`, `--help`:
+  顯示命令列說明檔案。
 
-```bash
-# 單一查詢 (人類易讀格式)
-python g30_cli.py resolve-org "第二河川局"
+## ENVIRONMENT
+* `DISABLE_WRA_CIV`: 若設定為 `1` 或 `true`，強制關閉外部 WRA-Civ CLI 呼叫，全面使用本機微拓樸引擎。
+* `TW_GOV_DB_PATH`: 指定 `universal_keys.sqlite` 實體路徑。
 
-# JSON 輸出格式
-python g30_cli.py resolve-org "南區工程處" -j
+## EXAMPLES
+1. 查詢頭前溪主流資訊：
+   ```bash
+   python src/modules/g30_hydrology_indexer/g30_cli.py search "頭前溪" -j
+   ```
+2. 追溯油羅溪向下游至出海口的完整父節點拓樸鏈：
+   ```bash
+   python src/modules/g30_hydrology_indexer/g30_cli.py trace 130000-C04 --direction down -j
+   ```
+3. 追溯頭前溪水系向源頭的所有民間與官方支流子樹：
+   ```bash
+   python src/modules/g30_hydrology_indexer/g30_cli.py trace 130000 --direction up -j
+   ```
+4. 串流厚化水文資料至事件流：
+   ```bash
+   echo '{"event": "flood_alert", "river_code": "130000"}' | python src/modules/g30_hydrology_indexer/g30_cli.py hydrate -j
+   ```
+5. 檢視水文模組健康與註冊筆數：
+   ```bash
+   python src/modules/g30_hydrology_indexer/g30_cli.py status -j
+   ```
 
-# UNIX 管道批次流式處理 (--stdin)
-printf "第二河川局\n南區工程處\n新竹林區管理處\n" | python g30_cli.py resolve-org --stdin -j
-```
+*(備註：若在整合工作區根目錄，上述指令亦可簡寫為 `./pa g30 <command>`)*
 
-### 2. 官方 OID 批次回填落地 (`backfill-oid`)
-自動遍歷 `agency_genealogy` 資料表，以官方 6,937 筆 OID 字典為已確認繼承機關回填權威 `successor_oid`。
-
-```bash
-python g30_cli.py backfill-oid -j
-```
-
-### 3. 法規文本改制演進採礦 (`parse-laws`)
-雙軌直連 `law_cli genealogy`，全量解析全國法規資料庫組織法規與廢止公告，抽取改制事件。
-
-```bash
-# 僅輸出評級結果
-python g30_cli.py parse-laws -j
-
-# 解析並寫入 SQLite 資料庫
-python g30_cli.py parse-laws --save -j
-```
-
-### 4. 業務關鍵字與組科職掌配對 (`match-mandate`)
-根據處務規程組科法定職掌，自動配對開放資料集或業務關鍵字的主管科室與法規 PCode。
-
-```bash
-python g30_cli.py match-mandate "農水路工程改善" -j
-```
-
-### 5. 歷史演進圖譜查詢與人工修補 (`genealogy`, `patch`, `patch-oid`)
-```bash
-# 查詢待修補條目
-python g30_cli.py genealogy --status NEEDS_PATCH -j
-
-# 透過 ID 更新既有規則
-python g30_cli.py patch --id 239 '{"successor_name": "交通部高速公路局各區養護工程分局"}'
-
-# 補充特定條目 OID
-python g30_cli.py patch-oid 46 --oid "2.16.886.101.20003.20069.20001"
-```
-
-### 6. 自我描述 JSON Schema (`schema`)
-輸出符合 Draft-2020-12 標準之規格描述：
-```bash
-python g30_cli.py schema
-```
-
----
-
-## 🐍 2. Python API 調用 (Programmatic API)
-
-在其他部會子專案或 AI Agent 腳本中可直接 import 呼叫：
-
-```python
-import sqlite3
-from modules.g30_mandate_indexer.g30_cli import resolve_single_org, get_canonical_oid
-
-conn = sqlite3.connect("events-2026Q3/gov-db-in/tw-gov-db/data/master_agencies.sqlite")
-cursor = conn.cursor()
-
-# 1. JIT 動態組織解析
-res = resolve_single_org("第二河川局", cursor)
-print(res["successor"])     # 經濟部水利署第二河川分署
-print(res["successor_oid"]) # 2.16.886.101.20003.20007.20014.20025
-
-# 2. 官方權威 OID 查詢
-oid = get_canonical_oid("農業部")
-print(oid)                  # 2.16.886.101.20003.20064
-```
+## SEE ALSO
+`g10_cli(1)`, `g20_cli(1)`, `g30_cli(1)`, `g40_cli(1)`, `g50_cli(1)`

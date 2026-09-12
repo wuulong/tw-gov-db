@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """[metadata]
-name: g10_cli.py
-title: G10 gov-report-miner 政府研究報告探勘與典藏 CLI 工具
+name: g01_cli.py
+title: G01 gov-report-miner 政府研究報告探勘與典藏 CLI 工具
 description: 提供全量 GRB 57.6萬筆研究計畫檢索、二階段按需採集下載 PDF/CSV、開放資料總表探勘與國圖 GPN 碰撞對位之 CGS v2.4 (Pipeline-Native) 標準 CLI/API 工具。
 spec: events-2026Q3/gov-db-in/sys_eng/02_specification/spec_cgs_v24_pipeline.md
 manual: events-2026Q3/gov-db-in/tw-gov-db/README.md
@@ -25,7 +25,7 @@ GOV_SRC = MODULE_ROOT.parents[1]
 if str(GOV_SRC) not in sys.path:
     sys.path.insert(0, str(GOV_SRC))
 
-from modules.g10_report_miner.g10_core import (
+from modules.g01_report_miner.g01_core import (
     get_db_summary,
     get_catalog_registry,
     register_and_ingest_catalog,
@@ -33,7 +33,7 @@ from modules.g10_report_miner.g10_core import (
     init_db
 )
 
-app = typer.Typer(help="🏛️ G10 gov-report-miner 政府研究報告探勘與典藏工具 (CGS v2.4 Pipeline-Native)")
+app = typer.Typer(help="🏛️ G01 gov-report-miner 政府研究報告探勘與典藏工具 (CGS v2.4 Pipeline-Native)")
 console = Console(stderr=True)
 
 
@@ -57,7 +57,7 @@ def status(
         print(json.dumps(summary, ensure_ascii=False))
         return
 
-    console.print("[bold green]📊 G10 gov-report-miner 運作狀態與代號系統能力矩陣看板[/bold green]\n")
+    console.print("[bold green]📊 G01 gov-report-miner 運作狀態與代號系統能力矩陣看板[/bold green]\n")
     
     table = Table(title="代號系統能力矩陣 (sys_namespace_status)")
     table.add_column("代號系統", style="cyan")
@@ -184,7 +184,7 @@ def batch_probe_cmd(
 ):
     """【正式工具命令】自動批量探勘與下載驗證全量未測試之潛力總表 Dataset"""
     console.print("[bold yellow]🚀 發動全量開放資料潛力總表批量探勘與驗證 (batch-probe)...[/bold yellow]\n")
-    from modules.g10_report_miner.g10_core import batch_probe_untested_catalogs
+    from modules.g01_report_miner.g01_core import batch_probe_untested_catalogs
     res = batch_probe_untested_catalogs()
     
     if json_output:
@@ -222,7 +222,7 @@ def match_gpn_cmd(
     json_output: bool = typer.Option(False, "--json", "-j", help="單行緊湊 JSON 輸出")
 ):
     """【正式工具命令】機制 A 碰撞對位：用 GRB 案號對位國家圖書館 GPN 下載服務 (支援 Pipe 輸入)"""
-    from modules.g10_report_miner.g10_core import match_grb_to_gpn
+    from modules.g01_report_miner.g01_core import match_grb_to_gpn
     
     pipe_inputs = read_pipe_lines()
     queries = []
@@ -264,7 +264,7 @@ def ingest_grb_cmd(
     json_output: bool = typer.Option(False, "--json", "-j", help="單行緊湊 JSON 輸出")
 ):
     """【正式工具命令】將 GRB 全量 23,116 筆研究計畫大腦寫入 grb_projects 專用資料表"""
-    from modules.g10_report_miner.g10_core import ingest_grb_catalog_full
+    from modules.g01_report_miner.g01_core import ingest_grb_catalog_full
     console.print(f"[bold yellow]🚀 發動 GRB 全量大腦資料庫寫入作業: [{xml_path}]...[/bold yellow]")
     
     res = ingest_grb_catalog_full(Path(xml_path), limit=limit)
@@ -284,7 +284,7 @@ def search_grb_cmd(
     json_output: bool = typer.Option(False, "--json", "-j", help="單行緊湊 JSON 輸出")
 ):
     """【正式工具命令】多維度智慧檢索 GRB 57.6萬筆研究計畫資料庫 (支援 Pipe 輸入關鍵字串流)"""
-    from modules.g10_report_miner.g10_core import search_grb_projects
+    from modules.g01_report_miner.g01_core import search_grb_projects
 
     pipe_keywords = read_pipe_lines()
     

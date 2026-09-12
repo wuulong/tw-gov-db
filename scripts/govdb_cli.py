@@ -271,6 +271,27 @@ def get_db_status(db_dir: Optional[Path] = None) -> Dict[str, Any]:
     return db_results
 
 
+def search_zipcode(query_str: str, db_dir: Optional[Path] = None) -> List[Dict[str, Any]]:
+    """從 universal_keys.sqlite 的 zipcode_registry 與 admin_codes 查詢郵遞區號與行政區碼"""
+    if db_dir is None:
+        db_dir = DB_PATH.parent
+    db_file = db_dir / "universal_keys.sqlite"
+    if not db_file.exists():
+        return []
+    conn = sqlite3.connect(str(db_file))
+    cursor = conn.cursor()
+    pattern = f"%{query_str.strip()}%"
+    cursor.execute("""
+        SELECT z.zipcode, z.city_name, z.district_name, a.admin_code
+        FROM zipcode_registry z
+        LEFT JOIN admin_codes a ON z.city_name = a.city_name AND z.district_name = a.district_name
+        WHERE (z.city_name || z.district_name) LIKE ? OR z.district_name LIKE ? OR z.zipcode LIKE ?
+    """, (pattern, pattern, pattern))
+    rows = cursor.fetchall()
+    conn.close()
+    return [{"zipcode": r[0], "city_name": r[1], "district_name": r[2], "admin_code": r[3] or ""} for r in rows]
+
+
 # --- CGS v2.4 CLI 進入點區塊 (只在此處呼叫 sys.exit) ---
 def main():
     parent_parser = argparse.ArgumentParser(add_help=False)
@@ -309,13 +330,17 @@ def main():
     # 6. status / tables / views
     subparsers.add_parser("status", aliases=["tables", "views"], parents=[parent_parser], help="掃描並顯示所有資料庫之 Table/View 筆數統計")
 
-    # 7. g10 / miner / report_miner
-    subparsers.add_parser("g10", aliases=["miner", "report_miner"], parents=[parent_parser], help="G10 報告探勘與典藏庫狀態")
+    # 7. zipcode / search-zipcode
+    zipcode_parser = subparsers.add_parser("zipcode", aliases=["search-zipcode"], parents=[parent_parser], help="查詢郵遞區號與行政區碼")
+    zipcode_parser.add_argument("query", nargs="?", default=None, help="鄉鎮市區名稱或郵遞區號關鍵字")
 
-    # 8. schema
+    # 8. g01 / g10 / miner / report_miner
+    subparsers.add_parser("g01", aliases=["g10", "miner", "report_miner"], parents=[parent_parser], help="G01 報告探勘與典藏庫狀態")
+
+    # 9. schema
     subparsers.add_parser("schema", parents=[parent_parser], help="輸出 JSON Schema 與路由地圖")
 
-    # 9. version
+    # 10. version
     subparsers.add_parser("version", parents=[parent_parser], help="顯示版本與 CGS 規範資訊")
 
     args = parser.parse_args()
@@ -498,6 +523,32 @@ def main():
                 print(f" • 開放資料發布單位別名 (publisher_aliases): {stats['publisher_aliases']} 筆")
                 print(f" • 已實體展開部會專案 (domain_deployments): {stats.get('domain_deployments', 0)} 個")
                 print(f" • 法規職掌條文 (agency_mandates): {stats['agency_mandates']} 筆")
+
+        elif cmd in ["zipcode", "search-zipcode"]:
+            query_terms = []
+            if args.query:
+                query_terms.append(args.query)
+            else:
+                query_terms.extend(read_pipe_lines())
+
+            if not query_terms:
+                log_msg("ERROR", "未提供 zipcode 查詢關鍵字，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
+                sys.exit(1)
+
+            all_results = []
+            for q in query_terms:
+                res = search_zipcode(q)
+                all_results.extend(res)
+
+            if args.json:
+                print(json.dumps(all_results, ensure_ascii=False, separators=(',', ':')))
+            elif args.quiet:
+                for r in all_results:
+                    print(f"{r['zipcode']}:{r['city_name']}{r['district_name']}")
+            else:
+                print(f"📮 郵遞區號與行政區碼查詢結果 ({len(all_results)} 筆):", file=sys.stderr)
+                for r in all_results:
+                    print(f" • [{r['zipcode']}] {r['city_name']}{r['district_name']} (行政區碼: {r['admin_code']})")
 
         sys.exit(0)
 

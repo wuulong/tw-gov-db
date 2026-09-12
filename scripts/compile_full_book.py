@@ -21,6 +21,12 @@ def compile_book():
         BOOK_DIR / "03_db_glossary.md",
     ]
 
+    # 第 3 章：子模組專篇 (03_submodules)
+    submodule_dir = BOOK_DIR / "03_submodules"
+    if submodule_dir.exists():
+        submodule_files = sorted(submodule_dir.glob("*.md"))
+        ordered_files.extend(submodule_files)
+
     # 第 4 章：Synergy 協同合約
     synergy_dir = BOOK_DIR / "04_synergy_contracts"
     if synergy_dir.exists():

@@ -215,7 +215,7 @@ def register_and_ingest_catalog(
 
     # 2. 發動 DataGovAdapter 剖析內文
     try:
-        from modules.g10_report_miner.adapters.datagov_adapter import DataGovAdapter
+        from modules.g01_report_miner.adapters.datagov_adapter import DataGovAdapter
         adapter = DataGovAdapter()
         items = adapter.ingest_catalog(download_url)
     except Exception as e:
@@ -639,7 +639,7 @@ def fetch_report_by_uid(report_uid: str, db_file: Path = DB_PATH) -> Dict[str, A
 
     cache_dir = TW_GOV_DB_ROOT / "data" / "reports" / "cache"
     
-    from modules.g10_report_miner.adapters.datagov_adapter import DataGovAdapter
+    from modules.g01_report_miner.adapters.datagov_adapter import DataGovAdapter
     adapter = DataGovAdapter()
     res = adapter.fetch_report(uid, remote_url, str(cache_dir))
 

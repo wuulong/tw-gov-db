@@ -17,9 +17,9 @@ if str(SRC_DIR) not in sys.path:
 
 class TestCrossAgencyInterop(unittest.TestCase):
 
-    def test_g10_report_miner_direct_import(self):
+    def test_g01_report_miner_direct_import(self):
         """驗證 G10 施政計畫探勘直接 Import"""
-        from modules.g10_report_miner.g10_core import search_grb_projects
+        from modules.g01_report_miner.g01_core import search_grb_projects
         res = search_grb_projects(kw="水利", limit=1)
         self.assertGreater(res["total_results"], 0)
         self.assertGreater(len(res["results"]), 0)
@@ -30,16 +30,16 @@ class TestCrossAgencyInterop(unittest.TestCase):
         res = parse_address_string("新竹縣竹北市光明六路10號")
         self.assertEqual(res.get("raw_address"), "新竹縣竹北市光明六路10號")
 
-    def test_g30_mandate_indexer_direct_import(self):
+    def test_g10_mandate_indexer_direct_import(self):
         """驗證 G30 機關權責與組織圖譜直接 Import"""
-        from modules.g30_mandate_indexer.g30_cli import get_canonical_oid
+        from modules.g10_mandate_indexer.g10_cli import get_canonical_oid
         oid = get_canonical_oid("農業部")
         self.assertEqual(oid, "2.16.886.101.20003.20064")
 
-    def test_g40_temporal_indexer_direct_import(self):
+    def test_g50_temporal_indexer_direct_import(self):
         """驗證 G40 時間時序與農曆節氣直接 Import"""
-        from modules.g40_temporal_indexer.g40_cli import clean_date_string
-        from modules.g40_temporal_indexer.lunar_engine import solar_to_lunar
+        from modules.g50_temporal_indexer.g50_cli import clean_date_string
+        from modules.g50_temporal_indexer.lunar_engine import solar_to_lunar
         
         # 民國年清洗
         d = clean_date_string("113/08/22")
@@ -52,10 +52,37 @@ class TestCrossAgencyInterop(unittest.TestCase):
         self.assertEqual(lunar["sheng_xiao"], "龍")
         self.assertEqual(lunar["solar_term"], "處暑")
 
-    def test_g60_corporate_indexer_direct_import(self):
+    def test_g30_hydrology_indexer_direct_import(self):
+        """驗證 G50 水文拓樸與測站查詢直接 Import"""
+        from modules.g30_hydrology_indexer.river_topology import RiverTopologyEngine
+
+        engine = RiverTopologyEngine()
+        # 1. 查詢水系
+        river = engine.get_river("130000")
+        self.assertIsNotNone(river)
+        self.assertEqual(river["river_name"], "頭前溪")
+        self.assertEqual(river["is_civilian"], 0)
+
+        # 2. 追溯祖先拓樸鏈 (Downstream)
+        ancestors = engine.get_ancestors("130000-C04")
+        self.assertGreater(len(ancestors), 0)
+        self.assertEqual(ancestors[0]["river_code"], "130000")
+
+        # 3. 追溯子樹 (Upstream)
+        descendants = engine.get_descendants("130000")
+        self.assertGreater(len(descendants), 0)
+
+        # 4. 測站查詢 (包含支流與主流測站)
+        stations = engine.get_stations_for_river("130000-C04")
+        self.assertGreater(len(stations), 0)
+        station_ids = [s["station_id"] for s in stations]
+        self.assertIn("C0A980", station_ids)
+        self.assertIn("1300H01", station_ids)
+
+    def test_g40_corporate_indexer_direct_import(self):
         """驗證 G60 法人統編與農漁會消歧義直接 Import"""
-        from modules.g60_corporate_indexer.ban_validator import BanValidator
-        from modules.g60_corporate_indexer.npo_resolver import NpoResolver
+        from modules.g40_corporate_indexer.ban_validator import BanValidator
+        from modules.g40_corporate_indexer.npo_resolver import NpoResolver
 
         # 統編加權檢核
         v_tsmc = BanValidator.validate("04595257")

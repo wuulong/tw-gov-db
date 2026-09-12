@@ -14,7 +14,7 @@
 ## 📚 開源技術專書與版本看板
 
 * 📘 **[開源專書圖鑑目錄 (book/00_toc.md)](book/00_toc.md)**：《台灣政府開放資料通用基石圖鑑：從權威機關到跨部會基石的資料治理體系》
-* 🏷️ **[版本演進與對接相容性看板 (VERSION.md)](events-2026Q3/gov-db-in/tw-gov-db/VERSION.md)**：記錄 `v0.2.1` 版號變更與 `tw-agro-db v0.7.1` 跨部會對接測試 100% PASS 綠燈相容矩陣。
+* 🏷️ **[版本演進與對接相容性看板 (VERSION.md)](events-2026Q3/gov-db-in/tw-gov-db/VERSION.md)**：記錄 `v0.3.0` 版號變更與 `tw-agro-db v0.7.1` 跨部會對接測試 100% PASS 綠燈相容矩陣。
 
 ---
 
@@ -78,7 +78,7 @@ print(cli_output)
 ```text
 tw-gov-db/
 ├── README.md                           ◄── 本說明檔案
-├── VERSION.md                          ◄── 版本演進與跨專案相容性矩陣 (v0.2.1)
+├── VERSION.md                          ◄── 版本演進與跨專案相容性矩陣 (v0.3.0)
 ├── domain_map_config.json              ◄── 跨專案領域對照地圖 (軟連結)
 ├── modules/                            ◄── 子專案範本藍圖專區
 │   └── template_blueprint/             ◄── 跨部會子專案複製起步模板 (8 大範本)

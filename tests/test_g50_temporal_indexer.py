@@ -11,7 +11,7 @@ from pathlib import Path
 
 MODULE_ROOT = Path(__file__).resolve().parents[1]
 SRC_DIR = MODULE_ROOT / "src"
-G40_DIR = SRC_DIR / "modules" / "g40_temporal_indexer"
+G40_DIR = SRC_DIR / "modules" / "g50_temporal_indexer"
 
 if str(MODULE_ROOT) not in sys.path:
     sys.path.insert(0, str(MODULE_ROOT))
@@ -21,7 +21,7 @@ if str(G40_DIR) not in sys.path:
     sys.path.insert(0, str(G40_DIR))
 
 import importlib.util
-g40_path = G40_DIR / "g40_cli.py"
+g40_path = G40_DIR / "g50_cli.py"
 spec = importlib.util.spec_from_file_location("g40_cli", g40_path)
 g40_cli = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(g40_cli)
@@ -29,7 +29,7 @@ spec.loader.exec_module(g40_cli)
 clean_date_string = g40_cli.clean_date_string
 
 
-class TestG40TemporalIndexer(unittest.TestCase):
+class TestG50TemporalIndexer(unittest.TestCase):
 
     def test_VAL_G40_001_clean_minguo_dates(self):
         """驗證民國年多種格式清洗為標準 ISO-8601"""

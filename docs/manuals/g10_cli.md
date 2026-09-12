@@ -6,9 +6,9 @@ header: BMAD-PA User Commands
 footer: CGS v2.4 Specification
 ---
 
-# 📖 使用者手冊：`g10_cli.py` G10 政府研究報告探勘與典藏 CLI 工具
+# 📖 使用者手冊：`g10_cli.py` G10 全政府法規處務規程與虛擬圖譜 CLI 工具
 
-`g10_cli.py` 是針對 `tw-gov-db` (`GOV-300`) 之 `g10_report_miner` 模組所研發的高效研究報告探勘工具，完全遵循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範。支援全量 GRB 57.6萬筆研究計畫多維檢索、按需採集 PDF/CSV、開放資料總表探勘與國家圖書館 GPN 案號碰撞對位。
+`g10_cli.py` 是針對 `tw-gov-db` (`GOV-300`) 之 `g10_mandate_indexer` 模組所研發的高效 CLI 工具，完全遵循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範。支援跨部會歷史機關動態對位、組科職掌配對、OID 字典批次回填與法規採礦管線。
 
 ---
 
@@ -16,82 +16,85 @@ footer: CGS v2.4 Specification
 
 基本語法：
 ```bash
-python events-2026Q3/gov-db-in/tw-gov-db/src/modules/g10_report_miner/g10_cli.py [子命令] [選項]
-# 或使用全域 pa 捷徑：
-./pa g10 [子命令] [選項]
+python events-2026Q3/gov-db-in/tw-gov-db/src/modules/g10_mandate_indexer/g10_cli.py [子命令] [選項]
 ```
 
-### 1. GRB 57.6 萬筆政府研究計畫智慧檢索 (`search-grb`)
-支援計畫名稱關鍵字 (`--kw`)、主持人姓名 (`--pi`) 檢索，支援管道輸入與單行緊湊 JSON 輸出。
+### 1. JIT 執行期輕量動態組織推導 (`resolve-org`)
+支援精準歷史機關比對與跨部會巨觀推導（如「第二河川局」➔「經濟部水利署第二河川分署」），並自動附帶現行官方 OID。
 
 ```bash
-# 依關鍵字查詢前 5 筆
-./pa g10 search-grb -k "石門水庫" -n 5 -j
+# 單一查詢 (人類易讀格式)
+python g10_cli.py resolve-org "第二河川局"
 
-# 依計畫主持人查詢
-./pa g10 search-grb -p "王大明" -n 3
+# JSON 輸出格式
+python g10_cli.py resolve-org "南區工程處" -j
 
-# 管道流式關鍵字檢索
-echo "智慧農業" | ./pa g10 search-grb -j
+# UNIX 管道批次流式處理 (--stdin)
+printf "第二河川局\n南區工程處\n新竹林區管理處\n" | python g10_cli.py resolve-org --stdin -j
 ```
 
-### 2. 機制 A 碰撞對位：GRB 案號對位國家圖書館 GPN (`match-gpn`)
-將 GRB 研究計畫案號與國圖 GPN 下載服務對位，取得正式政府出版品 GPN 與全文可達性。
+### 2. 官方 OID 批次回填落地 (`backfill-oid`)
+自動遍歷 `agency_genealogy` 資料表，以官方 6,937 筆 OID 字典為已確認繼承機關回填權威 `successor_oid`。
 
 ```bash
-# 查詢特定 GRB 案號對應 GPN
-./pa g10 match-gpn "PG10901-0123" -j
-
-# 管道流式案號對位
-cat projkeys.txt | ./pa g10 match-gpn -j
+python g10_cli.py backfill-oid -j
 ```
 
-### 3. Open Data 總表探勘與註冊 (`ingest-catalog`)
-線上下載並解析政府開放資料總表，自動歸並行布機關至權威 OID。
+### 3. 法規文本改制演進採礦 (`parse-laws`)
+雙軌直連 `law_cli genealogy`，全量解析全國法規資料庫組織法規與廢止公告，抽取改制事件。
 
 ```bash
-./pa g10 ingest-catalog "https://data.gov.tw/dataset/..." -j
+# 僅輸出評級結果
+python g10_cli.py parse-laws -j
+
+# 解析並寫入 SQLite 資料庫
+python g10_cli.py parse-laws --save -j
 ```
 
-### 4. 二階段按需採集下載實體報告 (`fetch`)
-給定報告 UID 串流，自動從快取或遠端下載實體 PDF/CSV 報告檔案至本機存放庫。
+### 4. 業務關鍵字與組科職掌配對 (`match-mandate`)
+根據處務規程組科法定職掌，自動配對開放資料集或業務關鍵字的主管科室與法規 PCode。
 
 ```bash
-./pa g10 fetch "UID_12345" -j
+python g10_cli.py match-mandate "農水路工程改善" -j
 ```
 
-### 5. 模組健康度與狀態看板 (`status`)
-查詢 G10 報告索引庫總筆數、快取命中率與代號系統矩陣。
-
+### 5. 歷史演進圖譜查詢與人工修補 (`genealogy`, `patch`, `patch-oid`)
 ```bash
-./pa g10 status -j
+# 查詢待修補條目
+python g10_cli.py genealogy --status NEEDS_PATCH -j
+
+# 透過 ID 更新既有規則
+python g10_cli.py patch --id 239 '{"successor_name": "交通部高速公路局各區養護工程分局"}'
+
+# 補充特定條目 OID
+python g10_cli.py patch-oid 46 --oid "2.16.886.101.20003.20069.20001"
+```
+
+### 6. 自我描述 JSON Schema (`schema`)
+輸出符合 Draft-2020-12 標準之規格描述：
+```bash
+python g10_cli.py schema
 ```
 
 ---
 
-## 🔗 2. UNIX 管道串接範例 (UNIX Pipe Recipes)
+## 🐍 2. Python API 調用 (Programmatic API)
 
-### Recipe A: 研究計畫履約期與法定工作日計算 (G10 ↔ G40)
-```bash
-./pa g10 search-grb -k "水利" -n 1 -j | \
-  jq -r '.results[0] | "\(.start_date) \(.end_date)"' | \
-  xargs ./pa g40 range -j | jq '{workdays: .total_working_days, holidays: .total_holidays}'
-```
-
-### Recipe B: 計畫發布機關歷史改制回溯 (G10 ↔ G30)
-```bash
-./pa g10 search-grb -k "農田水利" -n 1 -j | \
-  jq -r '.results[0].agency_name' | \
-  ./pa g30 resolve-org --stdin -j
-```
-
----
-
-## 🐍 3. Python API 調用 (Programmatic API)
+在其他部會子專案或 AI Agent 腳本中可直接 import 呼叫：
 
 ```python
-from modules.g10_report_miner.g10_core import search_grb_projects
+import sqlite3
+from modules.g10_mandate_indexer.g10_cli import resolve_single_org, get_canonical_oid
 
-res = search_grb_projects(kw="石門水庫", limit=5)
-print(f"找到 {res['total']} 筆計畫，首筆標題: {res['results'][0]['title']}")
+conn = sqlite3.connect("events-2026Q3/gov-db-in/tw-gov-db/data/master_agencies.sqlite")
+cursor = conn.cursor()
+
+# 1. JIT 動態組織解析
+res = resolve_single_org("第二河川局", cursor)
+print(res["successor"])     # 經濟部水利署第二河川分署
+print(res["successor_oid"]) # 2.16.886.101.20003.20007.20014.20025
+
+# 2. 官方權威 OID 查詢
+oid = get_canonical_oid("農業部")
+print(oid)                  # 2.16.886.101.20003.20064
 ```

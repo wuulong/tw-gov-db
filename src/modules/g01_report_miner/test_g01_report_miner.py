@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-G10 gov-report-miner 核心與母大腦對接單元測試套件
+G01 gov-report-miner 核心與母大腦對接單元測試套件
 """
 
 import sys
@@ -12,9 +12,9 @@ GOV_SRC = MODULE_ROOT.parents[1]
 if str(GOV_SRC) not in sys.path:
     sys.path.insert(0, str(GOV_SRC))
 
-from modules.g10_report_miner.g10_core import get_db_summary, validate_oid_exists, init_db
+from modules.g01_report_miner.g01_core import get_db_summary, validate_oid_exists, init_db
 
-def test_g10_core_and_guardrails():
+def test_g01_core_and_guardrails():
     init_db()
     summary = get_db_summary()
     assert "total_reports" in summary
@@ -32,7 +32,7 @@ def test_g10_core_and_guardrails():
     except KeyError:
         pass  # 預期行為
 
-    print("✅ G10 gov-report-miner 核心與 4 道硬性防線單元測試綠燈通過！")
+    print("✅ G01 gov-report-miner 核心與 4 道硬性防線單元測試綠燈通過！")
 
 if __name__ == "__main__":
-    test_g10_core_and_guardrails()
+    test_g01_core_and_guardrails()
