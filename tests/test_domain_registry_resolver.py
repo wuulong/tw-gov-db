@@ -43,8 +43,8 @@ def test_domain_map_resolution():
     from core.base_adapter import BaseDomainAdapter
     print("✅ [Library 層引用] 成功載入 Core SDK BaseDomainAdapter 類別!")
 
-    cli_out = resolver.run_domain_cli("tw-gov-db", "zipcode", ["臺北市中正區"])
-    print("✅ [CLI Co-work] 成功跨專案呼叫 tw-gov-db opendata_cli.py!")
+    cli_out = resolver.run_domain_cli("tw-gov-db", "search", ["水利署", "-q"])
+    print("✅ [CLI Co-work] 成功跨專案呼叫 tw-gov-db govdb_cli.py!")
     print(f"   - CLI 回傳結果摘要: {cli_out.splitlines()[0]}")
 
     # 5. 測試核心整合 DB 連線

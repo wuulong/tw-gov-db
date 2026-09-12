@@ -1,3 +1,11 @@
+---
+title: G30_CLI
+section: 1
+date: 2026-09-12
+header: BMAD-PA User Commands
+footer: CGS v2.4 Specification
+---
+
 # 📖 使用者手冊：`g30_cli.py` G30 全政府法規處務規程與虛擬圖譜 CLI 工具
 
 `g30_cli.py` 是針對 `tw-gov-db` (`GOV-300`) 之 `g30_mandate_indexer` 模組所研發的高效 CLI 工具，完全遵循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範。支援跨部會歷史機關動態對位、組科職掌配對、OID 字典批次回填與法規採礦管線。

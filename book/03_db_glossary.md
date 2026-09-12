@@ -264,10 +264,11 @@ erDiagram
 
 ### 3.10 法人與企業旁路透傳快取表 (`corporate_registry`) [基石四]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  採用 **Pass-Through Cache 旁路透傳快取架構**。本機僅收錄 **1,103 筆** 熱門 Seed 上市/國營企業（5MB 空間），Cache Miss 時自動連線經濟部 GCIS API 並動態寫回。
+  採用 **Pass-Through Cache 旁路透傳快取架構**。本機收錄代表性上市櫃與國營企業權威 Seed 快取，搭配 CGS v2.4 CLI 工具 `g60_cli.py` 提供純 Python 8 碼統一編號加權檢核（相容舊制除 10、第 7 位為 7 特例與 2023 年 4 月財政部新制除 5/10 雙重規則）、長文本串流統編萃取濾網 (`pipe --extract`)，以及 Cache Miss 時連線經濟部 GCIS API 動態寫回。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
   - **與 `admin_codes` 連結**：外鍵 `admin_code` 提供企業登記地緣分析。
   - **與經濟部商業庫 (`tw-moea-db`) 連結**：作為 160 萬全量公司商業登記的本地極速快取代理。
+  - **跨部會 UNIX 管線穿透**：支援衛福部食安裁罰 (A18)、採購公報廠商名冊直接透過管道輸入 `g60` 進行合法性校驗與地址反查。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE corporate_registry (
@@ -275,42 +276,62 @@ erDiagram
       company_name VARCHAR(128) NOT NULL,  -- 企業名稱 (如 台灣積體電路製造股份有限公司)
       registered_address VARCHAR(256),     -- 登記營業地址
       admin_code VARCHAR(8),               -- 所屬行政區劃
+      status VARCHAR(32) DEFAULT 'ACTIVE', -- 營運狀態
+      source VARCHAR(32) DEFAULT 'SEED',   -- 資料來源 (SEED, GCIS_API)
       cached_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(admin_code) REFERENCES admin_codes(admin_code)
   );
   ```
 
 ### 3.11 農會與非營利組織法人主檔表 (`npo_registry`) [基石四]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **23,218 筆** 依法登記之 NGO、基金會與 **342 家** 全台農漁會法人程式碼與地址。
+  收錄依法登記之 NGO、基金會與全台 302 家各級農會與 40 家漁會拓樸主檔。搭配 G60 維度器提供「消歧義對齊引擎 (`resolve`)」，能自動剝除分支機構綴詞（信用部、生鮮超市、辦事處），並結合 G20 空間行政區外推，將不規範的民間簡稱（如「板農」、「新埔農會」）精準對齊至官方正式全名與組織程式碼。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
   - **與 `admin_codes` 連結**：外鍵 `admin_code` 進行基層農會與鄉鎮市區對照整合。
-  - **與農業部農會庫 (`tw-agro-db`) 連結**：連結農業部推廣課、信用部與休閒農場輔導名錄。
+  - **與農業部農會庫 (`tw-agro-db`) 連結**：連結農業部產銷班、天然災害救助申請單位、推廣課、信用部與休閒農場輔導名錄。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE npo_registry (
-      npo_id VARCHAR(32) PRIMARY KEY,      -- 法人程式碼 / 統編 (如 03794705)
-      npo_name VARCHAR(128) NOT NULL,      -- 法人名稱 (如 新竹縣竹北市農會)
-      npo_type VARCHAR(32) NOT NULL,       -- 類型 (FARMERS_ASSOC 農會, NGO 非營利)
-      admin_code VARCHAR(8),
-      attributes_json TEXT,
+      npo_id VARCHAR(32) PRIMARY KEY,      -- 法人程式碼 / 統編 (如 FA_NTP_001)
+      npo_name VARCHAR(128) NOT NULL,      -- 法人官方正式名稱 (如 新北市板橋區農會)
+      short_name VARCHAR(64),              -- 通俗簡稱或別名 (如 板農)
+      npo_type VARCHAR(32) NOT NULL,       -- 類型 (FARMERS_ASSOC 農會, FISHERY_ASSOC 漁會, NGO 非營利)
+      level VARCHAR(16),                   -- 層級 (NATIONAL, MUNICIPAL, COUNTY, DISTRICT)
+      city_name VARCHAR(32),               -- 所在縣市
+      admin_code VARCHAR(8),               -- 行政區程式碼
+      address VARCHAR(256),                -- 登記地址
+      parent_id VARCHAR(32),               -- 上級輔導農會程式碼
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(admin_code) REFERENCES admin_codes(admin_code)
   );
   ```
 
 ### 3.12 行政機關辦公日曆表 (`calendar_registry`) [基石五]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **1,199 筆** (2018-2026) 行政院人事行政總處政府辦公日曆、例假日與颱風假分類。
+  收錄 **1,801 筆** (2013-2028 跨越 16 年) 全國行政機關辦公行事曆、例假日、調移放假與補行上班日。搭配 CGS v2.4 CLI 工具 `g40_cli.py` 提供全政府異質日期清理（民國年月日、中文農曆、季度、會計年度）、跨度法定工作天精確計算、補班日逆向判定、純 Python 緊湊農曆（1900-2100 年公曆農曆雙向轉換、生肖天干地支）、二十四節氣天文常數計算與 UNIX Pipe 流式資料過濾。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
-  - **時序對照整合 (Temporal Alignment)**：為所有跨部會資料集中異質時間字串清洗後生成的 ISO-8601 日期，提供「是否為工作日/放假日/颱風假」的時序脈絡對照整合。
+  - **時序對照整合 (Temporal Alignment)**：為所有跨部會資料集中異質時間字串清洗後生成的 ISO-8601 日期，提供「是否為工作日/放假日/補上班日」的時序脈絡對照整合，並自動附帶農曆歲次、生肖與傳統三大節（春節、端午、中秋）標記。
+  - **跨模組管線 (UNIX Pipe Native)**：可直接透過管道串接 G10（標案計畫履約天數計算）、G20（空間時序交叉統計）及 GOV-A19（農漁批發市場初一十五休市日與節氣產銷分析）。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE calendar_registry (
-      date_key VARCHAR(10) PRIMARY KEY,    -- ISO-8601 日期 (如 2024-08-22)
+      date_str VARCHAR(10) PRIMARY KEY,    -- ISO-8601 日期 (如 2024-08-22)
+      year INTEGER NOT NULL,               -- 西元年 (如 2024)
+      minguo_year INTEGER NOT NULL,        -- 民國年 (如 113)
+      month INTEGER NOT NULL,              -- 月份 (1-12)
+      day INTEGER NOT NULL,                -- 日期 (1-31)
+      day_of_week INTEGER NOT NULL,        -- 星期幾 (1=Mon ... 7=Sun)
       is_holiday BOOLEAN NOT NULL,         -- 是否為例假日/放假日
-      holiday_category VARCHAR(32),        -- 分類 (NATIONAL_HOLIDAY, TYPHOON)
-      description VARCHAR(128)             -- 節日或颱風假備註 (如 中秋節)
+      is_working_day BOOLEAN NOT NULL,     -- 是否為法定上班日 (含週六補班日)
+      holiday_category VARCHAR(64),        -- 假別分類 (放假之紀念日及節日、補行上班日、調整放假日等)
+      description VARCHAR(256),            -- 節日或放假事由說明
+      attributes_json TEXT,                -- 動態屬性與更新歷史
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
+  CREATE INDEX idx_calendar_year ON calendar_registry(year);
+  CREATE INDEX idx_calendar_minguo ON calendar_registry(minguo_year);
+  CREATE INDEX idx_calendar_working ON calendar_registry(is_working_day);
   ```
 
 ---

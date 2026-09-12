@@ -1,10 +1,3 @@
-# 📘 《台灣政府開放資料通用基石圖鑑：從權威機關到跨部會基石的資料治理體系》全書大一統合訂本
-
-> 本檔案由 `combine_tw_gov_db_book.py` 自動整合生成，涵蓋願景使命、母大腦全景架構、12 大實體表圖鑑、第 4 章跨部會 Synergy 協同合約、第 5 章 7 大類別 Playbooks、第 6 章 SE-6D/SDM 與全附錄 DDL/Mermaid 索引。
-
----
-
-<!-- START_OF_FILE: 00_toc.md -->
 # 📘 《台灣政府開放資料通用基石圖鑑：從權威機關到跨部會基石的資料治理體系》全書目錄 (00_toc.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -88,7 +81,7 @@
   - **3.11 農會與非營利組織法人主檔表 (`npo_registry`)** [基石四]
     - 🎯 *寫作意圖*：解析 23,218 筆依法登記 NGO、基金會與 342 家農漁會法人程式碼與地址 Schema。
   - **3.12 行政機關辦公日曆表 (`calendar_registry`)** [基石五]
-    - 🎯 *寫作意圖*：解析 1,199 筆 2018-2026 政府辦公日曆（含放假日 `is_holiday` 與颱風假分類 `holiday_category`）之時序 Schema。
+    - 🎯 *寫作意圖*：解析 1,801 筆 2013-2028 跨越 16 年政府辦公日曆（含放假日 `is_holiday`、法定上班日 `is_working_day`、補班日判定）、純 Python 緊湊農曆（1900-2100 年雙向轉換、生肖天干地支、傳統三大節）與二十四節氣天文演演算法之時序 Schema。
 
   #### **Part C: 追溯與擴充中繼管線**
   - **3.13 實體表 `attributes_json` 欄位解析器與 SDK 動態讀寫指南 (`GovBaseEntity`)**
@@ -102,6 +95,8 @@
 * 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責檔案治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
   - **[4.0 母子專案 Spec 權責劃分、生命週期與 AI 導航規範](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
     - 🎯 *寫作意圖*：解構第 4 章 8 大寫作結構區塊、AI Agent 導航框架與兩階段生命週期治理機制 (`[SPC-012]`)。
+  - **[4.G00 全政府通用基石跨部會服務協同合約 (SYN-GOV-G00)](04_synergy_contracts/4.G00_spec_universal_keys_synergy.md)**
+    - 🎯 *寫作意圖*：**【全域基石核心契約】** 正式發布五大通用基石 (G10-G60) 之跨部會服務契約、Python API Direct Import 與 CGS v2.4 UNIX Pipeline 雙軌規範。
   - **[4.A19 GOV-A19 農業部 (tw-agro-db) 跨專案協同合約](04_synergy_contracts/4.A19_spec_gov_a19_synergy.md)**
     - 🎯 *寫作意圖*：**【實體子專案已建立】** 完整示範！收錄農業部 Spec 摘要框架、`agro_cli.py` 連結、342 農會歸併、6 碼門牌反查、450 氣象站寒害預警與 `agro-db-wizard` Agent Skill 附件。
   - **[4.A21 GOV-A21 金管會 (tw-fsc-db) 跨專案協同合約](04_synergy_contracts/4.A21_spec_gov_a21_synergy.md)**
@@ -114,7 +109,7 @@
 ---
 
 ### **[第 5 章：七大類別實戰 Playbook 與 Agent 協同指南](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
-* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
+* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系系系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
   - **[5.0 七大類別實戰 Playbook 導覽與 4 大業務結構規範](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
     - 🎯 *寫作意圖*：介紹本章 7 大業務類別光譜與 4 大業務寫作結構規範。
   - **[5.1 【政府行政類】第一線基層公務人員 Playbook](05_stakeholder_playbooks/5.1_civil_servant_playbook.md)**
@@ -124,7 +119,7 @@
   - **[5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook](05_stakeholder_playbooks/5.3_ai_architect_playbook.md)**
     - 🎯 *寫作意圖*：解決 LLM 缺乏公部門語意與歷史改制知識、產生地理與組織幻覺的痛點，透過 Schema.org 語意物件與 `gov-db-wizard` 發動 100% 零幻覺 GraphRAG。
   - **[5.4 【企業法務/風控類】企業法務與合規官 Playbook](05_stakeholder_playbooks/5.4_legal_compliance_playbook.md)**
-    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
+    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出/登出/登出/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
   - **[5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook](05_stakeholder_playbooks/5.5_esg_consultant_playbook.md)**
     - 🎯 *寫作意圖*：解決工廠只有文字地址、國土分區只有地籍段號無法比對的痛點，1 秒將門牌轉地碼並空間套疊特定農業區與水質保護區，10 秒產出 GRI/ISO 綠色合規報告。
   - **[5.6 【調查媒體類】資料新聞記者 Playbook](05_stakeholder_playbooks/5.6_data_journalist_playbook.md)**
@@ -147,7 +142,7 @@
 
 ---
 
-### **[第 7 章：結語與跨部會生態系系展望](07_conclusion.md)**
+### **[第 7 章：結語與跨部會生態系系系系展望](07_conclusion.md)**
 * 🎯 **本章寫作意圖**：總結階段性成果，並展望跨部會資料大聯盟之未來地圖。
   - **7.1 結語：打破跨部會資料孤島的通用基石底座**
     - 🎯 *寫作意圖*：總結 `GOV-300` 作為全台灣政府資料治理通用基石的技術貢獻與階段性里程碑。
@@ -170,7 +165,6 @@
 
 ---
 
-<!-- START_OF_FILE: 01_vision_and_mission.md -->
 # 🏛️ 第 1 章：專案願景與台灣政府數位轉型使命 (01_vision_and_mission.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -274,7 +268,6 @@
 
 ---
 
-<!-- START_OF_FILE: 02_architecture_overview.md -->
 # 🏛️ 第 2 章：GOV-300 母大腦全景架構、系統中繼與通用基石解構 (02_architecture_overview.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -288,7 +281,7 @@
 
 為了徹底解決第 1 章提出的 8 大真實血淚痛點（資料孤島、發布單位別名混亂、民國年陷阱、缺乏診斷工具鏈、缺乏歷史改制脈絡與空間脫鉤等），`tw-gov-db` (`GOV-300`) 採用了現代系統工程中的 **「分散式分層協同架構 (Federated Multi-Tier Architecture)」**。
 
-整個母大腦底座與系統生態系系分為以下 4 大核心堆疊層：
+整個母大腦底座與系統生態系系系分為以下 4 大核心堆疊層：
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -358,7 +351,7 @@
 4. **基石四：法人與企業 (Corporate & NPO)**
    - 映射至 `Schema.org/Corporation` 與 `NGO`。收錄 1,103 筆熱門 Seed 上市/國營企業與 2.3 萬筆農漁會/NPO 組織，支援 8 碼統一編號 (`tax_id`) 精確對照整合。
 5. **基石五：時間與時序 (Temporal & Calendar)**
-   - 映射至 `Schema.org/DateTime`。收錄 1,199 筆政府辦公日曆與颱風假分類，內建 `clean_datetime()` 自動將五大民國年文字格式轉換為 ISO-8601 UTC/CST 字串 (`2024-08-22T00:00:00+08:00`)。
+   - 映射至 `Schema.org/DateTime` 與 `Event`。收錄 1,801 筆 (2013-2028 年跨 16 年) 全國行政機關辦公日曆、法定出勤日與補行上班日，整合純 Python 緊湊農曆（1900-2100 年公曆農曆雙向轉換、生肖歲次干支、傳統節日）與二十四節氣天文演算法，內建 `clean_datetime()` 自動將五大民國年文字格式轉換為 ISO-8601 CST 字串 (`2024-08-22T00:00:00+08:00`)。
 
 ---
 
@@ -486,7 +479,6 @@ src/core/
 
 ---
 
-<!-- START_OF_FILE: 03_db_glossary.md -->
 # 🏛️ 第 3 章：GOV-300 核心資料庫與 12 大實體表圖鑑百科 (03_db_glossary.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -753,10 +745,11 @@ erDiagram
 
 ### 3.10 法人與企業旁路透傳快取表 (`corporate_registry`) [基石四]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  採用 **Pass-Through Cache 旁路透傳快取架構**。本機僅收錄 **1,103 筆** 熱門 Seed 上市/國營企業（5MB 空間），Cache Miss 時自動連線經濟部 GCIS API 並動態寫回。
+  採用 **Pass-Through Cache 旁路透傳快取架構**。本機收錄代表性上市櫃與國營企業權威 Seed 快取，搭配 CGS v2.4 CLI 工具 `g60_cli.py` 提供純 Python 8 碼統一編號加權檢核（相容舊制除 10、第 7 位為 7 特例與 2023 年 4 月財政部新制除 5/10 雙重規則）、長文本串流統編萃取濾網 (`pipe --extract`)，以及 Cache Miss 時連線經濟部 GCIS API 動態寫回。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
   - **與 `admin_codes` 連結**：外鍵 `admin_code` 提供企業登記地緣分析。
   - **與經濟部商業庫 (`tw-moea-db`) 連結**：作為 160 萬全量公司商業登記的本地極速快取代理。
+  - **跨部會 UNIX 管線穿透**：支援衛福部食安裁罰 (A18)、採購公報廠商名冊直接透過管道輸入 `g60` 進行合法性校驗與地址反查。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE corporate_registry (
@@ -764,42 +757,62 @@ erDiagram
       company_name VARCHAR(128) NOT NULL,  -- 企業名稱 (如 台灣積體電路製造股份有限公司)
       registered_address VARCHAR(256),     -- 登記營業地址
       admin_code VARCHAR(8),               -- 所屬行政區劃
+      status VARCHAR(32) DEFAULT 'ACTIVE', -- 營運狀態
+      source VARCHAR(32) DEFAULT 'SEED',   -- 資料來源 (SEED, GCIS_API)
       cached_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(admin_code) REFERENCES admin_codes(admin_code)
   );
   ```
 
 ### 3.11 農會與非營利組織法人主檔表 (`npo_registry`) [基石四]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **23,218 筆** 依法登記之 NGO、基金會與 **342 家** 全台農漁會法人程式碼與地址。
+  收錄依法登記之 NGO、基金會與全台 302 家各級農會與 40 家漁會拓樸主檔。搭配 G60 維度器提供「消歧義對齊引擎 (`resolve`)」，能自動剝除分支機構綴詞（信用部、生鮮超市、辦事處），並結合 G20 空間行政區外推，將不規範的民間簡稱（如「板農」、「新埔農會」）精準對齊至官方正式全名與組織程式碼。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
   - **與 `admin_codes` 連結**：外鍵 `admin_code` 進行基層農會與鄉鎮市區對照整合。
-  - **與農業部農會庫 (`tw-agro-db`) 連結**：連結農業部推廣課、信用部與休閒農場輔導名錄。
+  - **與農業部農會庫 (`tw-agro-db`) 連結**：連結農業部產銷班、天然災害救助申請單位、推廣課、信用部與休閒農場輔導名錄。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE npo_registry (
-      npo_id VARCHAR(32) PRIMARY KEY,      -- 法人程式碼 / 統編 (如 03794705)
-      npo_name VARCHAR(128) NOT NULL,      -- 法人名稱 (如 新竹縣竹北市農會)
-      npo_type VARCHAR(32) NOT NULL,       -- 類型 (FARMERS_ASSOC 農會, NGO 非營利)
-      admin_code VARCHAR(8),
-      attributes_json TEXT,
+      npo_id VARCHAR(32) PRIMARY KEY,      -- 法人程式碼 / 統編 (如 FA_NTP_001)
+      npo_name VARCHAR(128) NOT NULL,      -- 法人官方正式名稱 (如 新北市板橋區農會)
+      short_name VARCHAR(64),              -- 通俗簡稱或別名 (如 板農)
+      npo_type VARCHAR(32) NOT NULL,       -- 類型 (FARMERS_ASSOC 農會, FISHERY_ASSOC 漁會, NGO 非營利)
+      level VARCHAR(16),                   -- 層級 (NATIONAL, MUNICIPAL, COUNTY, DISTRICT)
+      city_name VARCHAR(32),               -- 所在縣市
+      admin_code VARCHAR(8),               -- 行政區程式碼
+      address VARCHAR(256),                -- 登記地址
+      parent_id VARCHAR(32),               -- 上級輔導農會程式碼
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(admin_code) REFERENCES admin_codes(admin_code)
   );
   ```
 
 ### 3.12 行政機關辦公日曆表 (`calendar_registry`) [基石五]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **1,199 筆** (2018-2026) 行政院人事行政總處政府辦公日曆、例假日與颱風假分類。
+  收錄 **1,801 筆** (2013-2028 跨越 16 年) 全國行政機關辦公行事曆、例假日、調移放假與補行上班日。搭配 CGS v2.4 CLI 工具 `g40_cli.py` 提供全政府異質日期清理（民國年月日、中文農曆、季度、會計年度）、跨度法定工作天精確計算、補班日逆向判定、純 Python 緊湊農曆（1900-2100 年公曆農曆雙向轉換、生肖天干地支）、二十四節氣天文常數計算與 UNIX Pipe 流式資料過濾。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
-  - **時序對照整合 (Temporal Alignment)**：為所有跨部會資料集中異質時間字串清洗後生成的 ISO-8601 日期，提供「是否為工作日/放假日/颱風假」的時序脈絡對照整合。
+  - **時序對照整合 (Temporal Alignment)**：為所有跨部會資料集中異質時間字串清洗後生成的 ISO-8601 日期，提供「是否為工作日/放假日/補上班日」的時序脈絡對照整合，並自動附帶農曆歲次、生肖與傳統三大節（春節、端午、中秋）標記。
+  - **跨模組管線 (UNIX Pipe Native)**：可直接透過管道串接 G10（標案計畫履約天數計算）、G20（空間時序交叉統計）及 GOV-A19（農漁批發市場初一十五休市日與節氣產銷分析）。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE calendar_registry (
-      date_key VARCHAR(10) PRIMARY KEY,    -- ISO-8601 日期 (如 2024-08-22)
+      date_str VARCHAR(10) PRIMARY KEY,    -- ISO-8601 日期 (如 2024-08-22)
+      year INTEGER NOT NULL,               -- 西元年 (如 2024)
+      minguo_year INTEGER NOT NULL,        -- 民國年 (如 113)
+      month INTEGER NOT NULL,              -- 月份 (1-12)
+      day INTEGER NOT NULL,                -- 日期 (1-31)
+      day_of_week INTEGER NOT NULL,        -- 星期幾 (1=Mon ... 7=Sun)
       is_holiday BOOLEAN NOT NULL,         -- 是否為例假日/放假日
-      holiday_category VARCHAR(32),        -- 分類 (NATIONAL_HOLIDAY, TYPHOON)
-      description VARCHAR(128)             -- 節日或颱風假備註 (如 中秋節)
+      is_working_day BOOLEAN NOT NULL,     -- 是否為法定上班日 (含週六補班日)
+      holiday_category VARCHAR(64),        -- 假別分類 (放假之紀念日及節日、補行上班日、調整放假日等)
+      description VARCHAR(256),            -- 節日或放假事由說明
+      attributes_json TEXT,                -- 動態屬性與更新歷史
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
+  CREATE INDEX idx_calendar_year ON calendar_registry(year);
+  CREATE INDEX idx_calendar_minguo ON calendar_registry(minguo_year);
+  CREATE INDEX idx_calendar_working ON calendar_registry(is_working_day);
   ```
 
 ---
@@ -855,7 +868,6 @@ json_ld_output = entity.to_jsonld()
 
 ---
 
-<!-- START_OF_FILE: 04_synergy_contracts/4.0_overview_and_spec_governance.md -->
 # 🏛️ 4.0 跨部會 Synergy 協同合約治理規範與 AI 導航框架 (4.0_overview_and_spec_governance.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -942,7 +954,344 @@ json_ld_output = entity.to_jsonld()
 
 ---
 
-<!-- START_OF_FILE: 04_synergy_contracts/4.A19_spec_gov_a19_synergy.md -->
+# 🏛️ 4.A09 GOV-A09 經濟部 (tw-moea-db) 跨專案協同合約 (4.A09_spec_gov_a09_synergy.md)
+
+* **專案名稱**：`tw-moea-db` (台灣經濟產業與水利對照圖鑑庫)
+* **專案代號**：`GOV-A09` (方案 A 權威機關簡碼 `309000000A`)
+* **根機關 OID**：`2.16.886.101.20003.20002` (經濟部)
+* **當前狀態**：`Unstarted (未獨立建庫 / 母專案孵化演練中)`
+* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.A09_spec_gov_a09_synergy.md`
+
+---
+
+## 1. 協同合約基本資訊與標頭 (Metadata Header)
+
+| 欄位專案 | 資訊內容 |
+| :--- | :--- |
+| **部會專案名稱** | 台灣經濟產業與水利對照圖鑑庫 (`tw-moea-db`) |
+| **官方權威簡碼** | `GOV-A09` (方案 A 命名規範) |
+| **領域根 OID** | `2.16.886.101.20003.20002` (經濟部本部) |
+| **預定實體路徑** | 預定為同層目錄之 `tw-moea-db` (實體資料庫將為 `db/moea.db`) |
+| **生命週期狀態** | `Unstarted (孵化演練中，權威 Spec & CLI 手冊暫存於母專案)` |
+
+---
+
+## 2. 部會領域範疇與通用基石對齊 (Baseline Alignment)
+
+`GOV-A09` 經濟部專案負責全台灣公司商業登記、產業園區、國營事業與水利署水文資料：
+
+| 通用基石 | 經濟部引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
+| :--- | :--- | :--- | :--- |
+| **基石一：組織 OID** | `publisher_raw` | `master_agencies` / `publisher_aliases` | 將「水利署」、「商業發展署」對齊至權威 OID |
+| **基石二：空間地籍** | `factory_address` | `admin_codes` / `zipcode_registry` | 工廠登記地址反查 6 碼門牌區號與行政區劃 |
+| **基石三：水系氣象** | `river_id` / `dam_id` | `river_registry` / `station_registry` | 水庫集水區水位與 122 條國家水系對照整合 |
+| **基石四：法人企業** | `tax_id` | `corporate_registry` | 160 萬公司登記 Pass-Through 快取寫回本機 DB |
+| **基石五：時間時序** | `setup_date` | `calendar_registry` | 公司解散/變更登記時間與辦公日曆對齊 |
+
+---
+
+## 3. 部會核心 Spec 規格摘要與設計框架 (Core Spec Abstract & Blueprint)
+
+### 3.1 核心資料模型摘要 (`db/moea.db` 規劃草案)
+1. **`a09_corporate_master_index` (全量公司商業登記主檔)**：160 萬公司登記與營業狀態。
+2. **`a09_reservoir_water_levels` (水庫與集水區水文表)**：水利署即時水庫蓄水率與蓄水量。
+3. **`a09_industrial_park_registry` (全台產業園區與工廠登記表)**：工廠地緣與產業分類標籤。
+
+### 3.2 權威 Spec 檔案對應與位置說明
+* 📘 **孵化期 Spec 草案手冊**：位於母專案 `sys_eng/02_specification/spec_gov_a09.md` *(母專案孵化暫存檔)*
+* 📗 **母專案共享協同合約**：位於母專案 `sys_eng/02_specification/spec_gov_a09_synergy.md`
+* 📖 **未來歸位後 Spec 位址**：未來建庫時，基礎 Spec 將移至同層專案 `tw-moea-db` 根目錄之 `A00_SPECIFICATION.md`；多 DB 融合將移至 `A00_ADVANCED_DESIGN_SPEC.md`。
+
+---
+
+## 4. 部會 CLI 工具手冊摘要與說明 (CLI Manual Abstract & Guidance)
+
+### 4.1 CLI 命令結構摘要 (`moea_cli.py` 規劃草案)
+- `moea_cli.py company --tax-id <tax_id>`：查詢公司登記資料並發動 GCIS API 快取。
+- `moea_cli.py reservoir-status`：查詢全台主幹水庫蓄水狀態。
+
+### 4.2 權威 CLI 手冊位置說明
+* 🛠️ **孵化期 CLI 工具手冊**：位於母專案 `docs/manuals/moea_cli.md` *(母專案孵化暫存檔)*
+* 📖 **未來歸位後 CLI 手冊位址**：未來建庫時，手冊將移至同層專案 `tw-moea-db` 之 `book/07_03_appendix_cli_reference.md`。
+
+---
+
+## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
+
+### 情境 1：經濟部公司統編 ↔ GOV-300 通用基石 (Pass-Through 快取寫回)
+- **資料連結**：`GOV-A09` GCIS API ➜ `GOV-300` 企業快取表 (`corporate_registry`)。
+- **預期效果**：Cache Miss 時動態抓取並自動寫回本機 5MB SQLite 資料庫。
+
+### 情境 2：水利署水庫集水區 ↔ 農業部灌溉水質監測 (`GOV-A19`) 跨部會聯防
+- **資料連結**：`GOV-A09` 集水區水文表 (`a09_reservoir_water_levels`) ➜ `GOV-300` 水系表 (`river_registry`) ➜ `GOV-A19` 灌溉水質表。
+- **預期效果**：實時監視乾旱特報下農業灌溉用水調配與水質重金屬監測。
+
+---
+
+## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
+
+### 6.1 Agent Prompt 提示詞/Prompt範例
+```text
+[System Prompt for GOV-A09 Query]
+你是一個精通台灣經濟部商業與水利資料的 AI Agent。當使用者查詢公司統編或水庫水情時：
+1. 呼叫 GOV-300 Pass-Through Cache 介面查詢 tax_id。
+2. 連線 moea_cli.py 抓取水庫即時水情。
+3. 輸出符合 Schema.org/Corporation 格式之結果。
+```
+
+### 6.2 Agent Skill 位置與導航說明
+* 🧙‍♂️ **孵化期 Agent Skill 附件**：位於母專案 `.agent/skills/moea-db-wizard/SKILL.md` *(孵化暫存)*
+* 📖 **未來歸位後位址**：建庫後將移至同層專案 `tw-moea-db` 之 `.agent/skills/moea-db-wizard/SKILL.md`。
+
+---
+
+## 7. 介面合約與工具鏈對接規範 (Interface Contracts)
+
+```python
+from src.core.domain_registry_resolver import DomainRegistryResolver
+
+resolver = DomainRegistryResolver()
+# 連線孵化中之 GOV-A09 DB (解耦路徑路由)
+conn = resolver.get_domain_core_db_connection("GOV-A09", "moea.db")
+
+# 跨專案發動 moea_cli.py
+output = resolver.run_domain_cli("GOV-A09", "company", ["--tax-id", "22570177"])
+```
+
+---
+
+## 8. Spec 權責劃分與生命週期狀態 (Spec Ownership & Lifecycle)
+
+* **權責歸屬**：`GOV-A09` 業務邏輯與商業統編字典現階段由母專案架構師於 `spec_gov_a09.md` 中孵化維護；未來建庫後完全交由 `tw-moea-db` 團隊接管。
+* **生命週期狀態**：**`Unstarted (未獨立建庫 / 母專案孵化演練中)`**
+* **轉移條件**：當 `tw-moea-db` Repo 建置時，`spec_gov_a09.md` 將自動移至子專案根目錄 `A00_SPECIFICATION.md`，母專案僅保留 Symlink 共享協同合約。
+
+
+---
+
+# 🏛️ 4.A13 GOV-A13 內政部 (tw-moi-db) 跨專案協同合約 (4.A13_spec_gov_a13_synergy.md)
+
+* **專案名稱**：`tw-moi-db` (台灣內政國土與地政對照圖鑑庫)
+* **專案代號**：`GOV-A13` (方案 A 權威機關簡碼 `310000000A`)
+* **根機關 OID**：`2.16.886.101.20003.20007` (內政部)
+* **當前狀態**：`Unstarted (未獨立建庫 / 母專案孵化演練中)`
+* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.A13_spec_gov_a13_synergy.md`
+
+---
+
+## 1. 協同合約基本資訊與標頭 (Metadata Header)
+
+| 欄位專案 | 資訊內容 |
+| :--- | :--- |
+| **部會專案名稱** | 台灣內政國土與地政對照圖鑑庫 (`tw-moi-db`) |
+| **官方權威簡碼** | `GOV-A13` (方案 A 命名規範) |
+| **領域根 OID** | `2.16.886.101.20003.20007` (內政部本部) |
+| **預定實體路徑** | 預定為同層目錄之 `tw-moi-db` (實體資料庫將為 `db/moi.db`) |
+| **生命週期狀態** | `Unstarted (孵化演練中，權威 Spec & CLI 手冊暫存於母專案)` |
+
+---
+
+## 2. 部會領域範疇與通用基石對齊 (Baseline Alignment)
+
+`GOV-A13` 內政部專案為全台灣國土利用、地籍圖資、警政消防與戶政門牌的核心主管機關：
+
+| 通用基石 | 內政部引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
+| :--- | :--- | :--- | :--- |
+| **基石一：組織 OID** | `publisher_raw` | `master_agencies` / `publisher_aliases` | 將「國土管理署」、「消防署」對齊至權威 OID |
+| **基石二：空間地籍** | `cadastral_id` / `admin_code` | `cadastral_registry` / `admin_codes` | 全國地籍段名段號權威對照與 480 鄉鎮市區邊界 |
+| **基石三：水系氣象** | `village_code` | `station_registry` / `river_registry` | 7,748 村里邊界與河川淹水潛勢圖空間套疊 |
+| **基石四：法人企業** | `npo_id` | `npo_registry` | 2.3 萬筆依法登記之財團/社團法人登記對照整合 |
+| **基石五：時間時序** | `change_date` | `calendar_registry` | 行政區劃升格與地籍改制歷史演進對照 |
+
+---
+
+## 3. 部會核心 Spec 規格摘要與設計框架 (Core Spec Abstract & Blueprint)
+
+### 3.1 核心資料模型摘要 (`db/moi.db` 規劃草案)
+1. **`a13_land_use_zones` (國土利用分區表)**：收錄特定農業區、山坡地保育區、森林區等國土劃分。
+2. **`a13_cadastral_sections` (全國權威地籍段碼表)**：整理地政司全台段名與正則化 `cadastral_id`。
+3. **`a13_village_registry` (全台 7,748 村里邊界與 TGOS 門牌地碼表)**：提供門牌文字轉換為 EPSG:4326 WGS84 座標。
+
+### 3.2 權威 Spec 檔案對應與位置說明
+* 📘 **孵化期 Spec 草案手冊**：位於母專案 `sys_eng/02_specification/spec_gov_a13.md` *(母專案孵化暫存檔)*
+* 📗 **母專案共享協同合約**：位於母專案 `sys_eng/02_specification/spec_gov_a13_synergy.md`
+* 📖 **未來歸位後 Spec 位址**：未來建庫時，基礎 Spec 將移至同層專案 `tw-moi-db` 根目錄之 `A00_SPECIFICATION.md`；多 DB 融合將移至 `A00_ADVANCED_DESIGN_SPEC.md`。
+
+---
+
+## 4. 部會 CLI 工具手冊摘要與說明 (CLI Manual Abstract & Guidance)
+
+### 4.1 CLI 命令結構摘要 (`moi_cli.py` 規劃草案)
+- `moi_cli.py geocode <address_text>`：門牌文字轉換 WGS84 經緯度與 6 碼郵遞區號。
+- `moi_cli.py land-zoning --cadastral <cadastral_id>`：查詢特定地籍段號之國土利用分區。
+
+### 4.2 權威 CLI 手冊位置說明
+* 🛠️ **孵化期 CLI 工具手冊**：位於母專案 `docs/manuals/moi_cli.md` *(母專案孵化暫存檔)*
+* 📖 **未來歸位後 CLI 手冊位址**：未來建庫時，手冊將移至同層專案 `tw-moi-db` 之 `book/07_03_appendix_cli_reference.md`。
+
+---
+
+## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
+
+### 情境 1：全國地籍段號與基石二空間對照整合 (`GOV-A13` ➔ `GOV-300`)
+- **資料連結**：`GOV-A13` 地籍段碼表 (`a13_cadastral_sections`) ➜ `GOV-300` 地籍表 (`cadastral_registry`) ➜ `admin_codes`。
+- **預期效果**：校驗全台地號格式 `[admin_code][cadastral_id]`，為全台灣跨部會資料庫提供標準的地籍空間過濾能力。
+
+### 情境 2：內政部國土分區 ↔ 農業部休閒農場 (`GOV-A19`) 特農區違規侵占聯防
+- **資料連結**：`GOV-A13` 國土分區 (`a13_land_use_zones`) ➜ `GOV-300` 地籍段號 (`cadastral_registry`) ➜ `GOV-A19` 休閒農場清冊。
+- **預期效果**：自動比對休閒農場是否非法變更特定農業區或侵占水質水量保護區。
+
+### 情境 3：7,748 村里邊界與 TGOS 門牌地碼反查 (`GOV-A13` ➔ `GOV-300`)
+- **資料連結**：`GOV-A13` 村里地碼表 (`a13_village_registry`) ➜ `GOV-300` 郵遞區號表 (`zipcode_registry`)。
+- **預期效果**：實現輸入自然語言地址即時轉換為 6 碼門牌區號、村里程式碼與 WGS84 點位。
+
+---
+
+## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
+
+### 6.1 Agent Prompt 提示詞/Prompt範例
+```text
+[System Prompt for GOV-A13 Query]
+你是一個精通台灣內政部國土與地政資料的 AI Agent。當使用者詢問門牌地碼或地籍劃分時：
+1. 先連線 GOV-300 admin_codes 與 cadastral_registry 正則化地籍段號。
+2. 呼叫 moi_cli.py geocode 進行 WGS84 座標轉換。
+3. 輸出符合 Schema.org/Place 格式之結果。
+```
+
+### 6.2 Agent Skill 位置與導航說明
+* 🧙‍♂️ **孵化期 Agent Skill 附件**：位於母專案 `.agent/skills/moi-db-wizard/SKILL.md` *(孵化暫存)*
+* 📖 **未來歸位後位址**：建庫後將移至同層專案 `tw-moi-db` 之 `.agent/skills/moi-db-wizard/SKILL.md`。
+
+---
+
+## 7. 介面合約與工具鏈對接規範 (Interface Contracts)
+
+```python
+from src.core.domain_registry_resolver import DomainRegistryResolver
+
+resolver = DomainRegistryResolver()
+# 連線孵化中之 GOV-A13 DB (解耦路徑路由)
+conn = resolver.get_domain_core_db_connection("GOV-A13", "moi.db")
+
+# 跨專案調用 moi_cli.py
+output = resolver.run_domain_cli("GOV-A13", "geocode", ["臺北市中正區重慶南路一段120號"])
+```
+
+---
+
+## 8. Spec 權責劃分與生命週期狀態 (Spec Ownership & Lifecycle)
+
+* **權責歸屬**：`GOV-A13` 業務邏輯與地籍字典現階段由母專案架構師於 `spec_gov_a13.md` 中孵化維護；未來建庫後完全交由 `tw-moi-db` 團隊接管。
+* **生命週期狀態**：**`Unstarted (未獨立建庫 / 母專案孵化演練中)`**
+* **轉移條件**：當 `tw-moi-db` Repo 建置時，`spec_gov_a13.md` 將自動移至子專案根目錄 `A00_SPECIFICATION.md`，母專案僅保留 Symlink 共享協同合約。
+
+
+---
+
+# 🏛️ 4.A18 GOV-A18 衛生福利部 (tw-med-db) 跨專案協同合約 (4.A18_spec_gov_a18_synergy.md)
+
+* **專案名稱**：`tw-med-db` (台灣醫療藥品與醫院機構開放資料智庫)
+* **專案代號**：`GOV-A18` (方案 A 權威機關簡碼 `A18000000G`)
+* **根機關 OID**：`2.16.886.101.20003.20008` (衛生福利部)
+* **當前狀態**：`Bootstrapped (已啟動建置 / 獨立庫歸位)`
+* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.A18_spec_gov_a18_synergy.md`
+
+---
+
+## 1. 協同合約基本資訊與標頭 (Metadata Header)
+
+| 欄位專案 | 資訊內容 |
+| :--- | :--- |
+| **部會專案名稱** | 台灣醫療藥品與醫院機構開放資料智庫 (`tw-med-db`) |
+| **官方權威簡碼** | `GOV-A18` (方案 A 命名規範) |
+| **別名 (Aliases)** | `mohw`, `med` |
+| **領域根 OID** | `2.16.886.101.20003.20008` (衛福部本部) |
+| **預定實體路徑** | 位於同層目錄之 `events/TDHI_haba/med-db-in/tw-med-db` (實體 DB 位址: `/Volumes/D2024/data/med-db-in/db/med.db`) |
+| **生命週期狀態** | `Bootstrapped (實體庫已建置，權威 Spec & 專書於子專案歸位)` |
+
+---
+
+## 2. 部會領域範疇與通用基石對齊 (Baseline Alignment)
+
+`GOV-A18` 衛福部專案全量繼承 `GOV-300` 通用基石，實現醫療、藥品許可證、醫院診所、健保統計與藥商資料的實體對照整合：
+
+| 通用基石 | 衛福部引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
+| :--- | :--- | :--- | :--- |
+| **基石一：組織 OID** | `agency_name` / `bureau` | `master_agencies` / `publisher_aliases` | 自動將「食品藥物管理署 (TFDA)」、「中央健康保險署」歸併至權威 OID `2.16.886.101.20003.20008.*` |
+| **基石二：空間地籍** | `hospital_address` / `zipcode` | `admin_codes` / `zipcode_registry` | 2.3 萬家醫院診所機構地址反查 6 碼門牌區號與 3 碼郵遞區號 |
+| **基石三：水系氣象** | `epidemic_region` | `station_registry` / `river_registry` | 登革熱、流感等流行病區域與環境氣象測站氣溫/濕度對照整合 |
+| **基石四：法人企業** | `license_holder_tax_id` | `corporate_registry` | 6.6 萬筆藥品許可證持有藥商與西藥廠 8 碼統編寫回本機快取 |
+| **基石五：時間時序** | `issue_date` / `expiry_date` | `calendar_registry` | 清洗發證日期與健保申報時間時序 |
+
+---
+
+## 🏛️ 2.2 衛福部專案對母專案 GOV-300 提出之基石需求規格 (G300 Implementation Requirements)
+
+作為權威 Synergy 協同合約，本專案 `GOV-A18` 規範母專案 `GOV-300` 必須實作並暴露以下 4 大通用基石服務：
+
+1. **`G300-REQ-MOHW-01`：發布機關 OID 動態歸併服務 (`align_publisher_oid`)**
+   - **G300 實作責任**：`GOV-300` 的 `master_agencies.sqlite` 必須維護衛福部本部與轄下署局（食藥署、健保署、疾管署、國健署）的權威 OID 拓樸，支援 A18 將藥品許可證或醫療機構登記之發布機關文字名稱精確歸併至權威 OID。
+2. **`G300-REQ-MOHW-02`：醫療機構營業地址之 6 碼門牌區號反查服務 (`admin_codes`)**
+   - **G300 實作責任**：`GOV-300` 的 `universal_keys.sqlite` 必須提供 `admin_codes` 表，支援 A18 將全台 2.3 萬家醫院診所之中文地址在 $< 1\text{ms}$ 內反查 6 碼門牌區號。
+3. **`G300-REQ-MOHW-03`：藥商與藥廠企業統一編號 Pass-Through 快取與反查服務 (`corporate_registry`)**
+   - **G300 實作責任**：`GOV-300` 必須維護 `corporate_registry`，提供統編反查商工登記之 API 快取，支援 A18 穿透藥品許可證商與西藥製造廠之真實法人身分。
+4. **`G300-REQ-MOHW-04`：跨部會 CLI 命令發動與連線服務 (`run_domain_cli`)**
+   - **G300 實作責任**：`GOV-300` 的 `DomainRegistryResolver` 必須實作 `run_domain_cli("GOV-A18", cmd, args)` 與 `get_domain_core_db_connection("GOV-A18", "med.db")` 介面，支援別名 `mohw` 與 `med` 發動 A18 之 `m01_tw_drug_db` (6.6萬筆)、`m05_tw_hospital_db` (2.3萬家) 查詢。
+
+---
+
+## 🗺️ 2.1 跨模組實體關聯與資料流拓樸圖 (Mermaid Topology)
+
+```mermaid
+graph TD
+    subgraph GOV300["GOV-300 (母大腦通用基石)"]
+        OID["master_agencies<br>(7,956 OID)"]
+        ADMIN["admin_codes<br>(480 行政區劃)"]
+        CORP["corporate_registry<br>(Pass-Through 快取)"]
+        CALENDAR["calendar_registry<br>(政府辦公日曆)"]
+    end
+
+    subgraph GOVA18["GOV-A18 衛福部 (tw-med-db)"]
+        M01["m01_tw_drug_db<br>(6.6 萬筆藥品許可證)"]
+        M05["m05_tw_hospital_db<br>(2.3 萬家醫院診所)"]
+        VIEWS["v_h* 醫療統計 View<br>(30 個醫療專題 View)"]
+        FTS["fts_med_global<br>(全域倒排索引)"]
+    end
+
+    subgraph GOVA21["GOV-A21 金管會 (tw-fsc-db)"]
+        F30["f30_insurance<br>(商業醫療保險)"]
+    end
+
+    OID -->|agency_oid 權責歸併| M01
+    ADMIN -->|admin_code 門牌區號歸併| M05
+    CORP -->|tax_id 藥商與藥廠統編對照| M01
+    CALENDAR -->|issue_date 發證日期清洗| M01
+    M05 -->|公立醫院與健保醫療統計對照| VIEWS
+    VIEWS -->|健保自費與商業醫療險給付對照| F30
+```
+
+---
+
+## 3. 程式碼連線介面實例 (Integration Code Sample)
+
+```python
+from core.domain_registry_resolver import DomainRegistryResolver
+
+resolver = DomainRegistryResolver()
+
+# 1. 取得衛福部核心資料庫 med.db 連線 (支援 GOV-A18, mohw, med)
+conn = resolver.get_domain_core_db_connection("mohw", "med.db")
+cursor = conn.cursor()
+cursor.execute("SELECT count(*) FROM m01_tw_drug_db")
+drug_count = cursor.fetchone()[0]
+
+# 2. 跨專案發動 CLI 命令 (支援 ./pa med)
+output = resolver.run_domain_cli("med", "list", ["--limit", "5"])
+```
+
+
+---
+
 # 🏛️ 4.A19 GOV-A19 農業部 (tw-agro-db) 跨專案協同合約 (4.A19_spec_gov_a19_synergy.md)
 
 * **專案名稱**：`tw-agro-db` (台灣農漁畜開放資料全景圖鑑庫)
@@ -1149,134 +1498,13 @@ output = resolver.run_domain_cli("GOV-A19", "pesticide", ["水稻"])
 
 ---
 
-<!-- START_OF_FILE: 04_synergy_contracts/4.A13_spec_gov_a13_synergy.md -->
-# 🏛️ 4.A13 GOV-A13 內政部 (tw-moi-db) 跨專案協同合約 (4.A13_spec_gov_a13_synergy.md)
+# 🏛️ 4.A21 GOV-A21 金管會 (tw-fsc-db) 跨專案協同合約 (4.A21_spec_gov_a21_synergy.md)
 
-* **專案名稱**：`tw-moi-db` (台灣內政國土與地政對照圖鑑庫)
-* **專案代號**：`GOV-A13` (方案 A 權威機關簡碼 `310000000A`)
-* **根機關 OID**：`2.16.886.101.20003.20007` (內政部)
-* **當前狀態**：`Unstarted (未獨立建庫 / 母專案孵化演練中)`
-* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.A13_spec_gov_a13_synergy.md`
-
----
-
-## 1. 協同合約基本資訊與標頭 (Metadata Header)
-
-| 欄位專案 | 資訊內容 |
-| :--- | :--- |
-| **部會專案名稱** | 台灣內政國土與地政對照圖鑑庫 (`tw-moi-db`) |
-| **官方權威簡碼** | `GOV-A13` (方案 A 命名規範) |
-| **領域根 OID** | `2.16.886.101.20003.20007` (內政部本部) |
-| **預定實體路徑** | 預定為同層目錄之 `tw-moi-db` (實體資料庫將為 `db/moi.db`) |
-| **生命週期狀態** | `Unstarted (孵化演練中，權威 Spec & CLI 手冊暫存於母專案)` |
-
----
-
-## 2. 部會領域範疇與通用基石對齊 (Baseline Alignment)
-
-`GOV-A13` 內政部專案為全台灣國土利用、地籍圖資、警政消防與戶政門牌的核心主管機關：
-
-| 通用基石 | 內政部引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
-| :--- | :--- | :--- | :--- |
-| **基石一：組織 OID** | `publisher_raw` | `master_agencies` / `publisher_aliases` | 將「國土管理署」、「消防署」對齊至權威 OID |
-| **基石二：空間地籍** | `cadastral_id` / `admin_code` | `cadastral_registry` / `admin_codes` | 全國地籍段名段號權威對照與 480 鄉鎮市區邊界 |
-| **基石三：水系氣象** | `village_code` | `station_registry` / `river_registry` | 7,748 村里邊界與河川淹水潛勢圖空間套疊 |
-| **基石四：法人企業** | `npo_id` | `npo_registry` | 2.3 萬筆依法登記之財團/社團法人登記對照整合 |
-| **基石五：時間時序** | `change_date` | `calendar_registry` | 行政區劃升格與地籍改制歷史演進對照 |
-
----
-
-## 3. 部會核心 Spec 規格摘要與設計框架 (Core Spec Abstract & Blueprint)
-
-### 3.1 核心資料模型摘要 (`db/moi.db` 規劃草案)
-1. **`a13_land_use_zones` (國土利用分區表)**：收錄特定農業區、山坡地保育區、森林區等國土劃分。
-2. **`a13_cadastral_sections` (全國權威地籍段碼表)**：整理地政司全台段名與正則化 `cadastral_id`。
-3. **`a13_village_registry` (全台 7,748 村里邊界與 TGOS 門牌地碼表)**：提供門牌文字轉換為 EPSG:4326 WGS84 座標。
-
-### 3.2 權威 Spec 檔案對應與位置說明
-* 📘 **孵化期 Spec 草案手冊**：位於母專案 `sys_eng/02_specification/spec_gov_a13.md` *(母專案孵化暫存檔)*
-* 📗 **母專案共享協同合約**：位於母專案 `sys_eng/02_specification/spec_gov_a13_synergy.md`
-* 📖 **未來歸位後 Spec 位址**：未來建庫時，基礎 Spec 將移至同層專案 `tw-moi-db` 根目錄之 `A00_SPECIFICATION.md`；多 DB 融合將移至 `A00_ADVANCED_DESIGN_SPEC.md`。
-
----
-
-## 4. 部會 CLI 工具手冊摘要與說明 (CLI Manual Abstract & Guidance)
-
-### 4.1 CLI 命令結構摘要 (`moi_cli.py` 規劃草案)
-- `moi_cli.py geocode <address_text>`：門牌文字轉換 WGS84 經緯度與 6 碼郵遞區號。
-- `moi_cli.py land-zoning --cadastral <cadastral_id>`：查詢特定地籍段號之國土利用分區。
-
-### 4.2 權威 CLI 手冊位置說明
-* 🛠️ **孵化期 CLI 工具手冊**：位於母專案 `docs/manuals/moi_cli.md` *(母專案孵化暫存檔)*
-* 📖 **未來歸位後 CLI 手冊位址**：未來建庫時，手冊將移至同層專案 `tw-moi-db` 之 `book/07_03_appendix_cli_reference.md`。
-
----
-
-## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
-
-### 情境 1：全國地籍段號與基石二空間對照整合 (`GOV-A13` ➔ `GOV-300`)
-- **資料連結**：`GOV-A13` 地籍段碼表 (`a13_cadastral_sections`) ➜ `GOV-300` 地籍表 (`cadastral_registry`) ➜ `admin_codes`。
-- **預期效果**：校驗全台地號格式 `[admin_code][cadastral_id]`，為全台灣跨部會資料庫提供標準的地籍空間過濾能力。
-
-### 情境 2：內政部國土分區 ↔ 農業部休閒農場 (`GOV-A19`) 特農區違規侵占聯防
-- **資料連結**：`GOV-A13` 國土分區 (`a13_land_use_zones`) ➜ `GOV-300` 地籍段號 (`cadastral_registry`) ➜ `GOV-A19` 休閒農場清冊。
-- **預期效果**：自動比對休閒農場是否非法變更特定農業區或侵占水質水量保護區。
-
-### 情境 3：7,748 村里邊界與 TGOS 門牌地碼反查 (`GOV-A13` ➔ `GOV-300`)
-- **資料連結**：`GOV-A13` 村里地碼表 (`a13_village_registry`) ➜ `GOV-300` 郵遞區號表 (`zipcode_registry`)。
-- **預期效果**：實現輸入自然語言地址即時轉換為 6 碼門牌區號、村里程式碼與 WGS84 點位。
-
----
-
-## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
-
-### 6.1 Agent Prompt 提示詞/Prompt範例
-```text
-[System Prompt for GOV-A13 Query]
-你是一個精通台灣內政部國土與地政資料的 AI Agent。當使用者詢問門牌地碼或地籍劃分時：
-1. 先連線 GOV-300 admin_codes 與 cadastral_registry 正則化地籍段號。
-2. 呼叫 moi_cli.py geocode 進行 WGS84 座標轉換。
-3. 輸出符合 Schema.org/Place 格式之結果。
-```
-
-### 6.2 Agent Skill 位置與導航說明
-* 🧙‍♂️ **孵化期 Agent Skill 附件**：位於母專案 `.agent/skills/moi-db-wizard/SKILL.md` *(孵化暫存)*
-* 📖 **未來歸位後位址**：建庫後將移至同層專案 `tw-moi-db` 之 `.agent/skills/moi-db-wizard/SKILL.md`。
-
----
-
-## 7. 介面合約與工具鏈對接規範 (Interface Contracts)
-
-```python
-from src.core.domain_registry_resolver import DomainRegistryResolver
-
-resolver = DomainRegistryResolver()
-# 連線孵化中之 GOV-A13 DB (解耦路徑路由)
-conn = resolver.get_domain_core_db_connection("GOV-A13", "moi.db")
-
-# 跨專案調用 moi_cli.py
-output = resolver.run_domain_cli("GOV-A13", "geocode", ["臺北市中正區重慶南路一段120號"])
-```
-
----
-
-## 8. Spec 權責劃分與生命週期狀態 (Spec Ownership & Lifecycle)
-
-* **權責歸屬**：`GOV-A13` 業務邏輯與地籍字典現階段由母專案架構師於 `spec_gov_a13.md` 中孵化維護；未來建庫後完全交由 `tw-moi-db` 團隊接管。
-* **生命週期狀態**：**`Unstarted (未獨立建庫 / 母專案孵化演練中)`**
-* **轉移條件**：當 `tw-moi-db` Repo 建置時，`spec_gov_a13.md` 將自動移至子專案根目錄 `A00_SPECIFICATION.md`，母專案僅保留 Symlink 共享協同合約。
-
-
----
-
-<!-- START_OF_FILE: 04_synergy_contracts/4.A09_spec_gov_a09_synergy.md -->
-# 🏛️ 4.A09 GOV-A09 經濟部 (tw-moea-db) 跨專案協同合約 (4.A09_spec_gov_a09_synergy.md)
-
-* **專案名稱**：`tw-moea-db` (台灣經濟產業與水利對照圖鑑庫)
-* **專案代號**：`GOV-A09` (方案 A 權威機關簡碼 `309000000A`)
-* **根機關 OID**：`2.16.886.101.20003.20002` (經濟部)
-* **當前狀態**：`Unstarted (未獨立建庫 / 母專案孵化演練中)`
-* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.A09_spec_gov_a09_synergy.md`
+* **專案名稱**：`tw-fsc-db` (台灣金融監督管理開放資料智庫)
+* **專案代號**：`GOV-A21` (方案 A 權威機關簡碼 `300050000G`)
+* **根機關 OID**：`2.16.886.101.20003.20052` (金融監督管理委員會)
+* **當前狀態**：`Bootstrapped (已啟動建置 / 獨立庫歸位)`
+* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/4.A21_spec_gov_a21_synergy.md`
 
 ---
 
@@ -1284,108 +1512,450 @@ output = resolver.run_domain_cli("GOV-A13", "geocode", ["臺北市中正區重�
 
 | 欄位專案 | 資訊內容 |
 | :--- | :--- |
-| **部會專案名稱** | 台灣經濟產業與水利對照圖鑑庫 (`tw-moea-db`) |
-| **官方權威簡碼** | `GOV-A09` (方案 A 命名規範) |
-| **領域根 OID** | `2.16.886.101.20003.20002` (經濟部本部) |
-| **預定實體路徑** | 預定為同層目錄之 `tw-moea-db` (實體資料庫將為 `db/moea.db`) |
-| **生命週期狀態** | `Unstarted (孵化演練中，權威 Spec & CLI 手冊暫存於母專案)` |
+| **部會專案名稱** | 台灣金融監督管理開放資料智庫 (`tw-fsc-db`) |
+| **官方權威簡碼** | `GOV-A21` (方案 A 命名規範) |
+| **領域根 OID** | `2.16.886.101.20003.20052` (金管會本部) |
+| **預定實體路徑** | 位於同層目錄之 `tw-fsc-db` (實體資料庫位址: `db/fsc.db`) |
+| **生命週期狀態** | `Bootstrapped (實體庫已建置，權威 Spec & 專書於子專案歸位)` |
 
 ---
 
 ## 2. 部會領域範疇與通用基石對齊 (Baseline Alignment)
 
-`GOV-A09` 經濟部專案負責全台灣公司商業登記、產業園區、國營事業與水利署水文資料：
+`GOV-A21` 金管會專案全量繼承 `GOV-300` 通用基石，實現金融、證券、保險、檢查與裁罰資料的實體對照整合：
 
-| 通用基石 | 經濟部引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
+| 通用基石 | 金管會引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
 | :--- | :--- | :--- | :--- |
-| **基石一：組織 OID** | `publisher_raw` | `master_agencies` / `publisher_aliases` | 將「水利署」、「商業發展署」對齊至權威 OID |
-| **基石二：空間地籍** | `factory_address` | `admin_codes` / `zipcode_registry` | 工廠登記地址反查 6 碼門牌區號與行政區劃 |
-| **基石三：水系氣象** | `river_id` / `dam_id` | `river_registry` / `station_registry` | 水庫集水區水位與 122 條國家水系對照整合 |
-| **基石四：法人企業** | `tax_id` | `corporate_registry` | 160 萬公司登記 Pass-Through 快取寫回本機 DB |
-| **基石五：時間時序** | `setup_date` | `calendar_registry` | 公司解散/變更登記時間與辦公日曆對齊 |
+| **基石一：組織 OID** | `bureau` / `agency_name` | `master_agencies` / `publisher_aliases` | 自動將「銀行局」、「保險局」歸併至權威 OID `2.16.886.101.20003.20052.*` |
+| **基石二：空間地籍** | `registered_address` | `admin_codes` / `zipcode_registry` | 2,609 家金融機構地址反查 6 碼門牌區號 (`650001` 板橋區) 與 3 碼郵遞區號 |
+| **基石三：水系氣象** | `disaster_relief_loans` | `station_registry` / `river_registry` | 450 個氣象測站颱風豪雨警報與天然災害低利貸款對照整合 |
+| **基石四：法人企業** | `tax_id` | `corporate_registry` | 2,609 家特許金融機構與上市公司 8 碼統編寫回本機快取 |
+| **基石五：時間時序** | `disposition_date` | `calendar_registry` | 清洗民國年 (`110/12/28` ➔ `2021-12-28`) 並對齊股市營業日/政府辦公日曆 |
+
+---
+
+## 🏛️ 2.2 金管會專案對母專案 GOV-300 提出之基石需求規格 (G300 Implementation Requirements)
+
+作為權威 Synergy 協同合約，本專案 `GOV-A21` 規範母專案 `GOV-300` 必須實作並暴露以下 4 大通用基石服務：
+
+1. **`G300-REQ-FSC-01`：發布機關 OID 動態歸併服務 (`align_publisher_oid`)**
+   - **G300 實作責任**：`GOV-300` 的 `master_agencies.sqlite` 必須維護金管會本部與轄下四局（銀行局、證期局、保險局、檢查局）的權威 OID 拓樸，支援 A21 將處分書或統計表之發布機關文字名稱精確歸併至權威 OID，比對信心分數須 $\ge 0.9$。
+2. **`G300-REQ-FSC-02`：特許機構營業地址之 6 碼門牌區號反查服務 (`admin_codes`)**
+   - **G300 實作責任**：`GOV-300` 的 `universal_keys.sqlite` 必須提供 `admin_codes` 表，支援 A21 將全台 2,609 家總機構與分支機構之中文地址在 $< 1	ext{ms}$ 內反查 6 碼門牌區號（如金管會總會所在地板橋區反查為 `650001`）。
+3. **`G300-REQ-FSC-03`：全台灣企業統一編號 Pass-Through 快取與反查服務 (`corporate_registry`)**
+   - **G300 實作責任**：`GOV-300` 必須維護 `corporate_registry`，提供統編反查商工登記之 API 快取，支援 A21 穿透上市櫃公司與金控集團逾 10% 大股東之真實法人身分。
+4. **`G300-REQ-FSC-04`：跨部會 CLI 命令發動與連線服務 (`run_domain_cli`)**
+   - **G300 實作責任**：`GOV-300` 的 `DomainRegistryResolver` 必須實作 `run_domain_cli("GOV-A21", cmd, args)` 與 `get_domain_core_db_connection("GOV-A21", "fsc.db")` 介面，支援母大腦或其他部會（如農業部、經濟部）以統一介面發動 A21 之 `bank`、`company`、`sanctions` 或 `fintech` 命令。
+
+---
+
+## 🗺️ 2.1 跨模組實體關聯與資料流拓樸圖 (Mermaid Topology)
+
+```mermaid
+graph TD
+    subgraph GOV300["GOV-300 (母大腦通用基石)"]
+        OID["master_agencies<br>(7,956 OID)"]
+        ADMIN["admin_codes<br>(480 行政區劃)"]
+        CORP["corporate_registry<br>(Pass-Through 快取)"]
+        CALENDAR["calendar_registry<br>(政府辦公日曆)"]
+    end
+
+    subgraph GOVA21["GOV-A21 金管會 (tw-fsc-db)"]
+        F00["f00_entity_registry<br>(2,609 家金融機構母實體)"]
+        F10["f10_bank_master<br>(銀行與信用放款)"]
+        F20["f20_public_companies<br>(上市櫃公司與大股東)"]
+        F50["f50_sanctions<br>(499 筆處分裁罰)"]
+        F60["f60_vasp_compliance<br>(26 家合規 VASP)"]
+    end
+
+    subgraph GOVA19["GOV-A19 農業部 (tw-agro-db)"]
+        A19_CREDIT["farmers_assoc_directory<br>(342 農漁會信用部)"]
+    end
+
+    OID -->|agency_oid 權責歸併| F00
+    ADMIN -->|admin_code 門牌區號歸併| F00
+    CORP -->|tax_id 大股東與法人對照| F20
+    CALENDAR -->|disposition_date 營業日清洗| F50
+    F10 -->|城鄉金融普惠與農貸對照| A19_CREDIT
+    F60 -->|代管信託銀行穿透| F10
+```
 
 ---
 
 ## 3. 部會核心 Spec 規格摘要與設計框架 (Core Spec Abstract & Blueprint)
 
-### 3.1 核心資料模型摘要 (`db/moea.db` 規劃草案)
-1. **`a09_corporate_master_index` (全量公司商業登記主檔)**：160 萬公司登記與營業狀態。
-2. **`a09_reservoir_water_levels` (水庫與集水區水文表)**：水利署即時水庫蓄水率與蓄水量。
-3. **`a09_industrial_park_registry` (全台產業園區與工廠登記表)**：工廠地緣與產業分類標籤。
+### 3.1 核心資料模型摘要 (`db/fsc.db` 6 大領域庫)
+`GOV-A21` 金管會專案建立核心資料模型：
+1. **`f00_entity_registry` (金融機構母實體登記主表)**：2,609 家金融控股公司、銀行、證券、保險、上市櫃公司與 VASP 實體。
+2. **`f00_entity_relations` (集團控制力拓樸關聯表)**：556 條母子公司、轉投資與大股東持股網路。
+3. **`fts_fsc_global` (全域倒排索引虛擬表)**：支援全庫 18,624 筆資料之毫秒級全文檢索。
 
-### 3.2 權威 Spec 檔案對應與位置說明
-* 📘 **孵化期 Spec 草案手冊**：位於母專案 `sys_eng/02_specification/spec_gov_a09.md` *(母專案孵化暫存檔)*
-* 📗 **母專案共享協同合約**：位於母專案 `sys_eng/02_specification/spec_gov_a09_synergy.md`
-* 📖 **未來歸位後 Spec 位址**：未來建庫時，基礎 Spec 將移至同層專案 `tw-moea-db` 根目錄之 `A00_SPECIFICATION.md`；多 DB 融合將移至 `A00_ADVANCED_DESIGN_SPEC.md`。
+### 3.2 權威 Spec 與專書檔案位置說明
+* 📘 **子專案權威基礎業務 Spec**：位於子專案 `synergies/A21_SPECIFICATION.md` *(100% 由子專案獨立維護)*
+* 🔬 **子專案權威進階設計 Spec**：位於子專案 `synergies/A21_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演演算法規格)*
+* 📖 **子專案權威技術專書**：位於子專案 `book/00_toc.md` *(BGS v2.0 專書首發版 v1.1.0)*
+* 📗 **母專案共享協同合約**：位於母專案 `book/04_synergy_contracts/4.A21_spec_gov_a21_synergy.md` *(透過軟連結 Symlink 共享)*
 
 ---
 
 ## 4. 部會 CLI 工具手冊摘要與說明 (CLI Manual Abstract & Guidance)
 
-### 4.1 CLI 命令結構摘要 (`moea_cli.py` 規劃草案)
-- `moea_cli.py company --tax-id <tax_id>`：查詢公司登記資料並發動 GCIS API 快取。
-- `moea_cli.py reservoir-status`：查詢全台主幹水庫蓄水狀態。
+### 4.1 CLI 命令結構摘要 (`fsc_cli.py`)
+`GOV-A21` 提供專屬命令列工具，遵循 CGS v2.1 規範，支援以下核心子命令：
+- `fsc_cli.py bank credit-card`：查詢全台信用卡簽帳金額與活卡率消長。
+- `fsc_cli.py company valuation`：查詢上市櫃公司每日本益比與殖利率。
+- `fsc_cli.py sanctions search <關鍵字>`：毫秒級檢索重大行政處分裁罰案例。
+- `fsc_cli.py fintech vasp`：查詢完成洗防遵循聲明之 26 家合規虛擬通貨業者。
 
 ### 4.2 權威 CLI 手冊位置說明
-* 🛠️ **孵化期 CLI 工具手冊**：位於母專案 `docs/manuals/moea_cli.md` *(母專案孵化暫存檔)*
-* 📖 **未來歸位後 CLI 手冊位址**：未來建庫時，手冊將移至同層專案 `tw-moea-db` 之 `book/07_03_appendix_cli_reference.md`。
+* 🛠️ **權威 CLI 工具手冊**：位於子專案 `book/07_03_appendix_cli_reference.md` *(專書附錄 C 命令列速查手冊)*
 
 ---
 
 ## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
 
-### 情境 1：經濟部公司統編 ↔ GOV-300 通用基石 (Pass-Through 快取寫回)
-- **資料連結**：`GOV-A09` GCIS API ➜ `GOV-300` 企業快取表 (`corporate_registry`)。
-- **預期效果**：Cache Miss 時動態抓取並自動寫回本機 5MB SQLite 資料庫。
+### 情境 1：金管會洗防處分書 ➔ 經濟部商工登記 ➔ 司法裁判書 全生命週期連鎖追蹤
+- **資料連結**：`GOV-A21` 處分裁罰 (`f50_sanctions`) ➜ `GOV-300` 企業快取 (`corporate_registry`) ➜ `MOJ` 司法判決書。
+- **預期效果**：當某理專或上市董監遭金管會處分停職或重罰時，自動串接統編與裁判書系統，警示其民刑事訴訟進度。
 
-### 情境 2：水利署水庫集水區 ↔ 農業部灌溉水質監測 (`GOV-A19`) 跨部會聯防
-- **資料連結**：`GOV-A09` 集水區水文表 (`a09_reservoir_water_levels`) ➜ `GOV-300` 水系表 (`river_registry`) ➜ `GOV-A19` 灌溉水質表。
-- **預期效果**：實時監視乾旱特報下農業灌溉用水調配與水質重金屬監測。
+### 情境 2：農業天然災害低利貸款 ➔ 金管會本國銀行資產品質即時連鎖評估
+- **資料連結**：`GOV-300` 氣象測站 (`station_registry`) ➜ `GOV-A19` 農害救助表 (`agricultural_disaster_logs`) ➜ `GOV-A21` 銀行放款 (`f10_bank_asset_quality`)。
+- **預期效果**：當強烈颱風重創中南部農業產區時，自動評估承貸天然災害復建貸款之公私立行庫曝險比率與逾放風險。
 
 ---
 
-## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
+## 6. AI Agent 雙向 Prompt 契約與導航資訊 (Bi-directional Prompt Contracts)
 
-### 6.1 Agent Prompt 提示詞/Prompt範例
+### 6.1 雙向 Prompt 契約實體檔案
+- 📡 **母專案寫給 A21 的 Prompt 契約**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/prompts/PROMPT_TO_SUBMODULE_A21.md`
+- 📡 **A21 寫給母專案的對接 Prompt 契約**：位於子專案 `synergies/PROMPT_TO_MASTER_G300.md`
+
+### 6.2 Agent Prompt 提示詞/Prompt/Prompt範例
 ```text
-[System Prompt for GOV-A09 Query]
-你是一個精通台灣經濟部商業與水利資料的 AI Agent。當使用者查詢公司統編或水庫水情時：
-1. 呼叫 GOV-300 Pass-Through Cache 介面查詢 tax_id。
-2. 連線 moea_cli.py 抓取水庫即時水情。
-3. 輸出符合 Schema.org/Corporation 格式之結果。
+[System Prompt for GOV-A21 Query]
+你是一個精通台灣金管會開放資料與金融監理的 AI Agent。當使用者詢問金融機構裁罰紀錄或 VASP 合規地位時：
+1. 請先調用 GOV-300 的 BaseDomainAdapter.align_publisher_oid("金管會銀行局") 取得權威 OID。
+2. 連線 GOV-A21 之 db/fsc.db 資料庫，查詢 f50_sanctions 或 f60_vasp_compliance 表。
+3. 輸出符合金融監理合規標準之結構化回覆，並帶上官方裁罰文號或公報公告日。
 ```
-
-### 6.2 Agent Skill 位置與導航說明
-* 🧙‍♂️ **孵化期 Agent Skill 附件**：位於母專案 `.agent/skills/moea-db-wizard/SKILL.md` *(孵化暫存)*
-* 📖 **未來歸位後位址**：建庫後將移至同層專案 `tw-moea-db` 之 `.agent/skills/moea-db-wizard/SKILL.md`。
 
 ---
 
 ## 7. 介面合約與工具鏈對接規範 (Interface Contracts)
 
+### 7.1 雙邊對接整合測試成功驗證紀錄 (Integration Pass Record)
+* **驗證時間**：2026-09-05
+* **驗證狀態**：🟢 **100% PASS (全路徑整合對接綠燈)**
+* **實測資料摘要**：
+  - **4 階連線驗證**：直連 `db/fsc.db`、`align_publisher_oid("金融監督管理委員會")` 成功歸併 OID (`2.16.886.101.20003.20052`)、板橋區 6 碼門牌 (`650001`) 反查成功。
+  - **跨庫檢索效能**：跨 DB (universal_keys ↔ fsc.db) 單次連鎖檢索 P99 平均延遲 $< 5	ext{ms}$。
+  - **驗證套件**：`synergies/test_gov_a21_synergy.py`。
+
+### 7.2 程式碼連線介面範例
 ```python
 from src.core.domain_registry_resolver import DomainRegistryResolver
 
 resolver = DomainRegistryResolver()
-# 連線孵化中之 GOV-A09 DB (解耦路徑路由)
-conn = resolver.get_domain_core_db_connection("GOV-A09", "moea.db")
+# 1. 取得 GOV-A21 核心 DB 實體連線
+conn = resolver.get_domain_core_db_connection("GOV-A21", "fsc.db")
 
-# 跨專案發動 moea_cli.py
-output = resolver.run_domain_cli("GOV-A09", "company", ["--tax-id", "22570177"])
+# 2. 跨專案發動 CLI 命令
+output = resolver.run_domain_cli("GOV-A21", "bank", ["credit-card"])
 ```
 
 ---
 
 ## 8. Spec 權責劃分與生命週期狀態 (Spec Ownership & Lifecycle)
 
-* **權責歸屬**：`GOV-A09` 業務邏輯與商業統編字典現階段由母專案架構師於 `spec_gov_a09.md` 中孵化維護；未來建庫後完全交由 `tw-moea-db` 團隊接管。
-* **生命週期狀態**：**`Unstarted (未獨立建庫 / 母專案孵化演練中)`**
-* **轉移條件**：當 `tw-moea-db` Repo 建置時，`spec_gov_a09.md` 將自動移至子專案根目錄 `A00_SPECIFICATION.md`，母專案僅保留 Symlink 共享協同合約。
+* **權責歸屬**：`GOV-A21` 內部金融監理業務邏輯完全由 `tw-fsc-db` 團隊維護；與母專案 `GOV-300` 的協同介面（OID、五大基石）由母專案權威控管。
+* **生命週期狀態**：**`Bootstrapped (已啟動 / 獨立庫歸位)`**
 
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md -->
+# 🏛️ 4.G00 全政府通用基石跨部會服務協同合約 (4.G00_spec_universal_keys_synergy.md)
+
+* **合約代號**：`SYN-GOV-G00` (通用基石全域對接契約)
+* **服務提供方 (Provider)**：`tw-gov-db` / `GOV-300` (全政府通用基石對照庫)
+* **服務消費方 (Consumers)**：全政府 25 大部會子專案 (`GOV-A01` ~ `GOV-A25`)
+* **核心規範**：[CLI Governance Spec (CGS) v2.4](file:///Users/wuulong/github/bmad-pa/scripts/CLI_GOVERNANCE_SPEC.md) (Pipeline-Native)
+* **完整手冊**：[`docs/CROSS_AGENCY_INTEROP_GUIDE.md`](file:///Users/wuulong/github/bmad-pa/events-2026Q3/gov-db-in/tw-gov-db/docs/CROSS_AGENCY_INTEROP_GUIDE.md)
+
+---
+
+## 1. 服務合約基本資訊 (Contract Metadata)
+`GOV-300` 作為全台灣政府開放資料的大腦中樞，承諾向所有部會子專案提供 **「五大通用基石 (Universal Keys)」** 的微秒級解析、驗證與消歧義服務：
+
+| 基石程式碼 | 維度器模組 | 權威實體資料表 / 演演算法 | SLA 服務承諾 |
+| :--- | :--- | :--- | :--- |
+| **基石一** | **G30 (`g30_mandate_indexer`)** | `master_agencies.sqlite`<br>8,908 機關 OID 與處務規程 | 毫秒級機關權責反查、組織樹上下溯源 |
+| **基石二** | **G20 (`g20_spatial_indexer`)** | `universal_keys.sqlite` (`admin_codes`, `zipcode_registry`) | 台灣門牌正則解析、3+2/3+3 郵遞區號對位 |
+| **基石三** | **G50 (`g50_hydrology_indexer`)** | `universal_keys.sqlite` (`river_registry`, `station_registry`) | 122 條國家標準流域程式碼與水情測站關聯 |
+| **基石四** | **G60 (`g60_corporate_indexer`)** | `universal_keys.sqlite` (`corporate_registry`, `npo_registry`) | 8 碼統編舊制與 2023 財政部新制雙軌驗證、302 家農會消歧義 |
+| **基石五** | **G40 (`g40_temporal_indexer`)** | `universal_keys.sqlite` (`calendar_registry`)<br>純 Python 農曆節氣引擎 | 16 年辦公日曆工作天判定、陰陽曆干支生肖雙向解算 |
+
+---
+
+## 2. 跨部會雙軌調用介面標準 (Two-Tier Interop Interfaces)
+
+### 2.1 軌道一：Python 原生 Direct Import (高效內部連鎖)
+各部會子專案後端程式碼得直接調用核心函式，嚴禁無意義的 `subprocess` 開銷：
+* `from modules.g60_corporate_indexer.ban_validator import BanValidator`
+* `from modules.g60_corporate_indexer.npo_resolver import NpoResolver`
+* `from modules.g40_temporal_indexer.g40_cli import clean_date_string`
+* `from modules.g40_temporal_indexer.lunar_engine import solar_to_lunar`
+* `from modules.g30_mandate_indexer.g30_cli import get_canonical_oid`
+* `from modules.g20_spatial_indexer.g20_cli import parse_address_string`
+* `from modules.g10_report_miner.g10_core import search_grb_projects`
+
+### 2.2 軌道二：UNIX Pipeline 串流呼叫 (跨行程與 CLI 自動化)
+所有維度器遵循 CGS v2.4 規範，支援 `select.select` 0.3 秒緩衝非阻塞探測器，支援無障礙管道接力：
+```bash
+# 跨部會標案名冊統編萃取並查出公司全名
+cat tender_doc.txt | ./pa g60 pipe -q | ./pa g60 lookup --tsv
+```
+
+---
+
+## 3. 跨部會典型服務場景 (Cross-Agency Scenarios)
+
+1. **衛福部 (A18) 醫療與食安裁罰對照整合**：
+   - 裁罰違規廠商 ➔ 調用 G60 驗證 8 碼統編 ➔ 反查商業登記地址 ➔ 調用 G20 解析行政區進行地理熱點統計。
+2. **農業部 (A19) 農糧天災補助與批發市場休市對位**：
+   - 災損通報俗稱「板農」➔ 調用 G60 `resolve` 標準化為「新北市板橋區農會」(`FA_NTP_001`)。
+   - 農漁市場初一十五牙祭休市 ➔ 調用 G40 `lunar` 演算出對應公曆排程。
+3. **金管會 (A21) 金融機構與上市公司合法性檢驗**：
+   - 全量 2,609 家金融機構統一編號 ➔ 批次輸入 G60 `check -j` 進行除 10 / 除 5 新舊制合規審計。
+
+
+---
+
+# 🏛️ 第 5 章：七大類別實戰 Playbook 與 Agent 協同指南 (05_stakeholder_playbooks.md)
+
+* **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
+* **專案代號**：`GOV-300` (方案 A 權威機關簡碼 `300000000A`)
+* **當前版本**：`v0.2.1`
+* **歸檔路徑**：`events-2026Q3/gov-db-in/tw-gov-db/book/05_stakeholder_playbooks.md`
+
+---
+
+## 🎭 5.0 本章導覽與 Playbook 4 大業務寫作結構
+
+本章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
+
+本章每一個類別的小節均遵從以下 **4 大業務寫作結構**：
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│           第 5 章各類別 Playbook 4 大業務寫作結構 (白話實戰)            │
+├────────────────────────────────────────────────────────────────────────┤
+│ 1. 角色描述與真實應用場景 (Role Persona & Scenario Context)           │
+│    - 他是誰？他在什麼具體業務場景下作業？                              │
+│                                                                        │
+│ 2. 面臨的核心痛苦與困境 (Core Business Pain Points)                    │
+│    - 他在日常業務中碰到了第 1 章提到的哪些血淚痛點？                   │
+│                                                                        │
+│ 3. 實務操作流程與使用體驗 (Step-by-Step Playbook Experience)          │
+│    - 他是如何使用 GOV-300 的？（白話業務步驟描述 + 流程圖）          │
+│                                                                        │
+│ 4. 痛點如何被完美解決與獲得的效益 (Pain Relief & Value Delivered)     │
+│    - 解決前 vs 解決後 (Before vs After) 的巨大業務轉變與價值！        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🏛️ 5.1 【政府行政類】第一線基層公務人員 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：中央或地方政府第一線防災、民政與災後救助公務員。
+* **應用場景**：當極端氣候（颱風、強烈冷氣團）襲台發布陸上警報時，需要在數小時內完成跨部會應變名冊核對、發送防災警訊並規劃救災資源。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：農業部、內政部與經濟部水利署的資料庫各自獨立。防災特報發布時，必須人工下載 5 個不同部會的 Excel 表格手動核對，時間極度緊迫。最害怕漏掉救災農場或核對出錯，面臨民眾陳情與長官懲處的巨大心理壓力。
+
+### 3. 實務操作流程與使用體驗
+1. **輸入特報條件**：公務同仁在應變系統輸入中央氣象署警報測站編號（如 `466920` 臺北氣象站）。
+2. **自動連鎖對照整合**：系統自動透過 `GOV-300` 6 碼行政區劃與水系程式碼，1 秒內自動完成跨部會名冊掃描。
+3. **產出聯防名冊**：自動產出兼具門牌、地籍段號與連絡電話的應變清單。
+
+```mermaid
+flowchart LR
+    A[氣象局發布低溫特報] --> B[GOV-300 1秒跨部會對照整合]
+    B --> C[產出兼具門牌與地籍之精確防災名冊]
+    C --> D[第一線公務同仁安心發送警訊與救災]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：耗費 3 天手動下載並在 Excel 比對，經常錯漏且加班焦頭爛額。
+* **After**：**1 秒內自動完成跨部會對照整合**！名冊零錯漏，讓公務同仁能將全數精力投入實體救災。
+
+---
+
+## 📊 5.2 【資料分析類】開放資料分析師 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：政府研考單位、智庫或企業內部的資料分析師與資料科學家。
+* **應用場景**：進行全台灣年度跨部會開放資料品質監控、統計分析與趨勢報表產製。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：`data.gov.tw` 網路上資料極度髒亂！同一個發布單位出現「農糧署」、「行政院農業委員會農糧署」等 10 種變體字串，且欄位中混雜「113/08/22」等舊民國年，導致 SQL 統計與日期排序徹底癱瘓，每次做報表都要花 80% 時間清理髒資料。
+
+### 3. 實務操作流程與使用體驗
+1. **載入異質資料集**：分析師直接將原始 CSV 匯入清洗管線。
+2. **自動別名歸併與時間清洗**：呼叫對齊引擎，發布單位 100% 歸併至權威 OID，民國年自動轉為 ISO-8601。
+3. **產出源頭修正報告**：針對比對失敗的髒字串，自動匯出 `data_correction_feedback.json`。
+
+```mermaid
+flowchart LR
+    A[異質髒亂政府 CSV] --> B[GOV-300 別名與時間清洗引擎]
+    B --> C[產出 ISO-8601 與權威 OID 乾淨報表]
+    B --> D[生成 data_correction_feedback.json 反饋原機關]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：每次做跨部會分析都要花幾週時間手動清理字串與民國年，報表經常因日期排錯而重做。
+* **After**：**資料清洗自動化完成**！分析師可將 100% 精力專注於商業洞察與政策分析。
+
+---
+
+## 🤖 5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：生成式 AI (GenAI)、大語言模型 (LLM) 與 Agentic AI 系統架構師。
+* **應用場景**：為政府或企業打造「跨部會開放資料智慧問答與 Agent 自動化導航系統」。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：大語言模型嚴重缺乏公部門語意 Grounding！LLM 常常分不清「新竹農田水利會」與「新竹縣竹北市」的差別，回答使用者問題時產生嚴重的地理與組織幻覺，無法達到企業級上線標準。
+
+### 3. 實務操作流程與使用體驗
+1. **注入 Schema.org 語意**：架構師將 `GovBaseEntity` 輸出的 JSON-LD 物件注入 LLM 上下文。
+2. **Agent 意圖路由**：結合 `gov-db-wizard` Skill，讓 Agent 依據 OID 與五大基石進行精確推理。
+3. **零幻覺檢索**：LLM 依據權威實體對照整合鍵檢索，回答 100% 附帶可追溯來源。
+
+```mermaid
+flowchart LR
+    A[使用者自然語言提問] --> B[LLM + GOV-300 Schema.org 語意物件]
+    B --> C[gov-db-wizard Agent 意圖精確路由]
+    C --> D[傳回 100% 零幻覺且可追溯之權威回答]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：LLM 隨口胡謔、組織與地名混淆，智慧客服與 RAG 系統不敢正式上線。
+* **After**：**達到 100% 零幻覺 Grounding**！AI 系統具備嚴謹的公部門業務理解能力。
+
+---
+
+## ⚖️ 5.4 【企業法務/風控類】企業法務與合規官 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：大型企業、上市櫃公司之法務長、合規官 (Compliance Officer) 與風控稽核員。
+* **應用場景**：進行全台數萬家供應商、經銷商的身份驗證、商業登記審查與合約簽署。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：簽約前極度害怕查到「舊快照」或「已解散/註銷/登出的人頭公司」，面臨巨大法律冒名與合約詐欺風險；若要連線政府資料，又害怕抓取龐大檔案導致內部審查流程延宕。
+
+### 3. 實務操作流程與使用體驗
+1. **輸入企業統編**：法務同仁在合規系統輸入供應商 8 碼統一編號（如 `22570177`）。
+2. **旁路快取服務**：系統優先檢索本機 1,103 筆熱門 Seed 上市企業；未命中時自動連線經濟部 GCIS API。
+3. **即時身份印證**：1 秒內傳回最新的商業登記狀態與法定代表人。
+
+```mermaid
+flowchart LR
+    A[輸入供應商統編] --> B{GOV-300 快取檢索}
+    B -- 本機命中 (1ms) --> D[傳回權威商業登記]
+    B -- 未命中 --> C[連線經濟部 GCIS API 並寫回] --> D
+    D --> E[法務瞬間完成零法律風險簽約]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：人工前往商業署網站逐筆查詢，耗時且無法自動化，擔心資料滯後帶來法律風險。
+* **After**：**1 秒完成百分之百即時且具法律追溯力的身份驗證**！合規審查零死角。
+
+---
+
+## 🌍 5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：ESG 永續顧問、綠色供應鏈稽核員與國土規劃師。
+* **應用場景**：評估企業供應鏈工廠是否違規侵占特定農業區、水質水量保護區，產出 ESG 永續合規報告。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：企業工廠只有文字地址，而內政部國土利用分區與農業部農地圖資只有地籍段號。兩者無法在表格中直連比對，導致每次產製 ESG 供應鏈合規報告都要耗費數週進行人工地理摸底。
+
+### 3. 實務操作流程與使用體驗
+1. **門牌轉地籍段號**：稽核員輸入工廠文字地址，透過 `zipcode_registry` 與地碼服務轉為地籍段號 (`cadastral_id`)。
+2. **跨部會圖資套疊**：將地號自動與內政部 `a13_land_use_zones` 國土利用分區進行空間套疊。
+3. **生成綠色合規報告**：系統自動標註是否涵蓋特定農業區或保護區。
+
+```mermaid
+flowchart LR
+    A[輸入工廠文字地址] --> B[GOV-300 轉換為標準地籍段號 cadastral_id]
+    B --> C[套疊內政部國土分區與農業部農地圖資]
+    C --> D[10秒生成符合國際標準之 ESG 綠色合規報告]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：耗費數週進行人工地號摸底與 GIS 繪圖，報告產製昂貴且效率低下。
+* **After**：**10 秒內自動完成跨部會國土合規比對**！協助企業極速通過國際綠色供應鏈審查。
+
+---
+
+## 📰 5.6 【調查媒體類】資料新聞記者 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：資料新聞記者 (Data Journalist)、調查報導團隊與公共監督媒體。
+* **應用場景**：進行特定公共議題（如：違規工廠侵占農地、政府採購案件權責歸屬）之深入調查報導。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：追查公共議題時，不同政府部會的資料庫完全撕裂。新聞記者手上有農業部的休閒農場名冊、經濟部的公司登記與財政部的採購資料，但因為機關別名混亂且缺乏公用識別碼，無法建立嚴謹的證據鏈。
+
+### 3. 實務操作流程與使用體驗
+1. **建立主題對照矩陣**：記者將不同部會的檔案匯入分析管線。
+2. **全政府 OID 與統編勾稽**：透過 `master_agencies` OID 與 `tax_id` 企業統編發動全自動實體勾稽。
+3. **揭露暗藏關聯圖譜**：系統自動繪出人頭公司、機關發布源與地籍之間的隱藏關係鏈。
+
+```mermaid
+flowchart LR
+    A[跨部會分散政府檔案] --> B[GOV-300 OID 與統編全自動實體勾稽]
+    B --> C[繪出可追溯之證據鏈與隱藏關聯圖譜]
+    C --> D[記者產出具權威證據力之深度調查報導]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：資料無法勾稽，調查報導容易因為推論瑕疵而面臨法律挑戰。
+* **After**：**建立 100% 嚴謹且可追溯的權威證據鏈**！大幅提升資料新聞報導的專業度與社會影響力。
+
+---
+
+## 🕵️ 5.7 【公民社群類】公民科技開源貢獻者 Playbook
+
+### 1. 角色描述與真實應用場景
+* **角色**：公民科技 (Civic Tech) 社群成員、g0v 零時政府參與者與開源資料黑客。
+* **應用場景**：發動民間力量進行政府開放資料診斷、補完，並推動公私協同治理 (Public-Private Partnership)。
+
+### 2. 面臨的核心痛苦與困境
+* **業務痛苦**：民間社群耗費無數心力幫政府清洗、修復了髒亂的開放資料，但缺乏標準化反饋管道，導致修好的資料永遠留在民間，政府發布源頭依然持續發布髒資料。
+
+### 3. 實務操作流程與使用體驗
+1. **執行全自動診斷**：社群成員運用開源 Core SDK 跑過全台政府資料集。
+2. **自動生成標準反饋包**：系統自動將比對失敗的發布者別名、無效點位匯出為 `data_correction_feedback.json`。
+3. **回饋 data.gov.tw 源頭**：將標準報告提供給國發會與資料發布機關進行源頭修正。
+
+```mermaid
+flowchart LR
+    A[民間社群執行資料診斷] --> B[GOV-300 自動生成 data_correction_feedback.json]
+    B --> C[提交給 data.gov.tw 與發布機關進行源頭修正]
+    C --> D[實現全台開放資料公私協同治理完整迴路]
+```
+
+### 4. 痛點如何被完美解決與獲得的效益
+* **Before**：民間修民間的、政府發政府的，開源貢獻無法回流至政府源頭。
+* **After**：**貫通連線了公私協同治理的最後一哩路**！實現全台灣開放資料源頭品質的持續自我演進。
+
+
+---
+
 # 🏛️ 5.0 七大類別實戰 Playbook 導覽與 4 大業務結構規範 (5.0_overview_and_playbook_framework.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1440,7 +2010,6 @@ output = resolver.run_domain_cli("GOV-A09", "company", ["--tax-id", "22570177"])
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.1_civil_servant_playbook.md -->
 # 🏛️ 5.1 【政府行政類】第一線基層公務人員 Playbook (5.1_civil_servant_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1504,7 +2073,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.2_data_analyst_playbook.md -->
 # 📊 5.2 【資料分析類】開放資料分析師 Playbook (5.2_data_analyst_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1568,7 +2136,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.3_ai_architect_playbook.md -->
 # 🤖 5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook (5.3_ai_architect_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1631,7 +2198,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.4_legal_compliance_playbook.md -->
 # ⚖️ 5.4 【企業法務/風控類】企業法務與合規官 Playbook (5.4_legal_compliance_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1697,7 +2263,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.5_esg_consultant_playbook.md -->
 # 🌍 5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook (5.5_esg_consultant_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1760,7 +2325,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.6_data_journalist_playbook.md -->
 # 📰 5.6 【調查媒體類】資料新聞記者 Playbook (5.6_data_journalist_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1823,7 +2387,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 05_stakeholder_playbooks/5.7_civic_tech_playbook.md -->
 # 🕵️ 5.7 【公民社群類】公民科技開源貢獻者 Playbook (5.7_civic_tech_playbook.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -1884,7 +2447,6 @@ flowchart TD
 
 ---
 
-<!-- START_OF_FILE: 06_system_engineering_and_sdm.md -->
 # 🏛️ 第 6 章：系統工程驗證、單元測試網與 QGIS 軟體定義地圖 (06_system_engineering_and_sdm.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -2022,7 +2584,6 @@ python src/cli/main.py doctor
 
 ---
 
-<!-- START_OF_FILE: 07_conclusion.md -->
 # 🏛️ 第 7 章：結語與跨部會生態系展望 (07_conclusion.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -2079,7 +2640,6 @@ graph TD
 
 ---
 
-<!-- START_OF_FILE: 08_appendices.md -->
 # 🏛️ 附錄 (Appendix)：全庫 DDL 腳本、CLI 指令速查與全書 Mermaid 圖表索引 (08_appendices.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
@@ -2314,7 +2874,3 @@ python src/cli/main.py doctor
 | **第 6 章 6.1 節** | SE-6D 六維度追溯鏈拓樸圖 | `graph LR` |
 | **第 6 章 6.2 節** | 4 大階梯式跨部會整合完成測試時序圖 | `sequenceDiagram` |
 | **第 7 章 7.2 節** | 全台灣開放資料大聯盟黃金三角藍圖 | `graph TD` |
-
-
----
-
