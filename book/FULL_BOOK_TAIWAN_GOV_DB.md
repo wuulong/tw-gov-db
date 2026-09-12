@@ -1,6 +1,6 @@
 # 📘 《台灣政府開放資料通用基石圖鑑：從權威機關到跨部會基石的資料治理體系》全書大一統合訂本
 
-> 本檔案由  自動整合生成，涵蓋願景使命、母大腦全景架構、12 大實體表圖鑑、第 4 章跨部會 Synergy 協同合約、第 5 章 7 大類別 Playbooks、第 6 章 SE-6D/SDM 與全附錄 DDL/Mermaid 索引。
+> 本檔案由 `combine_tw_gov_db_book.py` 自動整合生成，涵蓋願景使命、母大腦全景架構、12 大實體表圖鑑、第 4 章跨部會 Synergy 協同合約、第 5 章 7 大類別 Playbooks、第 6 章 SE-6D/SDM 與全附錄 DDL/Mermaid 索引。
 
 ---
 
@@ -98,12 +98,14 @@
 
 ---
 
-### **[第 4 章：跨部會 Synergy 協同合約與 Spec 權責文件治理專章](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
-* 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責文件治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
+### **[第 4 章：跨部會 Synergy 協同合約與 Spec 權責檔案治理專章](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
+* 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責檔案治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
   - **[4.0 母子專案 Spec 權責劃分、生命週期與 AI 導航規範](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
     - 🎯 *寫作意圖*：解構第 4 章 8 大寫作結構區塊、AI Agent 導航框架與兩階段生命週期治理機制 (`[SPC-012]`)。
   - **[4.A19 GOV-A19 農業部 (tw-agro-db) 跨專案協同合約](04_synergy_contracts/4.A19_spec_gov_a19_synergy.md)**
     - 🎯 *寫作意圖*：**【實體子專案已建立】** 完整示範！收錄農業部 Spec 摘要框架、`agro_cli.py` 連結、342 農會歸併、6 碼門牌反查、450 氣象站寒害預警與 `agro-db-wizard` Agent Skill 附件。
+  - **[4.A21 GOV-A21 金管會 (tw-fsc-db) 跨專案協同合約](04_synergy_contracts/4.A21_spec_gov_a21_synergy.md)**
+    - 🎯 *寫作意圖*：**【實體子專案已建立】** 收錄金管會全景 Spec 摘要、`fsc_cli.py` 手冊連結、2,609 家金融機構 OID/門牌歸併、499 筆處分書與司法防詐穿透聯防合約。
   - **[4.A13 GOV-A13 內政部 (tw-moi-db) 跨專案協同合約](04_synergy_contracts/4.A13_spec_gov_a13_synergy.md)**
     - 🎯 *寫作意圖*：**【未建立，母專案孵化演練 1】** 示範！收錄內政部 Spec 摘要草案、`moi_cli.md` 手冊、7,748 村里邊界與地籍段號 (`cadastral_id`) 特農區違規聯防。
   - **[4.A09 GOV-A09 經濟部 (tw-moea-db) 跨專案協同合約](04_synergy_contracts/4.A09_spec_gov_a09_synergy.md)**
@@ -112,7 +114,7 @@
 ---
 
 ### **[第 5 章：七大類別實戰 Playbook 與 Agent 協同指南](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
-* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
+* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
   - **[5.0 七大類別實戰 Playbook 導覽與 4 大業務結構規範](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
     - 🎯 *寫作意圖*：介紹本章 7 大業務類別光譜與 4 大業務寫作結構規範。
   - **[5.1 【政府行政類】第一線基層公務人員 Playbook](05_stakeholder_playbooks/5.1_civil_servant_playbook.md)**
@@ -122,13 +124,13 @@
   - **[5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook](05_stakeholder_playbooks/5.3_ai_architect_playbook.md)**
     - 🎯 *寫作意圖*：解決 LLM 缺乏公部門語意與歷史改制知識、產生地理與組織幻覺的痛點，透過 Schema.org 語意物件與 `gov-db-wizard` 發動 100% 零幻覺 GraphRAG。
   - **[5.4 【企業法務/風控類】企業法務與合規官 Playbook](05_stakeholder_playbooks/5.4_legal_compliance_playbook.md)**
-    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
+    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
   - **[5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook](05_stakeholder_playbooks/5.5_esg_consultant_playbook.md)**
     - 🎯 *寫作意圖*：解決工廠只有文字地址、國土分區只有地籍段號無法比對的痛點，1 秒將門牌轉地碼並空間套疊特定農業區與水質保護區，10 秒產出 GRI/ISO 綠色合規報告。
   - **[5.6 【調查媒體類】資料新聞記者 Playbook](05_stakeholder_playbooks/5.6_data_journalist_playbook.md)**
     - 🎯 *寫作意圖*：解決跨部會資料庫撕裂、追查公共議題缺乏證據鏈的痛點，透過 OID 組織樹與企業統編發動全自動實體勾稽，繪出具權威背書之調查報導關聯圖譜。
   - **[5.7 【公民社群類】公民科技開源貢獻者 Playbook](05_stakeholder_playbooks/5.7_civic_tech_playbook.md)**
-    - 🎯 *寫作意圖*：解決民間修復好的資料無法回流政府發布源頭的痛點，透過自動生成 `data_correction_feedback.json` 回饋 `data.gov.tw`，貫通連線公私協同治理完整迴路。
+    - 🎯 *寫作意圖*：解決民間修復好的資料無法回流政府發布源頭的痛點，透過自動生成 `data_correction_feedback.json` 回饋 `data.gov.tw`，串接連線公私協同治理完整迴路。
 
 ---
 
@@ -145,7 +147,7 @@
 
 ---
 
-### **[第 7 章：結語與跨部會生態系展望](07_conclusion.md)**
+### **[第 7 章：結語與跨部會生態系系展望](07_conclusion.md)**
 * 🎯 **本章寫作意圖**：總結階段性成果，並展望跨部會資料大聯盟之未來地圖。
   - **7.1 結語：打破跨部會資料孤島的通用基石底座**
     - 🎯 *寫作意圖*：總結 `GOV-300` 作為全台灣政府資料治理通用基石的技術貢獻與階段性里程碑。
@@ -625,6 +627,36 @@ erDiagram
   );
   ```
 
+### 3.4.1 機關歷史改制與組織演進圖譜審核表 (`agency_genealogy`) [G30 核心實體表]
+* 🎯 **詳細表格用途 (Table Purpose)**：
+  記錄中央各部會、附屬機關歷史改制、升格、更名與廢止演進歷程。實裝 **JIT 輕量化巨觀推導 (JIT Macro Pattern Derivation)** 機制，資料庫僅記錄抽象演進骨幹規則與法規依據（如各河川局 ➔ 各河川分署），執行期動態對齊官方 6,937 筆最新 OID，避免底層資料庫膨脹數千筆附屬機構。
+* 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
+  - **與 `master_agencies` 連結**：`successor_oid` 與 `predecessor_oid` 直接對齊權威機關 OID 主檔。
+  - **與外部 `law_cli` 連結**：透過 `pcode` 與 `law_name` 直連全國法規資料庫歷史沿革與廢止條例。
+* 📜 **DDL 宣告**：
+  ```sql
+  CREATE TABLE agency_genealogy (
+      genealogy_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      predecessor_name VARCHAR(128) NOT NULL,   -- 前身機關名稱 (如 行政院農業委員會)
+      predecessor_oid VARCHAR(128),              -- 前身機關 OID
+      successor_name VARCHAR(128) NOT NULL,     -- 繼承/現行機關名稱 (如 農業部)
+      successor_oid VARCHAR(128),                -- 現行權威 OID (如 2.16.886.101.20003.20064)
+      event_type VARCHAR(32) NOT NULL,           -- UPGRADE (改制), ABOLISH (廢止), MERGE (整併)
+      effective_date VARCHAR(16),                -- 生效日期 (如 112年8月1日)
+      law_name VARCHAR(128) NOT NULL,            -- 依據法規 (如 農業部組織法)
+      law_article VARCHAR(32),                    -- 法規條次
+      pcode VARCHAR(16),                          -- law_cli PCode 識別碼
+      source_text TEXT,                          -- 法規原文摘要
+      completeness_level VARCHAR(32) NOT NULL,   -- FULL_MATCH, PARTIAL_MATCH, TEXT_ONLY
+      confidence_score FLOAT DEFAULT 0.5,        -- 0.0 ~ 1.0
+      review_status VARCHAR(32) DEFAULT 'PENDING_REVIEW', -- VERIFIED, PENDING_REVIEW, NEEDS_PATCH
+      reviewed_by VARCHAR(64),
+      reviewed_at TIMESTAMP,
+      attributes_json TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+  ```
+
 ---
 
 ## 🔑 Part B: `universal_keys.sqlite` 五大通用基石庫 (8 大實體表)
@@ -666,17 +698,18 @@ erDiagram
 
 ### 3.7 郵遞區號與地址對照表 (`zipcode_registry`) [基石二]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **372 筆** 本機 3 碼郵遞區號。並搭配 CLI 工具 `opendata_cli.py zipcode` 提供全台 6 碼（3+3 碼）門牌精確投遞區號的線上即時反查。
+  收錄 **117+ 筆全台實體** 與 372 筆通用 3 碼郵遞區號。搭配 CGS v2.4 CLI 工具 `g20_cli.py align-address` 提供門牌地址串流正規化、舊制縣市升格轉譯（如「桃園縣中壢市」轉「桃園市中壢區」）與門牌結構完整度指標 (AIS - Address Integrity Score, 🟢 HIGH / 🟡 MEDIUM / 🔴 LOW) 反查。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
-  - **與 `admin_codes` 連結**：透過 `admin_code` 連結至鄉鎮市區。
-  - **與門牌地址轉碼服務 (TGOS / `tw-moi-db`) 連結**：將異質文字地址（如「臺北市重慶南路一段120號」）轉譯為 6 碼郵遞區號與 WGS84 經緯度。
+  - **與 `admin_codes` 連結**：透過 `admin_code` 連結至 6 碼國家標準行政區劃。
+  - **與門牌地址轉碼服務 (TGOS / `tw-moi-db`) 連結**：將異質文字地址（如「臺北市信義區市府路1號」）轉譯為 3 碼/6 碼郵遞區號與行政區劃主鍵。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE zipcode_registry (
-      zipcode VARCHAR(8) PRIMARY KEY,      -- 3碼/6碼郵遞區號 (如 100005)
-      admin_code VARCHAR(8) NOT NULL,      -- 所屬行政區劃 (如 630000)
-      road_name VARCHAR(64),               -- 路名街名
-      scope_text VARCHAR(128),             -- 投遞門牌範圍
+      zipcode VARCHAR(8) PRIMARY KEY,      -- 3碼郵遞區號 (如 302, 110)
+      admin_code VARCHAR(8) NOT NULL,      -- 所屬行政區劃 (如 10004010, 63000060)
+      county_name VARCHAR(32) NOT NULL,    -- 權威縣市名
+      town_name VARCHAR(32) NOT NULL,      -- 權威鄉鎮區名
+      attributes_json TEXT,                -- 半結構化屬性與清洗紀錄
       FOREIGN KEY(admin_code) REFERENCES admin_codes(admin_code)
   );
   ```

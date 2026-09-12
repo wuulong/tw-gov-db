@@ -138,6 +138,36 @@ erDiagram
   );
   ```
 
+### 3.4.1 機關歷史改制與組織演進圖譜審核表 (`agency_genealogy`) [G30 核心實體表]
+* 🎯 **詳細表格用途 (Table Purpose)**：
+  記錄中央各部會、附屬機關歷史改制、升格、更名與廢止演進歷程。實裝 **JIT 輕量化巨觀推導 (JIT Macro Pattern Derivation)** 機制，資料庫僅記錄抽象演進骨幹規則與法規依據（如各河川局 ➔ 各河川分署），執行期動態對齊官方 6,937 筆最新 OID，避免底層資料庫膨脹數千筆附屬機構。
+* 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
+  - **與 `master_agencies` 連結**：`successor_oid` 與 `predecessor_oid` 直接對齊權威機關 OID 主檔。
+  - **與外部 `law_cli` 連結**：透過 `pcode` 與 `law_name` 直連全國法規資料庫歷史沿革與廢止條例。
+* 📜 **DDL 宣告**：
+  ```sql
+  CREATE TABLE agency_genealogy (
+      genealogy_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      predecessor_name VARCHAR(128) NOT NULL,   -- 前身機關名稱 (如 行政院農業委員會)
+      predecessor_oid VARCHAR(128),              -- 前身機關 OID
+      successor_name VARCHAR(128) NOT NULL,     -- 繼承/現行機關名稱 (如 農業部)
+      successor_oid VARCHAR(128),                -- 現行權威 OID (如 2.16.886.101.20003.20064)
+      event_type VARCHAR(32) NOT NULL,           -- UPGRADE (改制), ABOLISH (廢止), MERGE (整併)
+      effective_date VARCHAR(16),                -- 生效日期 (如 112年8月1日)
+      law_name VARCHAR(128) NOT NULL,            -- 依據法規 (如 農業部組織法)
+      law_article VARCHAR(32),                    -- 法規條次
+      pcode VARCHAR(16),                          -- law_cli PCode 識別碼
+      source_text TEXT,                          -- 法規原文摘要
+      completeness_level VARCHAR(32) NOT NULL,   -- FULL_MATCH, PARTIAL_MATCH, TEXT_ONLY
+      confidence_score FLOAT DEFAULT 0.5,        -- 0.0 ~ 1.0
+      review_status VARCHAR(32) DEFAULT 'PENDING_REVIEW', -- VERIFIED, PENDING_REVIEW, NEEDS_PATCH
+      reviewed_by VARCHAR(64),
+      reviewed_at TIMESTAMP,
+      attributes_json TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+  ```
+
 ---
 
 ## 🔑 Part B: `universal_keys.sqlite` 五大通用基石庫 (8 大實體表)
@@ -179,17 +209,18 @@ erDiagram
 
 ### 3.7 郵遞區號與地址對照表 (`zipcode_registry`) [基石二]
 * 🎯 **詳細表格用途 (Table Purpose)**：
-  收錄 **372 筆** 本機 3 碼郵遞區號。並搭配 CLI 工具 `opendata_cli.py zipcode` 提供全台 6 碼（3+3 碼）門牌精確投遞區號的線上即時反查。
+  收錄 **117+ 筆全台實體** 與 372 筆通用 3 碼郵遞區號。搭配 CGS v2.4 CLI 工具 `g20_cli.py align-address` 提供門牌地址串流正規化、舊制縣市升格轉譯（如「桃園縣中壢市」轉「桃園市中壢區」）與門牌結構完整度指標 (AIS - Address Integrity Score, 🟢 HIGH / 🟡 MEDIUM / 🔴 LOW) 反查。
 * 🔗 **跨 DB / 跨模組連結性 (Inter-DB Connectivity)**：
-  - **與 `admin_codes` 連結**：透過 `admin_code` 連結至鄉鎮市區。
-  - **與門牌地址轉碼服務 (TGOS / `tw-moi-db`) 連結**：將異質文字地址（如「臺北市重慶南路一段120號」）轉譯為 6 碼郵遞區號與 WGS84 經緯度。
+  - **與 `admin_codes` 連結**：透過 `admin_code` 連結至 6 碼國家標準行政區劃。
+  - **與門牌地址轉碼服務 (TGOS / `tw-moi-db`) 連結**：將異質文字地址（如「臺北市信義區市府路1號」）轉譯為 3 碼/6 碼郵遞區號與行政區劃主鍵。
 * 📜 **DDL 宣告**：
   ```sql
   CREATE TABLE zipcode_registry (
-      zipcode VARCHAR(8) PRIMARY KEY,      -- 3碼/6碼郵遞區號 (如 100005)
-      admin_code VARCHAR(8) NOT NULL,      -- 所屬行政區劃 (如 630000)
-      road_name VARCHAR(64),               -- 路名街名
-      scope_text VARCHAR(128),             -- 投遞門牌範圍
+      zipcode VARCHAR(8) PRIMARY KEY,      -- 3碼郵遞區號 (如 302, 110)
+      admin_code VARCHAR(8) NOT NULL,      -- 所屬行政區劃 (如 10004010, 63000060)
+      county_name VARCHAR(32) NOT NULL,    -- 權威縣市名
+      town_name VARCHAR(32) NOT NULL,      -- 權威鄉鎮區名
+      attributes_json TEXT,                -- 半結構化屬性與清洗紀錄
       FOREIGN KEY(admin_code) REFERENCES admin_codes(admin_code)
   );
   ```
