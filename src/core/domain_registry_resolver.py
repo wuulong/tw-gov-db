@@ -128,3 +128,73 @@ class DomainRegistryResolver:
         conn = sqlite3.connect(str(db_path))
         conn.row_factory = sqlite3.Row
         return conn
+
+    def bootstrap_domain_python_path(self, target_domain_id: str):
+        """強韌化功能: 自動將目標 Domain 專案之 src 加入 sys.path，實現免安裝 import 跨專案呼叫"""
+        info = self.get_domain_info(target_domain_id)
+        pkg_path = info.get("python_package_path") or str(Path(info["local_repo_path"]) / "src")
+        repo_path = info.get("local_repo_path")
+        
+        # 同時注入 repo_path 與 pkg_path 確保可匯入 src.xxx 或直接匯入 xxx
+        for p in [repo_path, pkg_path]:
+            if p and Path(p).exists() and p not in sys.path:
+                sys.path.insert(0, p)
+
+
+    def load_domain_adapter_class(self, domain_id: str):
+        """動態加載目標領域 Adapter 類別 (如載入 tw-agro-db 的 AgroAdapter)"""
+        self.bootstrap_domain_python_path("tw-gov-db")
+        info = self.get_domain_info(domain_id)
+        self.bootstrap_domain_python_path(domain_id)
+        
+        module_path = info.get("entry_adapter_module")
+        if not module_path:
+            raise ValueError(f"領域 {domain_id} 未設定 entry_adapter_module")
+        
+        errs = []
+        for p in [module_path, module_path[4:] if module_path.startswith("src.") else f"src.{module_path}"]:
+            try:
+                return importlib.import_module(p)
+            except Exception as e:
+                errs.append(f"{p}: {e}")
+        
+        raise ImportError(f"無法載入模組 {module_path} (嘗試清單失敗: {errs})")
+
+
+
+
+    def verify_all_domain_registrations(self) -> Dict[str, Any]:
+        """【JIT 審計檢驗 API】掃描並驗證全域所有已註冊領域之實體 Repo、CLI 腳本與 Adapter 可存取性"""
+        results = {}
+        for code, info in self.map_data.get("domains", {}).items():
+            domain_id = info.get("domain_id")
+            role = info.get("role")
+            if role == "DOMAIN_CHILD" and not info.get("cli_entry_script"):
+                # 預留站點
+                results[code] = {"status": "RESERVED", "domain_id": domain_id, "issues": [], "declared_commands": [], "declared_dbs": []}
+                continue
+
+            issues = []
+            repo_path = info.get("local_repo_path")
+            cli_script = info.get("cli_entry_script")
+            adapter_mod = info.get("entry_adapter_module")
+
+            if not repo_path or not Path(repo_path).exists():
+                issues.append(f"Repo 目錄不存在: {repo_path}")
+            if not cli_script or not Path(cli_script).exists():
+                issues.append(f"CLI 腳本不存在: {cli_script}")
+            if adapter_mod:
+                try:
+                    self.load_domain_adapter_class(code)
+                except Exception as e:
+                    issues.append(f"Adapter 模組無法動態加載: {e}")
+
+
+            results[code] = {
+                "status": "OK" if not issues else "ERROR",
+                "domain_id": domain_id,
+                "issues": issues,
+                "declared_commands": info.get("cli_commands", []),
+                "declared_dbs": info.get("core_dbs", [])
+            }
+        return results

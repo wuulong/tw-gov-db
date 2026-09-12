@@ -35,11 +35,18 @@ _log_file_handle = None
 
 
 
+import select
+
 def read_pipe_lines() -> List[str]:
-    """當 sys.stdin 非 tty 時自 stdin 讀取非空行字串列表"""
+    """當 sys.stdin 非 tty 且有輸入資料時自 stdin 讀取非空行字串列表 (Non-blocking)"""
     if not sys.stdin.isatty():
-        raw = sys.stdin.read()
-        return [line.strip() for line in raw.splitlines() if line.strip()]
+        try:
+            rlist, _, _ = select.select([sys.stdin], [], [], 0.05)
+            if rlist:
+                raw = sys.stdin.read()
+                return [line.strip() for line in raw.splitlines() if line.strip()]
+        except Exception:
+            pass
     return []
 
 
@@ -367,7 +374,8 @@ def main():
             queries = []
             if args.query:
                 queries.append(args.query)
-            queries.extend(read_pipe_lines())
+            else:
+                queries.extend(read_pipe_lines())
 
             if not queries:
                 log_msg("ERROR", "未提供 search 關鍵字，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
@@ -403,7 +411,8 @@ def main():
             targets = []
             if args.target:
                 targets.append(args.target)
-            targets.extend(read_pipe_lines())
+            else:
+                targets.extend(read_pipe_lines())
 
             if not targets:
                 log_msg("ERROR", "未提供 tree 目標機關，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
@@ -437,7 +446,8 @@ def main():
             publishers = []
             if args.publisher:
                 publishers.append(args.publisher)
-            publishers.extend(read_pipe_lines())
+            else:
+                publishers.extend(read_pipe_lines())
 
             if not publishers:
                 log_msg("ERROR", "未提供 alias 發布單位關鍵字，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
