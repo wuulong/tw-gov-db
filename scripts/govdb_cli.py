@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-[metadata]
+"""[metadata]
 name: govdb_cli.py
 title: 政府機關底座 DB 存取與對齊 CLI 工具 (GOV-DB CLI)
-description: 提供查詢 master_agencies.sqlite 機關主檔、發布者別名對齊、組織樹導航與部會子專案部署狀態的 CGS v2.0 標準 CLI/API 工具。
+description: 提供查詢 master_agencies.sqlite 機關主檔、發布者別名對齊、組織樹導航與部會子專案部署狀態的 CGS v2.4 (Pipeline-Native) 標準 CLI/API 工具。
 category: database
 dependencies: sqlite3
-cgs_version: 2.0
+spec: events-2026Q3/gov-db-in/sys_eng/02_specification/spec_cgs_v24_pipeline.md
+manual: events-2026Q3/gov-db-in/tw-gov-db/README.md
+compat: posix
 """
 
 import os
@@ -20,13 +21,29 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any
 
 # 顯式宣告 CGS 規格版號
-__cli_spec_version__ = "2.0"
+__cli_spec_version__ = "2.4"
 
-DB_PATH = Path(__file__).resolve().parents[1] / "ontology" / "master_agencies.sqlite"
+env_db_dir = os.environ.get("GOV_DB_DIR")
+if env_db_dir:
+    DB_PATH = Path(env_db_dir) / "master_agencies.sqlite"
+elif Path("/Volumes/D2024/data/gov-db-in/db/master_agencies.sqlite").exists():
+    DB_PATH = Path("/Volumes/D2024/data/gov-db-in/db/master_agencies.sqlite")
+else:
+    DB_PATH = Path(__file__).resolve().parents[1] / "ontology" / "master_agencies.sqlite"
+
 _log_file_handle = None
 
 
-# --- CGS v2.0 觀察性與日誌工具區塊 ---
+
+def read_pipe_lines() -> List[str]:
+    """當 sys.stdin 非 tty 時自 stdin 讀取非空行字串列表"""
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+        return [line.strip() for line in raw.splitlines() if line.strip()]
+    return []
+
+
+# --- CGS v2.4 觀察性與日誌工具區塊 ---
 def init_log_file(log_file_path: Optional[str] = None) -> None:
     """初始化 --log-file 目錄與檔案 File Handle"""
     global _log_file_handle
@@ -51,7 +68,7 @@ def init_log_file(log_file_path: Optional[str] = None) -> None:
 
 
 def log_msg(level: str, message: str, verbose: bool = False, json_mode: bool = False) -> None:
-    """CGS v2.0 統一結構化 Log 輸出函式 (100% 輸出至 sys.stderr)"""
+    """CGS v2.4 統一結構化 Log 輸出函式 (100% 輸出至 sys.stderr)"""
     if level.upper() == "DEBUG" and not verbose:
         return
 
@@ -85,12 +102,12 @@ def get_schema() -> Dict[str, Any]:
         "domain": "govdb",
         "cgs_spec": __cli_spec_version__,
         "title": "govdb_cli",
-        "description": "政府機關底座 DB 存取與別名對齊 CLI 工具",
+        "description": "政府機關底座 DB 存取與別名對齊 CLI 工具 (Pipeline-Native)",
         "commands": {
-            "search": {"description": "搜尋機關主檔 (關鍵字/OID/機關代號)", "aliases": ["find"], "params": ["query"]},
-            "tree": {"description": "顯示指定機關組織樹 (含父與子機關)", "aliases": ["hierarchy"], "params": ["target"]},
-            "alias": {"description": "查詢開放資料發布單位別名對齊與 OID 映射", "aliases": ["align"], "params": ["publisher"]},
-            "domains": {"description": "檢視已實體化展開之部會子專案", "aliases": ["list-domains"]},
+            "search": {"description": "搜尋機關主檔 (關鍵字/OID/機關代號, 支援 Pipe)", "aliases": ["find"], "params": ["query"]},
+            "tree": {"description": "顯示指定機關組織樹 (含父與子機關, 支援 Pipe)", "aliases": ["hierarchy"], "params": ["target"]},
+            "alias": {"description": "查詢開放資料發布單位別名對齊與 OID 映射 (支援 Pipe)", "aliases": ["align"], "params": ["publisher"]},
+            "domains": {"description": "檢視已實體化展開之部會子專案 (支援 Pipe 篩選)", "aliases": ["list-domains"]},
             "stat": {"description": "顯示 DB 資料筆數與健康度指標統計", "aliases": ["metrics"]},
             "status": {"description": "掃描並顯示所有資料庫之 Table/View 筆數統計", "aliases": ["tables", "views"]},
             "schema": {"description": "輸出 JSON Schema 與路由地圖"},
@@ -106,7 +123,7 @@ def get_schema() -> Dict[str, Any]:
     }
 
 
-# --- 核心業務邏輯 API 區塊 (CGS v2.0 規定: 零 sys.exit(), 拋出 Exception) ---
+# --- 核心業務邏輯 API 區塊 (CGS v2.4 規定: 零 sys.exit(), 拋出 Exception) ---
 def get_db_connection(db_path: Path = DB_PATH) -> sqlite3.Connection:
     """取得 sqlite3 資料庫連線"""
     if not db_path.exists():
@@ -247,7 +264,7 @@ def get_db_status(db_dir: Optional[Path] = None) -> Dict[str, Any]:
     return db_results
 
 
-# --- CGS v2.0 CLI 進入點區塊 (只在此處呼叫 sys.exit) ---
+# --- CGS v2.4 CLI 進入點區塊 (只在此處呼叫 sys.exit) ---
 def main():
     parent_parser = argparse.ArgumentParser(add_help=False)
     parent_parser.add_argument("-j", "--json", action="store_true", help="單行緊湊 JSON 輸出 (Token-Saving)")
@@ -256,7 +273,7 @@ def main():
     parent_parser.add_argument("--log-file", type=str, help="指定 Log 日誌輸出路徑")
 
     parser = argparse.ArgumentParser(
-        description="政府機關底座 DB 存取與對齊 CLI 工具 (GOV-DB CLI v2.0)",
+        description="政府機關底座 DB 存取與對齊 CLI 工具 (GOV-DB CLI v2.4 Pipeline-Native)",
         parents=[parent_parser],
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
@@ -265,16 +282,16 @@ def main():
 
     # 1. search / find
     search_parser = subparsers.add_parser("search", aliases=["find"], parents=[parent_parser], help="搜尋機關主檔")
-    search_parser.add_argument("query", help="搜尋關鍵字 (名稱/OID/機關代號)")
+    search_parser.add_argument("query", nargs="?", default=None, help="搜尋關鍵字 (名稱/OID/機關代號)")
     search_parser.add_argument("-n", "--limit", type=int, default=20, help="最多顯示筆數")
 
     # 2. tree / hierarchy
     tree_parser = subparsers.add_parser("tree", aliases=["hierarchy"], parents=[parent_parser], help="顯示機關組織樹")
-    tree_parser.add_argument("target", help="目標機關名稱或 OID")
+    tree_parser.add_argument("target", nargs="?", default=None, help="目標機關名稱或 OID")
 
     # 3. alias / align
     alias_parser = subparsers.add_parser("alias", aliases=["align"], parents=[parent_parser], help="查詢發布單位別名映射")
-    alias_parser.add_argument("publisher", help="發布單位名稱關鍵字")
+    alias_parser.add_argument("publisher", nargs="?", default=None, help="發布單位名稱關鍵字")
 
     # 4. domains / list-domains
     subparsers.add_parser("domains", aliases=["list-domains"], parents=[parent_parser], help="檢視已實體化展開之部會子專案")
@@ -285,13 +302,13 @@ def main():
     # 6. status / tables / views
     subparsers.add_parser("status", aliases=["tables", "views"], parents=[parent_parser], help="掃描並顯示所有資料庫之 Table/View 筆數統計")
 
-    # 8. g10 / miner / report_miner
+    # 7. g10 / miner / report_miner
     subparsers.add_parser("g10", aliases=["miner", "report_miner"], parents=[parent_parser], help="G10 報告探勘與典藏庫狀態")
 
-    # 9. schema
+    # 8. schema
     subparsers.add_parser("schema", parents=[parent_parser], help="輸出 JSON Schema 與路由地圖")
 
-    # 8. version
+    # 9. version
     subparsers.add_parser("version", parents=[parent_parser], help="顯示版本與 CGS 規範資訊")
 
     args = parser.parse_args()
@@ -311,14 +328,14 @@ def main():
         if cmd in ["version"]:
             ver_info = {
                 "script": "govdb_cli.py",
-                "version": "0.2.1",
+                "version": "0.3.0",
                 "cgs_spec": __cli_spec_version__,
                 "db_path": str(DB_PATH)
             }
             if args.json:
                 print(json.dumps(ver_info, ensure_ascii=False, separators=(',', ':')))
             else:
-                print(f"🏛️ govdb_cli.py v0.2.1 (CGS Spec v{__cli_spec_version__})")
+                print(f"🏛️ govdb_cli.py v0.3.0 (CGS Spec v{__cli_spec_version__})")
 
         elif cmd in ["schema"]:
             schema_data = get_schema()
@@ -336,27 +353,40 @@ def main():
                     for obj in res.get("objects", []):
                         print(f"{db_name}:{obj['type']}:{obj['name']}:{obj['count']}")
             else:
-                print("📊 tw-gov-db 全資料庫 Table & View 物件與筆數統計:")
+                print("📊 tw-gov-db 全資料庫 Table & View 物件與筆數統計:", file=sys.stderr)
                 for db_name, res in status_data.items():
                     if res["status"] != "OK":
-                        print(f"\n 📁 [{db_name}] ❌ 檔案不存在")
+                        print(f"\n 📁 [{db_name}] ❌ 檔案不存在", file=sys.stderr)
                         continue
-                    print(f"\n 📁 [{db_name}] ({len(res['objects'])} 個物件):")
+                    print(f"\n 📁 [{db_name}] ({len(res['objects'])} 個物件):", file=sys.stderr)
                     for obj in res["objects"]:
                         badge = "📋 [TABLE]" if obj["type"] == "TABLE" else "👁️ [VIEW]"
-                        print(f"   └── {badge} {obj['name']}: {obj['count']:,} 筆")
+                        print(f"   └── {badge} {obj['name']}: {obj['count']:,} 筆", file=sys.stderr)
 
         elif cmd in ["search", "find"]:
-            data = search_agencies(args.query, limit=args.limit)
+            queries = []
+            if args.query:
+                queries.append(args.query)
+            queries.extend(read_pipe_lines())
+
+            if not queries:
+                log_msg("ERROR", "未提供 search 關鍵字，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
+                sys.exit(1)
+
+            all_data = []
+            for q in queries:
+                res = search_agencies(q, limit=args.limit)
+                all_data.extend(res)
+
             if args.json:
-                print(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+                print(json.dumps(all_data, ensure_ascii=False, separators=(',', ':')))
             elif args.quiet:
-                for item in data:
+                for item in all_data:
                     print(item['agency_oid'])
             else:
-                print(f"🔍 搜尋 '{args.query}' 結果 ({len(data)} 筆):")
-                for item in data:
-                    print(f" • [{item['org_code'] or '無代碼'}] {item['agency_name']} (OID: {item['agency_oid']})")
+                print(f"🔍 搜尋結果 ({len(all_data)} 筆):", file=sys.stderr)
+                for item in all_data:
+                    print(f" • [{item['org_code'] or '無程式碼'}] {item['agency_name']} (OID: {item['agency_oid']})")
 
         elif cmd in ["g10", "miner", "report_miner"]:
             gov_src = str(Path(__file__).resolve().parents[1] / "src")
@@ -370,35 +400,71 @@ def main():
                 print(f"📊 G10 gov-report-miner 狀態摘要: 報告索引 {summary['total_reports']} 筆, 已快取 {summary['cached_reports']} 筆, 暫存 {summary['staged_reports']} 筆")
 
         elif cmd in ["tree", "hierarchy"]:
-            tree = get_agency_tree(args.target)
+            targets = []
+            if args.target:
+                targets.append(args.target)
+            targets.extend(read_pipe_lines())
+
+            if not targets:
+                log_msg("ERROR", "未提供 tree 目標機關，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
+                sys.exit(1)
+
+            trees = []
+            for t in targets:
+                try:
+                    tree = get_agency_tree(t)
+                    trees.append(tree)
+                except ValueError as ve:
+                    log_msg("WARN", str(ve), verbose=True, json_mode=args.json)
+
             if args.json:
-                print(json.dumps(tree, ensure_ascii=False, separators=(',', ':')))
+                print(json.dumps(trees[0] if len(trees) == 1 and args.target else trees, ensure_ascii=False, separators=(',', ':')))
             elif args.quiet:
-                print(f"{tree['agency_name']}:{tree['agency_oid']}")
+                for tree in trees:
+                    print(f"{tree['agency_name']}:{tree['agency_oid']}")
             else:
-                print(f"🌳 組織樹: {tree['agency_name']} (OID: {tree['agency_oid']})")
-                if tree['parent']:
-                    print(f" ⬆️ 上級機關: {tree['parent']['agency_name']} ({tree['parent']['agency_oid']})")
-                print(f" ⬇️ 下屬機關 ({len(tree['children'])} 個):")
-                for child in tree['children'][:15]:
-                    print(f"   └── [{child['org_code'] or 'N/A'}] {child['agency_name']} ({child['agency_oid']})")
-                if len(tree['children']) > 15:
-                    print(f"   ... (其餘 {len(tree['children']) - 15} 個省略)")
+                for tree in trees:
+                    print(f"🌳 組織樹: {tree['agency_name']} (OID: {tree['agency_oid']})")
+                    if tree['parent']:
+                        print(f" ⬆️ 上級機關: {tree['parent']['agency_name']} ({tree['parent']['agency_oid']})")
+                    print(f" ⬇️ 下屬機關 ({len(tree['children'])} 個):")
+                    for child in tree['children'][:15]:
+                        print(f"   └── [{child['org_code'] or 'N/A'}] {child['agency_name']} ({child['agency_oid']})")
+                    if len(tree['children']) > 15:
+                        print(f"   ... (其餘 {len(tree['children']) - 15} 個省略)")
 
         elif cmd in ["alias", "align"]:
-            aliases = search_publisher_alias(args.publisher)
+            publishers = []
+            if args.publisher:
+                publishers.append(args.publisher)
+            publishers.extend(read_pipe_lines())
+
+            if not publishers:
+                log_msg("ERROR", "未提供 alias 發布單位關鍵字，且 stdin 管道亦無資料！", verbose=True, json_mode=args.json)
+                sys.exit(1)
+
+            all_aliases = []
+            for p in publishers:
+                aliases = search_publisher_alias(p)
+                all_aliases.extend(aliases)
+
             if args.json:
-                print(json.dumps(aliases, ensure_ascii=False, separators=(',', ':')))
+                print(json.dumps(all_aliases, ensure_ascii=False, separators=(',', ':')))
             elif args.quiet:
-                for a in aliases:
+                for a in all_aliases:
                     print(f"{a['raw_publisher_name']}:{a['mapped_agency_oid']}")
             else:
-                print(f"🏷️ 發布單位別名對齊 '{args.publisher}' ({len(aliases)} 筆):")
-                for a in aliases:
+                print(f"🏷️ 發布單位別名對齊結果 ({len(all_aliases)} 筆):", file=sys.stderr)
+                for a in all_aliases:
                     print(f" • '{a['raw_publisher_name']}' ➔ {a['agency_name']} (OID: {a['mapped_agency_oid']}) [信心分數: {a['confidence_score']}]")
 
         elif cmd in ["domains", "list-domains"]:
             domains = get_domain_deployments()
+            pipe_filters = read_pipe_lines()
+            if pipe_filters:
+                filter_set = set(f.upper() for f in pipe_filters)
+                domains = [d for d in domains if d['domain_id'].upper() in filter_set or any(f in d['domain_name'] for f in pipe_filters)]
+
             if args.json:
                 print(json.dumps(domains, ensure_ascii=False, separators=(',', ':')))
             elif args.quiet:

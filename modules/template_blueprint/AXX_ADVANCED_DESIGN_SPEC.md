@@ -11,7 +11,7 @@
 
 ---
 
-## 2. 演算法與指標計算 (Algorithm Specifications)
+## 2. 演演算法與指標計算 (Algorithm Specifications)
 
 1. **空間鄰近算式 (Spatial Distance Math)**：
    利用 WGS84 經緯度半正矢公式 (Haversine Formula) 進行 20 公里範圍內防禦點位掃描。

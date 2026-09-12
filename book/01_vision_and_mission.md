@@ -94,6 +94,6 @@
 2. **Core DB 實體直連層 (`get_domain_core_db_connection`)**：以零額外維運成本連線對方的 SQLite 核心整合表。
 3. **Library 免安裝動態注入層 (`bootstrap_domain_python_path`)**：將 Python 封裝模組動態注入 `sys.path`，實現免 `pip install` 的程式庫級別調用。
 
-### 5. 重塑開源社會價值與 AI 生態賦能 (Open-Source Impact)
+### 5. 重塑開源社會價值與 AI 生態系賦能 (Open-Source Impact)
 * **打造零幻覺 GraphRAG 底座**：透過 `GOV-300` 權威實體 OID 與 5 大基石，大型語言模型 (LLM) 與 Agentic AI 能夠取得全台灣最精確的地理、時間與組織 Grounding，完全消解 AI 幻覺。
 * **賦能台灣數位轉型與公務開源**：將全台灣政府公開資料的治理經驗與系統工程規格（包含 SE-6D 追溯鏈、QGIS 軟體定義地圖 SDM、Marp 簡報生成）全數開源，提供產學研與政府單位作為下世代數位基建的標準標竿。

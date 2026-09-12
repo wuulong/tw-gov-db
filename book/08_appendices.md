@@ -184,7 +184,7 @@ python src/cli/opendata_cli.py zipcode "臺北市中正區重慶南路一段120�
 # 2. 檢索開放資料集並觸發 Circuit Breaker 品質 profiling
 python src/cli/opendata_cli.py profile --dataset-id 173440
 
-# 3. 強制刷新發布單位別名對齊
+# 3. 強制重新整理發布單位別名對齊
 python src/cli/opendata_cli.py align-publisher "農業部農糧署"
 ```
 

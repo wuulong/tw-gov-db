@@ -10,7 +10,7 @@
 
 ```text
 modules/template_blueprint/
-├── README.md                      ◄── 本說明文件 (模組簡介與架構範本)
+├── README.md                      ◄── 本說明檔案 (模組簡介與架構範本)
 ├── AXX_SPECIFICATION.md           ◄── 子模組基礎業務 Spec 強制模板
 ├── AXX_ADVANCED_DESIGN_SPEC.md    ◄── 子模組內部多 DB 碰撞進階設計模板
 ├── CLI_MANUAL.md                  ◄── CLI 工具使用手冊範本
@@ -26,4 +26,4 @@ modules/template_blueprint/
 
 1. **複製模板**：將 `modules/template_blueprint/` 複製至目標子專案或新模組目錄（如 `modules/a13_moi_core/`）。
 2. **搜尋與替換**：將檔案中的 `AXX` 替換為實際部會代號（如 `A13`），將 `[DOMAIN_NAME]` 替換為專案全稱。
-3. **完成階段 1~5**：遵從 `workflow_gov_db_submodule_bootstrap.md` 規範完成通用基石對齊、Spec 歸位、CLI 實作與合龍測試！
+3. **完成階段 1~5**：遵從 `workflow_gov_db_submodule_bootstrap.md` 規範完成通用基石對齊、Spec 歸位、CLI 實作與整合對接測試！

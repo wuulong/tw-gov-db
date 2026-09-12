@@ -7,7 +7,7 @@
 
 `tw-gov-db` (代號 **`GOV-300`** / 方案 A 權威行政院機關簡碼 `300000000A`) 是全台灣政府開放資料 (data.gov.tw) 作為語意對照、實體連結與 GraphRAG 零幻覺 Grounding 的**開源通用基石對照庫 (Mother Core Infrastructure)**。
 
-本專案解決跨部會資料孤島、發布單位別名混亂、舊民國年格式偏離標準、巨量體積障礙與缺少空間對合鍵 6 大現實痛點，為全台灣政府資料治理與部會子專案 (`GOV-A19` 農業部 `tw-agro-db v0.7.1` 相容對接、`GOV-A13` 內政部、`GOV-A09` 經濟部) 提供統一的語意基石與三層式 Co-work 介面。
+本專案解決跨部會資料孤島、發布單位別名混亂、舊民國年格式偏離標準、巨量體積障礙與缺少空間對照整合鍵 6 大現實痛點，為全台灣政府資料治理與部會子專案 (`GOV-A19` 農業部 `tw-agro-db v0.7.1` 相容對接、`GOV-A13` 內政部、`GOV-A09` 經濟部) 提供統一的語意基石與三層式 Co-work 介面。
 
 ---
 
@@ -20,13 +20,13 @@
 
 ## 🌟 五大通用基石 (5 Universal Baseline Cornerstones)
 
-`tw-gov-db` 凝練全全台灣政府資料運作所必需的 5 大核心對合基石：
+`tw-gov-db` 凝練全全台灣政府資料運作所必需的 5 大核心對照整合基石：
 
 | 通用基石 | 核心資料庫與表格 | 資料規模與對對能力 | 應用範疇 |
 | :--- | :--- | :--- | :--- |
 | **基石一：組織與身份** | `master_agencies.sqlite`<br>(`master_agencies`, `publisher_aliases`) | **7,956 筆** 官方 OID 機關<br>**708 筆** data.gov.tw 發布者別名 | 自動將異質字串 (如 "農糧署") 100% 對齊至權威 OID (`2.16.886.101...`) |
 | **基石二：空間與地籍** | `universal_keys.sqlite`<br>(`admin_codes`, `cadastral_registry`, `zipcode_registry`) | **480 筆** 6 碼國家標準行政區劃<br>**372 筆** 3 碼本機郵遞區號 (支援 6 碼門牌即時反查) | 提供全台縣市鄉鎮、地籍段號與精確門牌投遞區號 Spatial 定址 |
-| **基石三：水系與環境** | `universal_keys.sqlite`<br>(`river_registry`, `station_registry`) | **122 條** 國家水系代碼<br>**450 個** 中央氣象署/環境部官方測站 | 提供水文流域 (如淡水河 1300) 與 WGS84 氣象/水質監測站點空間碰撞 |
+| **基石三：水系與環境** | `universal_keys.sqlite`<br>(`river_registry`, `station_registry`) | **122 條** 國家水系程式碼<br>**450 個** 中央氣象署/環境部官方測站 | 提供水文流域 (如淡水河 1300) 與 WGS84 氣象/水質監測站點空間碰撞 |
 | **基石四：法人與企業** | `universal_keys.sqlite`<br>(`corporate_registry`, `npo_registry`) | **1,103 筆** 熱門 Seed 上市/國營企業<br>**23,218 筆** 登記 NGO/農漁會 | 旁路透傳快取 (Pass-Through Cache) 模式，離線本機 5MB，連線 GCIS API 自動快取 |
 | **基石五：時間與時序** | `universal_keys.sqlite`<br>(`calendar_registry`) | **1,199 筆** 2018-2026 政府辦公日曆<br>`clean_datetime()` ISO-8601 轉碼 | 自動清洗民國年 (`113/08/22` ➔ `2024-08-22`) 並對齊例假日與颱風假分類 |
 
@@ -77,7 +77,7 @@ print(cli_output)
 
 ```text
 tw-gov-db/
-├── README.md                           ◄── 本說明文件
+├── README.md                           ◄── 本說明檔案
 ├── VERSION.md                          ◄── 版本演進與跨專案相容性矩陣 (v0.2.1)
 ├── domain_map_config.json              ◄── 跨專案領域對照地圖 (軟連結)
 ├── modules/                            ◄── 子專案範本藍圖專區
@@ -86,7 +86,7 @@ tw-gov-db/
 │   ├── 00_toc.md                       ◄── 專書完整目錄與章節寫作意圖
 │   ├── FULL_BOOK_TAIWAN_GOV_DB.md      ◄── 154KB 全書大一統合訂本
 │   └── 04_synergy_contracts/prompts/   ◄── 雙向 Prompt 契約 (PROMPT_TO_SUBMODULE_A19.md)
-├── ontology/                           ◄── 數據庫 Schema 與軟連結實體庫
+├── ontology/                           ◄── 資料庫 Schema 與軟連結實體庫
 │   ├── datasource_metadata.json        ◄── 資料來源追溯中繼檔 (含 12 大資料集來源)
 │   ├── schema.sql                      ◄── 100% 全量實體庫 DDL 腳本
 │   ├── master_agencies.sqlite          🔗 權威機關主檔與別名庫

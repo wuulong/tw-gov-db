@@ -47,9 +47,11 @@ class DomainRegistryResolver:
         if domain_id_or_code in domains:
             return domains[domain_id_or_code]
 
-        # 2. 搜尋程式碼或 ID 匹配項
+        # 2. 搜尋程式碼、ID 或別名 (aliases) 匹配項
         for code, info in domains.items():
             if info.get("domain_id") == domain_id_or_code or info.get("project_code") == domain_id_or_code:
+                return info
+            if domain_id_or_code in info.get("aliases", []):
                 return info
 
         raise KeyError(f"未在 domain_map_config.json 中註冊該領域代號或 ID: {domain_id_or_code}")

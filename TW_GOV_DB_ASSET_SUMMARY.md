@@ -38,7 +38,7 @@ tw-gov-db/
 
 ---
 
-## 📊 2. 資料庫與數據規模總覽 (Database Inventory)
+## 📊 2. 資料庫與資料規模總覽 (Database Inventory)
 
 1. **`master_agencies.sqlite` (權威機關庫 - 7.5 MB)**：
    - `master_agencies`: **7,956 筆** 官方 OID 權威機關（含行政院及各部會層級）。

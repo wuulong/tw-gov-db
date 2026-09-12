@@ -38,7 +38,7 @@ def test_axx_template_spec_grounded_integration():
     assert row[0] == "630001"
     conn_keys.close()
     
-    print("✅ GOV-AXX 模板與 Spec 強對合之測試通過！")
+    print("✅ GOV-AXX 模板與 Spec 強對照整合之測試通過！")
 
 if __name__ == "__main__":
     test_axx_template_spec_grounded_integration()

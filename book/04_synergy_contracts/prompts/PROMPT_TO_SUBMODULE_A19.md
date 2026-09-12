@@ -30,7 +30,7 @@
 ### 3. 執行測試並更新對母大腦 Prompt 契約 (`synergies/PROMPT_TO_MASTER_G300.md`)
 - 執行測試套件：
   `python3 synergies/test_gov_a19_synergy.py`
-- 測試通過後，更新/確認 `synergies/PROMPT_TO_MASTER_G300.md` 檔案內容，供開發者複製回母大腦發動最終合龍驗證！
+- 測試通過後，更新/確認 `synergies/PROMPT_TO_MASTER_G300.md` 檔案內容，供開發者複製回母大腦發動最終整合對接驗證！
 
 ---
 

@@ -1,6 +1,6 @@
 # 📖 使用者手冊：`govdb_cli.py` 底座 DB 存取工具
 
-`govdb_cli.py` 是針對 `master_agencies.sqlite` 提供的高效檢索 CLI 與 Python API 工具。雙向相容於「人類命令列查詢」與「AI 代理程式 JSON 數據調用」。
+`govdb_cli.py` 是針對 `master_agencies.sqlite` 提供的高效檢索 CLI 與 Python API 工具。雙向相容於「人類命令列查詢」與「AI 代理程式 JSON 資料調用」。
 
 ---
 

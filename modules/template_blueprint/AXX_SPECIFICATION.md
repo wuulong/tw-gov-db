@@ -13,14 +13,14 @@
 
 ---
 
-## 2. 五大通用基石對齊對合表 (Baseline Alignment)
+## 2. 五大通用基石對齊對照整合表 (Baseline Alignment)
 
-| 通用基石 | 子模組引用欄位 | 對齊 GOV-300 實體表 | 業務對合目標 |
+| 通用基石 | 子模組引用欄位 | 對齊 GOV-300 實體表 | 業務對照整合目標 |
 | :--- | :--- | :--- | :--- |
-| **基石一：組織 OID** | `publisher_raw` | `master_agencies` / `publisher_aliases` | 自動歸併發布者至權威 OID |
+| **基石一：組織 OID** | `publisher_raw` | `master_agencies` / `publisher_aliases` | 自動歸並行布者至權威 OID |
 | **基石二：空間地籍** | `address_raw` / `cadastral_id` | `admin_codes` / `zipcode_registry` | 文字地址反查 6 碼門牌與地籍段號 |
 | **基石三：水系氣象** | `station_id` / `river_id` | `station_registry` / `river_registry` | 氣象與水文空間碰撞 |
-| **基石四：法人企業** | `tax_id` | `corporate_registry` / `npo_registry` | 企業統編與法人登記對合 |
+| **基石四：法人企業** | `tax_id` | `corporate_registry` / `npo_registry` | 企業統編與法人登記對照整合 |
 | **基石五：時間時序** | `date_raw` | `calendar_registry` / `clean_datetime` | 舊民國年轉 ISO-8601 與辦公日曆對齊 |
 
 ---

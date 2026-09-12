@@ -2,7 +2,16 @@ import unittest
 import sqlite3
 from pathlib import Path
 
-TARGET_DB_PATH = Path(__file__).resolve().parents[1] / "ontology" / "master_agencies.sqlite"
+import os
+
+env_db_dir = os.environ.get("GOV_DB_DIR")
+if env_db_dir:
+    TARGET_DB_PATH = Path(env_db_dir) / "master_agencies.sqlite"
+elif Path("/Volumes/D2024/data/gov-db-in/db/master_agencies.sqlite").exists():
+    TARGET_DB_PATH = Path("/Volumes/D2024/data/gov-db-in/db/master_agencies.sqlite")
+else:
+    TARGET_DB_PATH = Path(__file__).resolve().parents[1] / "ontology" / "master_agencies.sqlite"
+
 
 class TestBootstrapDB(unittest.TestCase):
     def setUp(self):

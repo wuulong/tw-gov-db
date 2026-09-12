@@ -98,8 +98,8 @@
 
 ---
 
-### **[第 4 章：跨部會 Synergy 協同合約與 Spec 權責文檔治理專章](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
-* 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責文檔治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
+### **[第 4 章：跨部會 Synergy 協同合約與 Spec 權責文件治理專章](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
+* 🎯 **本章寫作意圖**：作為所有部會子專案對接母專案 `GOV-300` 的「權威跨部會協同介面與 Spec 權責文件治理專章」。採用**目錄化多獨立檔案結構 (`04_synergy_contracts/`)** 與 **8 大標準結構區塊**。詳細解構母子專案在 Spec 權責劃分、CLI 手冊、AI Agent 工作流、Single Source of Truth 與兩階段生命週期（孵化 ➔ 歸位）上的治理機制。
   - **[4.0 母子專案 Spec 權責劃分、生命週期與 AI 導航規範](04_synergy_contracts/4.0_overview_and_spec_governance.md)**
     - 🎯 *寫作意圖*：解構第 4 章 8 大寫作結構區塊、AI Agent 導航框架與兩階段生命週期治理機制 (`[SPC-012]`)。
   - **[4.A19 GOV-A19 農業部 (tw-agro-db) 跨專案協同合約](04_synergy_contracts/4.A19_spec_gov_a19_synergy.md)**
@@ -112,7 +112,7 @@
 ---
 
 ### **[第 5 章：七大類別實戰 Playbook 與 Agent 協同指南](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
-* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
+* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
   - **[5.0 七大類別實戰 Playbook 導覽與 4 大業務結構規範](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
     - 🎯 *寫作意圖*：介紹本章 7 大業務類別光譜與 4 大業務寫作結構規範。
   - **[5.1 【政府行政類】第一線基層公務人員 Playbook](05_stakeholder_playbooks/5.1_civil_servant_playbook.md)**
@@ -122,13 +122,13 @@
   - **[5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook](05_stakeholder_playbooks/5.3_ai_architect_playbook.md)**
     - 🎯 *寫作意圖*：解決 LLM 缺乏公部門語意與歷史改制知識、產生地理與組織幻覺的痛點，透過 Schema.org 語意物件與 `gov-db-wizard` 發動 100% 零幻覺 GraphRAG。
   - **[5.4 【企業法務/風控類】企業法務與合規官 Playbook](05_stakeholder_playbooks/5.4_legal_compliance_playbook.md)**
-    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
+    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
   - **[5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook](05_stakeholder_playbooks/5.5_esg_consultant_playbook.md)**
     - 🎯 *寫作意圖*：解決工廠只有文字地址、國土分區只有地籍段號無法比對的痛點，1 秒將門牌轉地碼並空間套疊特定農業區與水質保護區，10 秒產出 GRI/ISO 綠色合規報告。
   - **[5.6 【調查媒體類】資料新聞記者 Playbook](05_stakeholder_playbooks/5.6_data_journalist_playbook.md)**
     - 🎯 *寫作意圖*：解決跨部會資料庫撕裂、追查公共議題缺乏證據鏈的痛點，透過 OID 組織樹與企業統編發動全自動實體勾稽，繪出具權威背書之調查報導關聯圖譜。
   - **[5.7 【公民社群類】公民科技開源貢獻者 Playbook](05_stakeholder_playbooks/5.7_civic_tech_playbook.md)**
-    - 🎯 *寫作意圖*：解決民間修復好的資料無法回流政府發布源頭的痛點，透過自動生成 `data_correction_feedback.json` 回饋 `data.gov.tw`，打通公私協同治理閉環。
+    - 🎯 *寫作意圖*：解決民間修復好的資料無法回流政府發布源頭的痛點，透過自動生成 `data_correction_feedback.json` 回饋 `data.gov.tw`，貫通連線公私協同治理完整迴路。
 
 ---
 
@@ -141,11 +141,11 @@
   - **6.3 軟體定義地圖 (SDM) 與 QGIS 全台行政區、水系空間視覺化**
     - 🎯 *寫作意圖*：介紹如何運用 QGIS 軟體定義地圖 (SDM) 將 `admin_codes` 與 `river_registry` 空間資料動態渲染為高畫質主題圖。
   - **6.4 專案自動化維運與開源部署指南**
-    - 🎯 *寫作意圖*：提供外接硬碟 `/Volumes/D2024/data/gov-db-in/db` 與軟連結 (`ln -s`) 之運維復原手冊。
+    - 🎯 *寫作意圖*：提供外接硬碟 `/Volumes/D2024/data/gov-db-in/db` 與軟連結 (`ln -s`) 之維運復原手冊。
 
 ---
 
-### **[第 7 章：結語與跨部會生態展望](07_conclusion.md)**
+### **[第 7 章：結語與跨部會生態系展望](07_conclusion.md)**
 * 🎯 **本章寫作意圖**：總結階段性成果，並展望跨部會資料大聯盟之未來地圖。
   - **7.1 結語：打破跨部會資料孤島的通用基石底座**
     - 🎯 *寫作意圖*：總結 `GOV-300` 作為全台灣政府資料治理通用基石的技術貢獻與階段性里程碑。
@@ -265,7 +265,7 @@
 2. **Core DB 實體直連層 (`get_domain_core_db_connection`)**：以零額外維運成本連線對方的 SQLite 核心整合表。
 3. **Library 免安裝動態注入層 (`bootstrap_domain_python_path`)**：將 Python 封裝模組動態注入 `sys.path`，實現免 `pip install` 的程式庫級別調用。
 
-### 5. 重塑開源社會價值與 AI 生態賦能 (Open-Source Impact)
+### 5. 重塑開源社會價值與 AI 生態系賦能 (Open-Source Impact)
 * **打造零幻覺 GraphRAG 底座**：透過 `GOV-300` 權威實體 OID 與 5 大基石，大型語言模型 (LLM) 與 Agentic AI 能夠取得全台灣最精確的地理、時間與組織 Grounding，完全消解 AI 幻覺。
 * **賦能台灣數位轉型與公務開源**：將全台灣政府公開資料的治理經驗與系統工程規格（包含 SE-6D 追溯鏈、QGIS 軟體定義地圖 SDM、Marp 簡報生成）全數開源，提供產學研與政府單位作為下世代數位基建的標準標竿。
 
@@ -286,7 +286,7 @@
 
 為了徹底解決第 1 章提出的 8 大真實血淚痛點（資料孤島、發布單位別名混亂、民國年陷阱、缺乏診斷工具鏈、缺乏歷史改制脈絡與空間脫鉤等），`tw-gov-db` (`GOV-300`) 採用了現代系統工程中的 **「分散式分層協同架構 (Federated Multi-Tier Architecture)」**。
 
-整個母大腦底座與系統生態系分為以下 4 大核心堆疊層：
+整個母大腦底座與系統生態系系分為以下 4 大核心堆疊層：
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -855,7 +855,7 @@ json_ld_output = entity.to_jsonld()
 │    - 摘要 CLI 命令結構 (如 agro_cli.py)，並提供權威 Manual 檔案連結    │
 │      (未啟動期指向母專案 docs/manuals/，啟動期指向子專案 docs/manuals/) │
 │                                                                        │
-│ 5. 跨部會核心協同情境與資料鏈結 (Core Synergy Scenarios & Data Pipeline)│
+│ 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios & Data Pipeline)│
 │    - 3~5 個跨部會碰撞情境 (如 農務氣象寒害預警 / 國土違規變更聯防)      │
 │                                                                        │
 │ 6. AI Agent 雙向 Prompt 契約與導航資訊 (Bi-directional Prompt Contracts) │
@@ -902,7 +902,7 @@ json_ld_output = entity.to_jsonld()
 
 本專章不僅服務人類工程師，更是 **AI Agent (LLM 代理程式)** 發動跨部會資料連網的核心指南：
 
-1. **Prompt 提示詞注入**：每個部會小節均提供精確的 Agent Prompt，引導 LLM 正確理解該部會資料集中異質欄位與 `GOV-300` 通用基石的對應關係。
+1. **Prompt 提示詞/Prompt注入**：每個部會小節均提供精確的 Agent Prompt，引導 LLM 正確理解該部會資料集中異質欄位與 `GOV-300` 通用基石的對應關係。
 2. **Workflow 自動化流程 (DAG)**：定義多 Agent 協同作業時的標準 Task 順序（例如：`抓取氣象測站` ➔ `對齊地籍段號` ➔ `產出農害評估`）。
 3. **Agent Skill 附件連結**：將 `.agent/skills/` 技能資產物件化，提供 AI Agent 開箱即用的自動化導航能力。
 
@@ -1001,7 +1001,7 @@ graph TD
 
 ### 3.2 權威 Spec 與專書檔案位置說明
 * 📘 **子專案權威基礎業務 Spec**：位於同層專案 `tw-agro-db` 根目錄之 `A00_SPECIFICATION.md` *(100% 由子專案獨立維護)*
-* 🔬 **子專案權威進階設計 Spec**：位於同層專案 `tw-agro-db` 根目錄之 `A00_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演算法規格)*
+* 🔬 **子專案權威進階設計 Spec**：位於同層專案 `tw-agro-db` 根目錄之 `A00_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演演算法規格)*
 * 📖 **子專案權威專書圖鑑**：位於同層專案 `tw-agro-db` 之 `book/FULL_BOOK_TAIWAN_AGRO_DB.md` *(已就位專書白皮書)*
 * 📗 **母專案共享協同合約**：位於母專案 `GOV_A19_SYNERGY_SPEC.md` *(透過軟連結 Symlink 共享讀取)*
 
@@ -1019,10 +1019,10 @@ graph TD
 
 ---
 
-## 5. 跨部會核心協同情境與資料鏈結 (Core Synergy Scenarios)
+## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
 
 ### 情境 1：氣象局低溫特報 ➔ 農業部寒害農藝衝擊 1 毫秒預警
-- **資料鏈結**：`GOV-300` 氣象測站 (`station_registry`) ➜ `GOV-A19` 作物產銷表 (`a00_crop_pesticide_safety_mesh`) ➜ 6 碼門牌 (`zipcode_registry`)。
+- **資料連結**：`GOV-300` 氣象測站 (`station_registry`) ➜ `GOV-A19` 作物產銷表 (`a00_crop_pesticide_safety_mesh`) ➜ 6 碼門牌 (`zipcode_registry`)。
 - **預期效果**：當台北氣象站 (`466920`) 測得低於 10°C 低溫時，自動掃描周邊 20 公里內之高風險休閒農場與作物產銷班，透過簡訊發送防寒警訊。
 
 ### ⏱️ 最複雜情境連鎖查詢時序圖 (Mermaid Sequence Diagram)
@@ -1069,7 +1069,7 @@ sequenceDiagram
 - 📡 **母專案寫給 A19 的 Prompt 契約**：[book/04_synergy_contracts/prompts/PROMPT_TO_SUBMODULE_A19.md](prompts/PROMPT_TO_SUBMODULE_A19.md)
 - 📡 **A19 寫給母專案的對接 Prompt 契約**：位於子專案 `synergies/PROMPT_TO_MASTER_G300.md`
 
-### 6.2 Agent Prompt 提示詞範例
+### 6.2 Agent Prompt 提示詞/Prompt範例
 ```text
 [System Prompt for GOV-A19 Query]
 你是一個精通台灣農業部開放資料的 AI Agent。當使用者詢問農藥安全採收期或農會輔導資訊時：
@@ -1087,9 +1087,9 @@ sequenceDiagram
 
 ### 7.1 雙邊對接整合測試成功驗證紀錄 (Integration Pass Record)
 * **驗證時間**：2026-08-22
-* **驗證狀態**：🟢 **100% PASS (全路徑整合對接綠燈合龍)**
-* **實測數據摘要**：
-  - **4 階連線驗證**：直連 `db/agro.db` (102 Table)、`BaseDomainAdapter.align_publisher_oid("農業部")` 成功歸併 OID (`2.16.886.101.20003.20064`)、臺北市中正區 6 碼門牌 (`630001`) 與 `C0A980` 臺北氣象站經緯度空間對合成功。
+* **驗證狀態**：🟢 **100% PASS (全路徑整合對接綠燈整合對接)**
+* **實測資料摘要**：
+  - **4 階連線驗證**：直連 `db/agro.db` (102 Table)、`BaseDomainAdapter.align_publisher_oid("農業部")` 成功歸併 OID (`2.16.886.101.20003.20064`)、臺北市中正區 6 碼門牌 (`630001`) 與 `C0A980` 臺北氣象站經緯度空間對照整合成功。
   - **跨庫檢索效能**：跨 DB (universal_keys ↔ agro.db) 單次連鎖檢索 P99 平均延遲為 **`0.0095 ms`** (遠高於門檻 $< 10\text{ms}$)。
   - **驗證日誌與報告**：[WT_GOV_300_A19_INTEGRATION.md](../../sys_eng/00_buildlogs/WT_GOV_300_A19_INTEGRATION.md)
 
@@ -1179,25 +1179,25 @@ output = resolver.run_domain_cli("GOV-A19", "pesticide", ["水稻"])
 
 ---
 
-## 5. 跨部會核心協同情境與資料鏈結 (Core Synergy Scenarios)
+## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
 
 ### 情境 1：全國地籍段號與基石二空間對照整合 (`GOV-A13` ➔ `GOV-300`)
-- **資料鏈結**：`GOV-A13` 地籍段碼表 (`a13_cadastral_sections`) ➜ `GOV-300` 地籍表 (`cadastral_registry`) ➜ `admin_codes`。
+- **資料連結**：`GOV-A13` 地籍段碼表 (`a13_cadastral_sections`) ➜ `GOV-300` 地籍表 (`cadastral_registry`) ➜ `admin_codes`。
 - **預期效果**：校驗全台地號格式 `[admin_code][cadastral_id]`，為全台灣跨部會資料庫提供標準的地籍空間過濾能力。
 
 ### 情境 2：內政部國土分區 ↔ 農業部休閒農場 (`GOV-A19`) 特農區違規侵占聯防
-- **資料鏈結**：`GOV-A13` 國土分區 (`a13_land_use_zones`) ➜ `GOV-300` 地籍段號 (`cadastral_registry`) ➜ `GOV-A19` 休閒農場清冊。
+- **資料連結**：`GOV-A13` 國土分區 (`a13_land_use_zones`) ➜ `GOV-300` 地籍段號 (`cadastral_registry`) ➜ `GOV-A19` 休閒農場清冊。
 - **預期效果**：自動比對休閒農場是否非法變更特定農業區或侵占水質水量保護區。
 
 ### 情境 3：7,748 村里邊界與 TGOS 門牌地碼反查 (`GOV-A13` ➔ `GOV-300`)
-- **資料鏈結**：`GOV-A13` 村里地碼表 (`a13_village_registry`) ➜ `GOV-300` 郵遞區號表 (`zipcode_registry`)。
+- **資料連結**：`GOV-A13` 村里地碼表 (`a13_village_registry`) ➜ `GOV-300` 郵遞區號表 (`zipcode_registry`)。
 - **預期效果**：實現輸入自然語言地址即時轉換為 6 碼門牌區號、村里程式碼與 WGS84 點位。
 
 ---
 
 ## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
 
-### 6.1 Agent Prompt 提示詞範例
+### 6.1 Agent Prompt 提示詞/Prompt範例
 ```text
 [System Prompt for GOV-A13 Query]
 你是一個精通台灣內政部國土與地政資料的 AI Agent。當使用者詢問門牌地碼或地籍劃分時：
@@ -1299,21 +1299,21 @@ output = resolver.run_domain_cli("GOV-A13", "geocode", ["臺北市中正區重�
 
 ---
 
-## 5. 跨部會核心協同情境與資料鏈結 (Core Synergy Scenarios)
+## 5. 跨部會核心協同情境與資料連結 (Core Synergy Scenarios)
 
 ### 情境 1：經濟部公司統編 ↔ GOV-300 通用基石 (Pass-Through 快取寫回)
-- **資料鏈結**：`GOV-A09` GCIS API ➜ `GOV-300` 企業快取表 (`corporate_registry`)。
+- **資料連結**：`GOV-A09` GCIS API ➜ `GOV-300` 企業快取表 (`corporate_registry`)。
 - **預期效果**：Cache Miss 時動態抓取並自動寫回本機 5MB SQLite 資料庫。
 
 ### 情境 2：水利署水庫集水區 ↔ 農業部灌溉水質監測 (`GOV-A19`) 跨部會聯防
-- **資料鏈結**：`GOV-A09` 集水區水文表 (`a09_reservoir_water_levels`) ➜ `GOV-300` 水系表 (`river_registry`) ➜ `GOV-A19` 灌溉水質表。
+- **資料連結**：`GOV-A09` 集水區水文表 (`a09_reservoir_water_levels`) ➜ `GOV-300` 水系表 (`river_registry`) ➜ `GOV-A19` 灌溉水質表。
 - **預期效果**：實時監視乾旱特報下農業灌溉用水調配與水質重金屬監測。
 
 ---
 
 ## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
 
-### 6.1 Agent Prompt 提示詞範例
+### 6.1 Agent Prompt 提示詞/Prompt範例
 ```text
 [System Prompt for GOV-A09 Query]
 你是一個精通台灣經濟部商業與水利資料的 AI Agent。當使用者查詢公司統編或水庫水情時：
@@ -1364,7 +1364,7 @@ output = resolver.run_domain_cli("GOV-A09", "company", ["--tax-id", "22570177"])
 
 ## 🎭 5.0.1 本章使命與 7 大不可替代業務類別
 
-第 5 章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
+第 5 章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -1619,7 +1619,7 @@ flowchart TD
 
 企業法務與合規團隊在執行審查時，面臨以下直接威脅企業營運安全的核心痛苦：
 
-1. **害怕抓到「舊快照」或已註銷人頭公司，面臨重大合約詐欺風險**：
+1. **害怕抓到「舊快照」或已註銷/登出人頭公司，面臨重大合約詐欺風險**：
    若依賴幾個月前下載的靜態開放資料檔，一旦合作對象在近期已申請解散、破產或變更負責人，法務將可能與已失效的法人簽署合約，面臨百萬甚至千萬元的法律詐欺與追討無門風險。
 2. **人工前往經濟部網站逐筆查詢，效率低下無法自動化**：
    法務人員被迫手動前往經濟部商業發展署網站，逐一輸入統一編號進行人工比對與截圖存證，無法整合進企業內部的 ERP/CRM 簽核系統中。
@@ -1765,7 +1765,7 @@ flowchart TD
 記者將收集到的農業部農場名冊、經濟部統編與採購標案 CSV 匯入調查分析工具。
 
 ### 步驟 2：發動 OID 組織樹與企業統編全自動勾稽
-系統自動透過 `master_agencies` OID 歸併發布機關，並帶入 8 碼企業統編（`tax_id`）與地籍段號（`cadastral_id`）進行跨部會資料連鎖 `JOIN`。
+系統自動透過 `master_agencies` OID 歸並行布機關，並帶入 8 碼企業統編（`tax_id`）與地籍段號（`cadastral_id`）進行跨部會資料連鎖 `JOIN`。
 
 ### 步驟 3：產出具備權威證據力之關聯圖譜與資料鏈
 系統自動繪出「違規農場 ➔ 控股公司統編 ➔ 地籍特定農業區 ➔ 政府採購補助」的完整關聯圖譜，並自動標註可追溯的官方資料來源網址。
@@ -1820,7 +1820,7 @@ flowchart TD
 
 ## 3. 實務操作流程與使用體驗 (Step-by-Step Playbook Experience)
 
-透過 `GOV-300` 開源 Core SDK 與 `data_correction_feedback.json` 規範，社群打通公私協同閉環：
+透過 `GOV-300` 開源 Core SDK 與 `data_correction_feedback.json` 規範，社群貫通連線公私協同完整迴路：
 
 ### 步驟 1：發動全全全自動資料診斷
 社群成員使用 `GOV-300` 開源 SDK 執行全台資料集自動診斷診斷（`se_manager.py audit`）。
@@ -1836,7 +1836,7 @@ flowchart TD
     A[開源社群發動全台開放資料集全自動診斷] --> B[GOV-300 自動生成標準化 data_correction_feedback.json]
     B --> C[提交 data.gov.tw 平台與政府發布機關]
     C --> D[政府原發布機關在源頭 ETL 完成資料品質升級]
-    D --> E[實現全台灣開放資料源頭品質持續演進之公私協同治理閉環]
+    D --> E[實現全台灣開放資料源頭品質持續演進之公私協同治理完整迴路]
 ```
 
 ---
@@ -1846,7 +1846,7 @@ flowchart TD
 * **Before (解決前)**：
   民間社群的修復成果永遠留在外部第三方網站，政府發布源頭的資料品質十年如一日，公私協同流於口號。
 * **After (解決後)**：
-  **打通了公私協同治理的最後一哩路**！開源社群的診斷與修正能透過標準 JSON 報告回饋給政府，實現全台灣開放資料品質的持續自我演進與升級！
+  **貫通連線了公私協同治理的最後一哩路**！開源社群的診斷與修正能透過標準 JSON 報告回饋給政府，實現全台灣開放資料品質的持續自我演進與升級！
 
 
 ---
@@ -1913,7 +1913,7 @@ sequenceDiagram
     Resolver->>A19: 測試 CLI 輸出與 SQLite sqlite3.Connection 直連
     A19-->>Resolver: 連線成功 [PASS]
 
-    CI->>Resolver: 2. 發動單對單鏈結測試 (BaseDomainAdapter.align_publisher_oid)
+    CI->>Resolver: 2. 發動單對單連結測試 (BaseDomainAdapter.align_publisher_oid)
     Resolver->>G300: 查詢 "農糧署中區分署" 組織歸併
     G300-->>Resolver: 傳回權威 OID 2.16.886.101... [MATCH PASS]
 
@@ -1990,7 +1990,7 @@ python src/cli/main.py doctor
 ---
 
 <!-- START_OF_FILE: 07_conclusion.md -->
-# 🏛️ 第 7 章：結語與跨部會生態展望 (07_conclusion.md)
+# 🏛️ 第 7 章：結語與跨部會生態系展望 (07_conclusion.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
 * **專案代號**：`GOV-300` (方案 A 權威機關簡碼 `300000000A`)
@@ -2009,9 +2009,9 @@ python src/cli/main.py doctor
 
 ---
 
-## 7.2 延伸展望：從 `GOV-300` 到全台大資料黃金三角生態系
+## 7.2 延伸展望：從 `GOV-300` 到全台大資料黃金三角生態系系
 
-`GOV-300` 作為總母大腦，並非孤立運作的資料庫，而是全台灣跨部會資料生態系的核心樞紐。
+`GOV-300` 作為總母大腦，並非孤立運作的資料庫，而是全台灣跨部會資料生態系系的核心樞紐。
 
 未來將持續深化與 **`GOV-A19` (農業部 `tw-agro-db`)**、**`GOV-A13` (內政部 `tw-moi-db`)**、**`GOV-A09` (經濟部 `tw-moea-db`)** 等部會子專案的分散式協同，構建「全台灣開放資料黃金三角大聯盟」：
 
@@ -2022,7 +2022,7 @@ graph TD
     end
 
     subgraph Child1["GOV-A19 農業部 (tw-agro-db)"]
-        A19["tw-agro-db 農業生態庫<br>(農藥安全網 / 342 農會 / 災損)"]
+        A19["tw-agro-db 農業生態系庫<br>(農藥安全網 / 342 農會 / 災損)"]
     end
 
     subgraph Child2["GOV-A13 內政部 (tw-moi-db)"]
@@ -2233,7 +2233,7 @@ python src/cli/opendata_cli.py zipcode "臺北市中正區重慶南路一段120�
 # 2. 檢索開放資料集並觸發 Circuit Breaker 品質 profiling
 python src/cli/opendata_cli.py profile --dataset-id 173440
 
-# 3. 強制刷新發布單位別名對齊
+# 3. 強制重新整理發布單位別名對齊
 python src/cli/opendata_cli.py align-publisher "農業部農糧署"
 ```
 

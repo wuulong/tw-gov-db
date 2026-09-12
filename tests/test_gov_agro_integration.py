@@ -75,13 +75,13 @@ def test_gov_agro_4tier_integration():
     cursor_keys.execute("SELECT admin_code, city_name, district_name FROM admin_codes WHERE city_name='臺北市' AND district_name='中正區';")
     admin_row = cursor_keys.fetchone()
     assert admin_row is not None
-    print(f"✅ 3.1 行政區劃基石對合成功: {admin_row[1]}{admin_row[2]} ➔ 6碼區號: {admin_row[0]}")
+    print(f"✅ 3.1 行政區劃基石對照整合成功: {admin_row[1]}{admin_row[2]} ➔ 6碼區號: {admin_row[0]}")
 
-    # 3.2 驗證 450 個氣象站空間對合 (station_registry: C0A980 臺北氣象站)
+    # 3.2 驗證 450 個氣象站空間對照整合 (station_registry: C0A980 臺北氣象站)
     cursor_keys.execute("SELECT station_id, station_name, longitude, latitude FROM station_registry WHERE station_id='C0A980';")
     station_row = cursor_keys.fetchone()
     assert station_row is not None
-    print(f"✅ 3.2 氣象測站基石對合成功: {station_row[1]} ({station_row[0]}) 經緯度: ({station_row[2]}, {station_row[3]})")
+    print(f"✅ 3.2 氣象測站基石對照整合成功: {station_row[1]} ({station_row[0]}) 經緯度: ({station_row[2]}, {station_row[3]})")
 
     # =========================================================================
     # 階梯 4：跨 DB 實體 View 穿透與 10ms 內檢索延遲測試 (Performance < 10ms)
@@ -109,7 +109,7 @@ def test_gov_agro_4tier_integration():
     conn_agro.close()
     conn_keys.close()
     
-    print("\n🎉 全數通過 GOV-A19 ↔ GOV-300 4 階對接整合測試！100% 綠燈合龍！\n")
+    print("\n🎉 全數通過 GOV-A19 ↔ GOV-300 4 階對接整合測試！100% 綠燈整合對接！\n")
 
 if __name__ == "__main__":
     test_gov_agro_4tier_integration()

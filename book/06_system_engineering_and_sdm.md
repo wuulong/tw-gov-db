@@ -59,7 +59,7 @@ sequenceDiagram
     Resolver->>A19: 測試 CLI 輸出與 SQLite sqlite3.Connection 直連
     A19-->>Resolver: 連線成功 [PASS]
 
-    CI->>Resolver: 2. 發動單對單鏈結測試 (BaseDomainAdapter.align_publisher_oid)
+    CI->>Resolver: 2. 發動單對單連結測試 (BaseDomainAdapter.align_publisher_oid)
     Resolver->>G300: 查詢 "農糧署中區分署" 組織歸併
     G300-->>Resolver: 傳回權威 OID 2.16.886.101... [MATCH PASS]
 
