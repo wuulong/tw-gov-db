@@ -5,8 +5,8 @@
 * **規範版本**：`v2.4` (CGS Pipeline-Native UNIX Standard)
 * **基石定位**：基石三 (基石三 (Cornerstone 3: 水系與環境 Hydrology & River Topology): 水系與環境 Hydrology & Environmental Sensors)
 * **主管機關**：經濟部水利署 (WRA) / 交通部中央氣象署 / 環境部
-* **上游權威**：WRA-Civ (Civilian Water Resources Agency Hydrology System / 1,394+ 水脈)
-* **核心實裝**：[`g30_cli.py`](../../src/modules/g30_hydrology_indexer/g30_cli.py) | [`river_topology.py`](../../src/modules/g30_hydrology_indexer/river_topology.py)
+* **上游權威**：WRA-Civ (Civilian Water Resources Agency Hydrology System / 1,380 筆純化水脈拓樸)
+* **核心實裝**：[`g30_cli.py`](../../src/modules/g30_hydrology_indexer/g30_cli.py) | [`river_topology.py`](../../src/modules/g30_hydrology_indexer/river_topology.py) | [`ingest_wra_stations.py`](../../scripts/ingest_wra_stations.py)
 * **單元測試**：[`test_g30_hydrology_indexer.py`](../../tests/test_g30_hydrology_indexer.py) (5/5 綠燈 PASS)
 
 ---
@@ -16,13 +16,15 @@
 水文是自然地理與環境治理最根本的骨幹，但在政府傳統資料庫中，水系與行政治理存在嚴重的架構撕裂：
 
 1. **官方河川程式碼與山區野溪的「程式碼斷層」**：
-   水利署官方公告水系僅收錄 122 條主流，但絕大多數水土保持崩塌點、農田灌排取水口、山區野溪與生態系系系系系樣區均位於「無官方 6 碼的小溪或民間支流」。資料庫若只存 122 條幹流，超過 80% 的環境資料將無法對齊。
+   水利署官方公告水系僅收錄 122 條主流，但絕大多數水土保持崩塌點、農田灌排取水口、山區野溪與生態系採樣區均位於「無官方 6 碼的小溪或民間支流」。資料庫若只存 122 條幹流，超過 80% 的環境資料將無法對齊。
 2. **外部套件重度依賴引發的「容器化地獄」**：
    民間水文拓樸庫（如 `RiverExploration`）包含龐大的 3D 地理運算、OSM 爬蟲與專書建構依賴。若直接引入核心基石，將導致微服務容器肥大且容易因依賴衝突而崩潰。
 3. **測站、水理與行政區劃無法一鍵 JOIN**：
-   氣象署雨量站、水利署水位站與各河川分署管轄責任劃分不同。缺乏單一親緣拓樸樹，無法在水災來臨時一秒追溯特定支流上游的所有觀測站點。
+   氣象署雨量站、水利署水位站與各河川分署管轄責任劃分不同。若缺乏單一親緣拓樸樹，無法在水災來臨時一秒追溯特定支流上游的所有觀測站點。
+4. **雨量站與水位站的物理混淆**：
+   過往系統常把雨量站強行投影至最近河道，忽視雨量站「雨落何區（集水區面）」與水位站「身在何河（河道線）」的本質差異。
 
-`G50 水系流域、水文測站與親緣拓樸維度器` 全面接軌 **WRA-Civ 雙層編碼標準**，將 1,394 筆水脈全數收納入本地 SQLite，並以純 Python 微拓樸引擎自主實現親緣溯源、優雅降級與跨部會資料流厚化 (`plugins.gov_db.hydrology`)。
+`G30 水系流域、水文測站與親緣拓樸維度器` 全面接軌 **WRA-Civ 雙層編碼標準**，將 1,380 筆純化水脈全數收納入本地 SQLite，並以純 Python 微拓樸引擎自主實現親緣溯源、優雅降級、雙軌測站歸位治理與跨部會資料流厚化 (`plugins.gov_db.hydrology`)。
 
 ---
 
@@ -32,8 +34,8 @@
 
 | 資料集代號 | 資料集名稱 | 主管權責機關 | 實體收錄規模 | 本機資料表與對齊 |
 | :--- | :--- | :--- | :--- | :--- |
-| **`WRA-CIV`** | 全台灣水系親緣拓樸註冊表 (WRA-Civ) | 經濟部水利署 / 民間野溪標準 | 1,394 筆水脈 (727 官方 + 667 民間) | `universal_keys.sqlite` (`river_registry`) |
-| **`HYDRO-ST`**| 全國重要水文水位與雨量觀測站 | 經濟部水利署 / 中央氣象署 | 5 大核心代表性測站 (種子快取) | `universal_keys.sqlite` (`station_registry`) |
+| **`WRA-CIV`** | 全台灣水系親緣拓樸註冊表 (WRA-Civ) | 經濟部水利署 / 民間野溪標準 | 1,380 筆純化水脈 (全面收斂官方 6 碼) | `universal_keys.sqlite` (`river_registry`) |
+| **`HYDRO-ST`**| 全國水情河川水位與雨量觀測站 | 經濟部水利署 (ID: 22227, 32729) | 1,095+ 全量測站 (839 筆 VERIFIED 水位站) | `universal_keys.sqlite` (`station_registry`) |
 
 ---
 
@@ -55,7 +57,7 @@ graph TD
         G30["🏛️ G30 機關組織圖譜<br/>(river_office 河川分署 OID)"]
     end
 
-    subgraph Agency_Applications["🌾 跨部會防汛與生態系系系系聯防"]
+    subgraph Agency_Applications["🌾 跨部會防汛與生態系系系系系聯防"]
         A19["🌾 GOV-A19 農業部<br/>(土石流潛勢溪流 & 農田取水)"]
         MOEA["🏭 GOV-A09 經濟部<br/>(水庫集水區水位 & 淹水預警)"]
         MOI["🏘️ GOV-A13 內政部<br/>(河川行水區違章查報)"]
@@ -148,9 +150,9 @@ CREATE TABLE IF NOT EXISTS station_registry (
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
-1. **`@` 分隔親緣路徑樹遍歷演演演演演算法 (`river_topology.py`)**：
+1. **`@` 分隔親緣路徑樹遍歷演演演演演演算法 (`river_topology.py`)**：
    - **向下游回溯幹流 (Ancestors / Downstream)**：拆解 `topology_path` 陣列，批次查詢父級節點，百微秒內取得至出海口的完整幹流路徑。
    - **向上游展開支流子樹 (Descendants / Upstream)**：利用 SQL 前綴比對 `topology_path LIKE 'current_path@%'`，秒級提取所有野溪支流。
 2. **無依賴優雅降級架構 (Graceful Degradation)**：

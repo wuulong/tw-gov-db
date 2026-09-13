@@ -16,14 +16,14 @@
 
 本工具遵循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範，並直接接軌台灣水利署與民間野溪延伸拓樸標準 **WRA-Civ (Water Resources Agency - Civilian Extended Topology)**：
 1. **雙層編碼架構支援**：
-   - 官方 6 碼權威編碼 (`is_civilian: 0`，如 `130000` 頭前溪主流、`151000` 濁水溪）。
+   - 官方 6 碼權威編碼 (`is_civilian: 0`，如 `114000` 淡水河、`114022` 北勢溪、`114011` 三峽溪、`130000` 頭前溪主流、`151000` 濁水溪）。
    - 民間連字號延伸編碼 (`is_civilian: 1`，如 `130000-C04-C01` 代表頭前溪四級支流深山野溪）。
 2. **微秒級親緣拓樸樹遍歷**：
    - 基於 `@` 分隔路徑 (`topology_path`) 實現純 SQL 前綴比對，百微秒內解析主流向下游（Ancestors / Downstream）或向源頭上游子樹（Descendants / Upstream）。
 3. **外部跨部會資料流厚化 (Hydration)**：
    - 透過標準輸入輸出將全政府事件流、採購標案、水質測站資料注入 `plugins.gov_db.hydrology` 拓樸結構，而不污染各部會既有核心 Schema。
 4. **自主無依賴優雅降級**：
-   - 本地 `universal_keys.sqlite` 完整備份 1,394+ 筆台灣水脈資料。當外部環境缺少 `river_cli` 或指定 `--no-wra` 時，以純 Python 微拓樸引擎自主運作，絕不中斷服務。
+   - 本地 `universal_keys.sqlite` 完整備份 1,380 筆純化台灣水脈資料與 1,095+ 跨部會水文測站。當外部環境缺少 `river_cli` 或指定 `--no-wra` 時，以純 Python 微拓樸引擎自主運作，絕不中斷服務。
 5. **上游異動偵測與原子同步**：
    - 支援 `sync-rivers` 檢測上游 WRA-Civ JSONL 雜湊異動並執行事務性原子同步。
 

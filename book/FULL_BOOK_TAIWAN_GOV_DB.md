@@ -53,17 +53,17 @@
 ---
 
 ### **[第 3 章：GOV-300 核心維度器與通用基石資產圖鑑百科](03_submodules/03_00_structure_guide.md)**
-* 🎯 **本章寫作意圖**：作為全系統最核心的「六大核心維度器與通用基石資產圖鑑 (Submodules & Universal Keys Atlas)」。比照 `tw-fsc-db` 專書第三章之模組化深核架構，採取**目錄化獨立篇章結構 (`03_submodules/`)** 與 **通用 7 大維度標準架構**。剖析全政府 12 大實體表與六大維度器之業務情境、官方資料源、跨模組對接拓樸、SQLite Schema、核心演演演演算法、CGS v2.4 CLI 實戰與地面真實驗證證明。
+* 🎯 **本章寫作意圖**：作為全系統最核心的「六大核心維度器與通用基石資產圖鑑 (Submodules & Universal Keys Atlas)」。比照 `tw-fsc-db` 專書第三章之模組化深核架構，採取**目錄化獨立篇章結構 (`03_submodules/`)** 與 **通用 7 大維度標準架構**。剖析全政府 12 大實體表與六大維度器之業務情境、官方資料源、跨模組對接拓樸、SQLite Schema、核心演演演演演算法、CGS v2.4 CLI 實戰與地面真實驗證證明。
 
   #### **Part A: 第 3 章子模組通用架構規範**
   - **[3.0 全章子模組撰寫規範與通用 7 大維度架構說明](03_submodules/03_00_structure_guide.md)**
-    - 🎯 *寫作意圖*：定義全章通用 7 大維度寫作標準（業務情境、官方資料源、Mermaid 拓樸、SQLite Schema、演演演演算法、CLI 實戰、真實物理指標），並提供六大子模組篇章索引地圖。
+    - 🎯 *寫作意圖*：定義全章通用 7 大維度寫作標準（業務情境、官方資料源、Mermaid 拓樸、SQLite Schema、演演演演演算法、CLI 實戰、真實物理指標），並提供六大子模組篇章索引地圖。
 
   #### **Part B: 應用探勘與五大通用基石子模組獨立專篇 (`03_submodules/`)**
   - **[3.01 G01 政府研究計畫與開放資料報告探勘器 (`g01_report_miner`)](03_submodules/03_01_g01_report_miner.md)**
     - 🎯 *寫作意圖*：解構 GRB 57.6 萬筆計畫檢索、國圖 GPN 案號雙向碰撞對位、全文 PDF 安全落庫與 OID 強制繫結防線（非基石通用應用層）。
   - **[3.10 G10 機關組織圖譜、權責職掌與歷史演進器 (`g10_mandate_indexer`)](03_submodules/03_10_g10_mandate_indexer.md)** ★基石一
-    - 🎯 *寫作意圖*：解析 8,908 筆機關權威 OID 組織樹、處務規程法規虛擬層 (0MB 開銷)、214 筆改制事件與 JIT 輕量動態組織推導演演演算法。
+    - 🎯 *寫作意圖*：解析 8,908 筆機關權威 OID 組織樹、處務規程法規虛擬層 (0MB 開銷)、214 筆改制事件與 JIT 輕量動態組織推導演演演演算法。
   - **[3.20 G20 空間地籍、地址正規化與郵遞區號基石器 (`g20_spatial_indexer`)](03_submodules/03_20_g20_spatial_indexer.md)** ★基石二
     - 🎯 *寫作意圖*：解析 480 筆行政區劃、372 筆郵遞區號、門牌結構完整度指標 (AIS 綠/黃/紅)、歷史升格轉譯與標準 `cadastral_id` 地籍號生成。
   - **[3.30 G30 水系流域、水文測站與親緣拓樸維度器 (`g30_hydrology_indexer`)](03_submodules/03_30_g30_hydrology_indexer.md)** ★基石三
@@ -71,7 +71,7 @@
   - **[3.40 G40 法人統編、企業快取與農漁會消歧義維度器 (`g40_corporate_indexer`)](03_submodules/03_40_g40_corporate_indexer.md)** ★基石四
     - 🎯 *寫作意圖*：解析 8 碼統編新舊制雙軌加權檢核（除 10 與 2023 財政部除 5/10 新制）、Pass-Through 企業快取、342 家農漁會分支機構綴詞剝除與消歧義。
   - **[3.50 G50 時間時序、辦公日曆與農曆節氣基石器 (`g50_temporal_indexer`)](03_submodules/03_50_g50_temporal_indexer.md)** ★基石五
-    - 🎯 *寫作意圖*：解析人事行政總處跨越 16 年 1,801 筆工作天/例假日、民國年零 Token 清洗、純 Python 緊湊農曆（1900-2100 年）與二十四節氣天文常數演演演算法。
+    - 🎯 *寫作意圖*：解析人事行政總處跨越 16 年 1,801 筆工作天/例假日、民國年零 Token 清洗、純 Python 緊湊農曆（1900-2100 年）與二十四節氣天文常數演演演演算法。
 
   #### **Part C: 核心資料庫與 12 大實體表底座對照**
   - **[03_db_glossary.md 核心實體表總覽與 DDL 藍圖](03_db_glossary.md)**
@@ -97,7 +97,7 @@
 ---
 
 ### **[第 5 章：七大類別實戰 Playbook 與 Agent 協同指南](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
-* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系系系系系系系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
+* 🎯 **本章寫作意圖**：以「100% 業務與問題解決為導向 (User-Centric & Problem-Solving)」，採用**目錄化多獨立檔案結構 (`05_stakeholder_playbooks/`)** 與 **4 大業務寫作結構**。為全台灣開放資料生態系系系系系系系系系系中的 **7 大不可替代業務類別**（公務、分析、AI、法務、永續、媒體、社群）提供專屬的白話實戰 Playbook 與流程圖。
   - **[5.0 七大類別實戰 Playbook 導覽與 4 大業務結構規範](05_stakeholder_playbooks/5.0_overview_and_playbook_framework.md)**
     - 🎯 *寫作意圖*：介紹本章 7 大業務類別光譜與 4 大業務寫作結構規範。
   - **[5.1 【政府行政類】第一線基層公務人員 Playbook](05_stakeholder_playbooks/5.1_civil_servant_playbook.md)**
@@ -107,7 +107,7 @@
   - **[5.3 【AI 生成類】AI / Agentic 系統架構師 Playbook](05_stakeholder_playbooks/5.3_ai_architect_playbook.md)**
     - 🎯 *寫作意圖*：解決 LLM 缺乏公部門語意與歷史改制知識、產生地理與組織幻覺的痛點，透過 Schema.org 語意物件與 `gov-db-wizard` 發動 100% 零幻覺 GraphRAG。
   - **[5.4 【企業法務/風控類】企業法務與合規官 Playbook](05_stakeholder_playbooks/5.4_legal_compliance_playbook.md)**
-    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出/登出/登出/登出/登出/登出/登出/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
+    - 🎯 *寫作意圖*：解決企業簽約時害怕查到舊快照或已註銷/登出/登出/登出/登出/登出/登出/登出/登出/登出人頭公司的合約詐欺風險，利用 Pass-Through 旁路快取實現 1 秒即時且具法律追溯力的身份驗證。
   - **[5.5 【綠色永續類】ESG 永續與國土稽核員 Playbook](05_stakeholder_playbooks/5.5_esg_consultant_playbook.md)**
     - 🎯 *寫作意圖*：解決工廠只有文字地址、國土分區只有地籍段號無法比對的痛點，1 秒將門牌轉地碼並空間套疊特定農業區與水質保護區，10 秒產出 GRI/ISO 綠色合規報告。
   - **[5.6 【調查媒體類】資料新聞記者 Playbook](05_stakeholder_playbooks/5.6_data_journalist_playbook.md)**
@@ -130,7 +130,7 @@
 
 ---
 
-### **[第 7 章：結語與跨部會生態系系系系系系系系展望](07_conclusion.md)**
+### **[第 7 章：結語與跨部會生態系系系系系系系系系展望](07_conclusion.md)**
 * 🎯 **本章寫作意圖**：總結階段性成果，並展望跨部會資料大聯盟之未來地圖。
   - **7.1 結語：打破跨部會資料孤島的通用基石底座**
     - 🎯 *寫作意圖*：總結 `GOV-300` 作為全台灣政府資料治理通用基石的技術貢獻與階段性里程碑。
@@ -249,7 +249,7 @@
 2. **Core DB 實體直連層 (`get_domain_core_db_connection`)**：以零額外維運成本連線對方的 SQLite 核心整合表。
 3. **Library 免安裝動態注入層 (`bootstrap_domain_python_path`)**：將 Python 封裝模組動態注入 `sys.path`，實現免 `pip install` 的程式庫級別調用。
 
-### 5. 重塑開源社會價值與 AI 生態系系系系系賦能 (Open-Source Impact)
+### 5. 重塑開源社會價值與 AI 生態系系系系系系賦能 (Open-Source Impact)
 * **打造零幻覺 GraphRAG 底座**：透過 `GOV-300` 權威實體 OID 與 5 大基石，大型語言模型 (LLM) 與 Agentic AI 能夠取得全台灣最精確的地理、時間與組織 Grounding，完全消解 AI 幻覺。
 * **賦能台灣數位轉型與公務開源**：將全台灣政府公開資料的治理經驗與系統工程規格（包含 SE-6D 追溯鏈、QGIS 軟體定義地圖 SDM、Marp 簡報生成）全數開源，提供產學研與政府單位作為下世代數位基建的標準標竿。
 
@@ -269,7 +269,7 @@
 
 為了徹底解決第 1 章提出的 8 大真實血淚痛點（資料孤島、發布單位別名混亂、民國年陷阱、缺乏診斷工具鏈、缺乏歷史改制脈絡與空間脫鉤等），`tw-gov-db` (`GOV-300`) 採用了現代系統工程中的 **「分散式分層協同架構 (Federated Multi-Tier Architecture)」**。
 
-整個母大腦底座與系統生態系系系系系系系分為以下 4 大核心堆疊層：
+整個母大腦底座與系統生態系系系系系系系系分為以下 4 大核心堆疊層：
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -339,7 +339,7 @@
 4. **基石四：法人與企業 (Corporate & NPO)**
    - 映射至 `Schema.org/Corporation` 與 `NGO`。收錄 1,103 筆熱門 Seed 上市/國營企業與 2.3 萬筆農漁會/NPO 組織，支援 8 碼統一編號 (`tax_id`) 精確對照整合。
 5. **基石五：時間與時序 (Temporal & Calendar)**
-   - 映射至 `Schema.org/DateTime` 與 `Event`。收錄 1,801 筆 (2013-2028 年跨 16 年) 全國行政機關辦公日曆、法定出勤日與補行上班日，整合純 Python 緊湊農曆（1900-2100 年公曆農曆雙向轉換、生肖歲次干支、傳統節日）與二十四節氣天文演演演演演算法，內建 `clean_datetime()` 自動將五大民國年文字格式轉換為 ISO-8601 CST 字串 (`2024-08-22T00:00:00+08:00`)。
+   - 映射至 `Schema.org/DateTime` 與 `Event`。收錄 1,801 筆 (2013-2028 年跨 16 年) 全國行政機關辦公日曆、法定出勤日與補行上班日，整合純 Python 緊湊農曆（1900-2100 年公曆農曆雙向轉換、生肖歲次干支、傳統節日）與二十四節氣天文演演演演演演算法，內建 `clean_datetime()` 自動將五大民國年文字格式轉換為 ISO-8601 CST 字串 (`2024-08-22T00:00:00+08:00`)。
 
 ---
 
@@ -880,7 +880,7 @@ json_ld_output = entity.to_jsonld()
 
 台灣政府跨部會開放資料長年深受「機關改制別名難辨、地址門牌結構髒亂、野溪缺乏官方程式碼、統編新舊制驗證繁瑣、日曆農曆時序割裂、以及研究報告案號孤立」等深層撕裂之苦。為徹底避免傳統技術檔案「只列出冷冰冰的 SQL 欄位、缺乏政府業務情境」的通病，本章比照 `tw-fsc-db` 專書第三章之深核架構，採取**「每個子模組獨立成篇」**的模組化寫作方式（`03_10_g01_report_miner.md` 至 `03_60_g40_corporate_indexer.md`）。
 
-全章六大子模組篇章，均嚴格遵循以下 **「通用 7 大維度標準架構」**，將靜態資料表與演演演演演算法引擎昇華為具備解決跨部會實務痛點的政府級知識資產：
+全章六大子模組篇章，均嚴格遵循以下 **「通用 7 大維度標準架構」**，將靜態資料表與演演演演演演算法引擎昇華為具備解決跨部會實務痛點的政府級知識資產：
 
 ```mermaid
 flowchart TD
@@ -889,7 +889,7 @@ flowchart TD
         D2["2. 官方開放資料源與主管權責機關 (Data Governance & Sources)"]
         D3["3. 跨模組對接拓樸與資料流向 (Fig 3.x Mermaid 串接圖)"]
         D4["4. SQLite 資料庫 Schema 與資料模型 (DDL & attributes_json)"]
-        D5["5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)"]
+        D5["5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)"]
         D6["6. 專屬 CLI 指令實戰與 JSON 管線輸出 (CGS v2.4 CLI Operations)"]
         D7["7. 地面真實資料物理指標與驗證證明 (Empirical Proof & PASS)"]
     end
@@ -921,8 +921,8 @@ flowchart TD
 * **【必須包含 `attributes_json` 規格定義】**：說明動態擴充欄位的結構與中繼資料。
 * **【必須包含一筆真實資料列展示】**：以 JSON 格式展現 100% 地面真實入庫資料樣貌。
 
-### 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
-* 詳述該模組的核心演演演演演算法（如 G10 雙向案號碰撞；G20 門牌完整度指標 AIS 與正則解析；G30 JIT 動態組織推導與 MCS 信心度；G40 緊湊農曆干支天文演演演演演算法與工作日判定；G50 `@` 親緣拓樸樹遍歷；G40 除 10 與除 5/10 雙軌統編檢核及農漁會綴詞剝除）。
+### 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
+* 詳述該模組的核心演演演演演演算法（如 G10 雙向案號碰撞；G20 門牌完整度指標 AIS 與正則解析；G30 JIT 動態組織推導與 MCS 信心度；G40 緊湊農曆干支天文演演演演演演算法與工作日判定；G50 `@` 親緣拓樸樹遍歷；G40 除 10 與除 5/10 雙軌統編檢核及農漁會綴詞剝除）。
 
 ### 6. 專屬 CLI 指令實戰與 UNIX 管線 (Pipe) 深度串接規範 (CLI & Unix Pipeline Operations)
 * 依循 **CGS v2.4 (Pipeline-Native UNIX Standard)** 規範，展示 `./pa gX` 的專屬子命令與參數用法。
@@ -1102,9 +1102,9 @@ CREATE INDEX IF NOT EXISTS idx_report_oid ON report_index(agency_oid);
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
-1. **GRB 案號正規化與 GPN 碰撞演演演演演算法 (`match_gpn_algorithm`)**：
+1. **GRB 案號正規化與 GPN 碰撞演演演演演演算法 (`match_gpn_algorithm`)**：
    - 案號格式解析：抽取計畫年度 (`112`)、部會程式碼 (`01`) 與流水號。
    - 碰撞防護：針對無 GPN 成果報告，自動啟動模糊書名與主持人群組合交集比對，輸出碰撞信心度 (0.0 ~ 1.0)。
 2. **硬體安全防禦儲存路徑規則 (`build_safe_storage_path`)**：
@@ -1190,7 +1190,7 @@ echo "PG11201-0089" | ./pa g01 match-gpn - -j
 3. **資料集究竟屬於哪個「內部組科職掌」難以自動定位**：
    資料集僅標註部會全稱，無法自動對齊至《處務規程》或《辦事細則》中的法定業務組科，阻礙了 AI Agent 進行精確法規對齊。
 
-`G30 機關組織圖譜、權責職掌與歷史演進器` 透過 8,908 筆官方 OID 字典、JIT 機關動態推導、處務規程法規虛擬層與 MCS 職掌匹配演演演演演算法，為全政府機關確立唯一的權威身分與演進脈絡。
+`G30 機關組織圖譜、權責職掌與歷史演進器` 透過 8,908 筆官方 OID 字典、JIT 機關動態推導、處務規程法規虛擬層與 MCS 職掌匹配演演演演演演算法，為全政府機關確立唯一的權威身分與演進脈絡。
 
 ---
 
@@ -1312,9 +1312,9 @@ CREATE INDEX IF NOT EXISTS idx_genealogy_pred ON agency_genealogy(predecessor_na
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
-1. **JIT 輕量動態組織推導演演演演演算法 (`resolve_org_jit`)**：
+1. **JIT 輕量動態組織推導演演演演演演算法 (`resolve_org_jit`)**：
    - 先行比對抽象改制規則（如「各河川局」➔「各河川分署」），命中時動態掛載變更描述與上層機關 OID。
    - 避免將數百個派出單位生硬寫死於資料庫中，實現極致輕量化與零維護負擔。
 2. **職掌匹配信心度指標 (Mandate Confidence Score, MCS)**：
@@ -1414,7 +1414,7 @@ printf "行政院農業委員會\n第二河川局\n行政院環境保護署\n" |
 | :--- | :--- | :--- | :--- | :--- |
 | **`MOI-ADMIN`** | 中華民國行政區劃程式碼 (縣市與鄉鎮區) | 內政部戶政司 | 119 筆代表性縣市鄉鎮區 | `universal_keys.sqlite` (`admin_codes`) |
 | **`POST-ZIP`** | 全國郵遞區號一覽表 (3 碼與 3+2/3+3) | 中華郵政股份有限公司 | 117 筆精確郵遞區號 | `universal_keys.sqlite` (`zipcode_registry`) |
-| **`NLSC-CADA`** | 全國土地段名程式碼與地籍清冊 | 內政部國土測繪中心 | 全台各縣市段號規則庫 | 演演演演演算法動態正規化為 `cadastral_id` |
+| **`NLSC-CADA`** | 全國土地段名程式碼與地籍清冊 | 內政部國土測繪中心 | 全台各縣市段號規則庫 | 演演演演演演算法動態正規化為 `cadastral_id` |
 
 ---
 
@@ -1509,7 +1509,7 @@ CREATE INDEX IF NOT EXISTS idx_zipcode_admin ON zipcode_registry(admin_code);
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
 1. **門牌結構完整度指標 (Address Integrity Score, AIS)**：
    - 🟢 **`HIGH`**：包含完整「縣市 + 鄉鎮市區 + 路/街 + 號」，可精確定位。
@@ -1585,8 +1585,8 @@ echo "新竹縣竹北市成功段 12 號" | ./pa g20 lookup-cadastral - -j
 * **規範版本**：`v2.4` (CGS Pipeline-Native UNIX Standard)
 * **基石定位**：基石三 (基石三 (Cornerstone 3: 水系與環境 Hydrology & River Topology): 水系與環境 Hydrology & Environmental Sensors)
 * **主管機關**：經濟部水利署 (WRA) / 交通部中央氣象署 / 環境部
-* **上游權威**：WRA-Civ (Civilian Water Resources Agency Hydrology System / 1,394+ 水脈)
-* **核心實裝**：[`g30_cli.py`](../../src/modules/g30_hydrology_indexer/g30_cli.py) | [`river_topology.py`](../../src/modules/g30_hydrology_indexer/river_topology.py)
+* **上游權威**：WRA-Civ (Civilian Water Resources Agency Hydrology System / 1,380 筆純化水脈拓樸)
+* **核心實裝**：[`g30_cli.py`](../../src/modules/g30_hydrology_indexer/g30_cli.py) | [`river_topology.py`](../../src/modules/g30_hydrology_indexer/river_topology.py) | [`ingest_wra_stations.py`](../../scripts/ingest_wra_stations.py)
 * **單元測試**：[`test_g30_hydrology_indexer.py`](../../tests/test_g30_hydrology_indexer.py) (5/5 綠燈 PASS)
 
 ---
@@ -1596,13 +1596,15 @@ echo "新竹縣竹北市成功段 12 號" | ./pa g20 lookup-cadastral - -j
 水文是自然地理與環境治理最根本的骨幹，但在政府傳統資料庫中，水系與行政治理存在嚴重的架構撕裂：
 
 1. **官方河川程式碼與山區野溪的「程式碼斷層」**：
-   水利署官方公告水系僅收錄 122 條主流，但絕大多數水土保持崩塌點、農田灌排取水口、山區野溪與生態系系系系系樣區均位於「無官方 6 碼的小溪或民間支流」。資料庫若只存 122 條幹流，超過 80% 的環境資料將無法對齊。
+   水利署官方公告水系僅收錄 122 條主流，但絕大多數水土保持崩塌點、農田灌排取水口、山區野溪與生態系採樣區均位於「無官方 6 碼的小溪或民間支流」。資料庫若只存 122 條幹流，超過 80% 的環境資料將無法對齊。
 2. **外部套件重度依賴引發的「容器化地獄」**：
    民間水文拓樸庫（如 `RiverExploration`）包含龐大的 3D 地理運算、OSM 爬蟲與專書建構依賴。若直接引入核心基石，將導致微服務容器肥大且容易因依賴衝突而崩潰。
 3. **測站、水理與行政區劃無法一鍵 JOIN**：
-   氣象署雨量站、水利署水位站與各河川分署管轄責任劃分不同。缺乏單一親緣拓樸樹，無法在水災來臨時一秒追溯特定支流上游的所有觀測站點。
+   氣象署雨量站、水利署水位站與各河川分署管轄責任劃分不同。若缺乏單一親緣拓樸樹，無法在水災來臨時一秒追溯特定支流上游的所有觀測站點。
+4. **雨量站與水位站的物理混淆**：
+   過往系統常把雨量站強行投影至最近河道，忽視雨量站「雨落何區（集水區面）」與水位站「身在何河（河道線）」的本質差異。
 
-`G50 水系流域、水文測站與親緣拓樸維度器` 全面接軌 **WRA-Civ 雙層編碼標準**，將 1,394 筆水脈全數收納入本地 SQLite，並以純 Python 微拓樸引擎自主實現親緣溯源、優雅降級與跨部會資料流厚化 (`plugins.gov_db.hydrology`)。
+`G30 水系流域、水文測站與親緣拓樸維度器` 全面接軌 **WRA-Civ 雙層編碼標準**，將 1,380 筆純化水脈全數收納入本地 SQLite，並以純 Python 微拓樸引擎自主實現親緣溯源、優雅降級、雙軌測站歸位治理與跨部會資料流厚化 (`plugins.gov_db.hydrology`)。
 
 ---
 
@@ -1612,8 +1614,8 @@ echo "新竹縣竹北市成功段 12 號" | ./pa g20 lookup-cadastral - -j
 
 | 資料集代號 | 資料集名稱 | 主管權責機關 | 實體收錄規模 | 本機資料表與對齊 |
 | :--- | :--- | :--- | :--- | :--- |
-| **`WRA-CIV`** | 全台灣水系親緣拓樸註冊表 (WRA-Civ) | 經濟部水利署 / 民間野溪標準 | 1,394 筆水脈 (727 官方 + 667 民間) | `universal_keys.sqlite` (`river_registry`) |
-| **`HYDRO-ST`**| 全國重要水文水位與雨量觀測站 | 經濟部水利署 / 中央氣象署 | 5 大核心代表性測站 (種子快取) | `universal_keys.sqlite` (`station_registry`) |
+| **`WRA-CIV`** | 全台灣水系親緣拓樸註冊表 (WRA-Civ) | 經濟部水利署 / 民間野溪標準 | 1,380 筆純化水脈 (全面收斂官方 6 碼) | `universal_keys.sqlite` (`river_registry`) |
+| **`HYDRO-ST`**| 全國水情河川水位與雨量觀測站 | 經濟部水利署 (ID: 22227, 32729) | 1,095+ 全量測站 (839 筆 VERIFIED 水位站) | `universal_keys.sqlite` (`station_registry`) |
 
 ---
 
@@ -1635,7 +1637,7 @@ graph TD
         G30["🏛️ G30 機關組織圖譜<br/>(river_office 河川分署 OID)"]
     end
 
-    subgraph Agency_Applications["🌾 跨部會防汛與生態系系系系聯防"]
+    subgraph Agency_Applications["🌾 跨部會防汛與生態系系系系系聯防"]
         A19["🌾 GOV-A19 農業部<br/>(土石流潛勢溪流 & 農田取水)"]
         MOEA["🏭 GOV-A09 經濟部<br/>(水庫集水區水位 & 淹水預警)"]
         MOI["🏘️ GOV-A13 內政部<br/>(河川行水區違章查報)"]
@@ -1728,9 +1730,9 @@ CREATE TABLE IF NOT EXISTS station_registry (
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
-1. **`@` 分隔親緣路徑樹遍歷演演演演演算法 (`river_topology.py`)**：
+1. **`@` 分隔親緣路徑樹遍歷演演演演演演算法 (`river_topology.py`)**：
    - **向下游回溯幹流 (Ancestors / Downstream)**：拆解 `topology_path` 陣列，批次查詢父級節點，百微秒內取得至出海口的完整幹流路徑。
    - **向上游展開支流子樹 (Descendants / Upstream)**：利用 SQL 前綴比對 `topology_path LIKE 'current_path@%'`，秒級提取所有野溪支流。
 2. **無依賴優雅降級架構 (Graceful Degradation)**：
@@ -1824,13 +1826,13 @@ echo '{"event_id": "EVT_202609_001", "river_code": "130000-C04", "alert_level": 
 在全台灣所有涉及採購、裁罰、補助與商業登記的場景中，法人身分判定是權責發生的第一道防線：
 
 1. **8 碼營利事業統一編號新舊制引發的「誤判危機」**：
-   長年以來，統一編號檢核採固定加權除 10 規則（第 7 位為 7 特例）。然而財政部自 2023 年 4 月起正式放寬實施「除 5 或除 10 雙重判定新制」。若政府後端系統未同步更新演演演演演算法，將把大量合法立案的新創與中小企業誤判為偽造統編。
+   長年以來，統一編號檢核採固定加權除 10 規則（第 7 位為 7 特例）。然而財政部自 2023 年 4 月起正式放寬實施「除 5 或除 10 雙重判定新制」。若政府後端系統未同步更新演演演演演演算法，將把大量合法立案的新創與中小企業誤判為偽造統編。
 2. **農漁會非營利法人綴詞繁雜導致的「消歧義痛點」**：
    地方通報、農糧救助名冊常以俗稱或分支機構（如「板農」、「新埔農會生鮮超市」、「花蓮市農會信用部」）登記，造成與母法組織程式碼完全斷鏈。
 3. **160 萬全量企業儲存與輕量化的「兩難抉擇」**：
    全台灣立案公司超過 160 萬家。若將全量資料硬塞進本機 SQLite，檔案將暴增至數 GB；若完全依賴雲端 GCIS API，離線或網路抖動時服務直接停擺。
 
-`G40 法人統編、企業快取與農漁會消歧義維度器` 透過純 Python 雙軌統編檢核器、農漁會分支機構綴詞剝除演演演演演算法、以及「Pass-Through Cache 旁路透傳快取」架構，以零依賴與極致輕量守護全政府法人基石。
+`G40 法人統編、企業快取與農漁會消歧義維度器` 透過純 Python 雙軌統編檢核器、農漁會分支機構綴詞剝除演演演演演演算法、以及「Pass-Through Cache 旁路透傳快取」架構，以零依賴與極致輕量守護全政府法人基石。
 
 ---
 
@@ -1946,14 +1948,14 @@ CREATE TABLE IF NOT EXISTS npo_registry (
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
-1. **純 Python 雙軌統一編號驗證演演演演演算法 (`BanValidator`)**：
+1. **純 Python 雙軌統一編號驗證演演演演演演算法 (`BanValidator`)**：
    - 加權陣列：`[1, 2, 1, 2, 1, 2, 4, 1]`。
    - 乘積各位數和相加後：
      - **舊制規則**：總和除以 10 餘數為 0。若第 7 位為 7，支援雙重分支計算。
      - **2023 新制規則**：放寬為總和除以 5 或 10 餘數為 0 皆判定有效。
-2. **農漁會分支機構綴詞剝除與空間推導演演演演演算法 (`NpoResolver`)**：
+2. **農漁會分支機構綴詞剝除與空間推導演演演演演演算法 (`NpoResolver`)**：
    - 剝除正則：自動過濾「信用部」、「供銷部」、「推廣部」、「生鮮超市」、「分部」、「辦事處」。
    - 空間反推：結合 G20 空間行政區推導，將「新埔農會超市」精確導回「新竹縣新埔鎮農會」。
 3. **長文本串流統編萃取濾網 (`pipe --extract`)**：
@@ -2047,7 +2049,7 @@ printf "04595257\n22570177\n12345678\n" |   ./pa g40 check - -j |   jq -c '{tax_
 3. **傳統三大節與批發市場休市的「農曆時空割裂」**：
    全台灣農產品批發市場（逢農曆初一、十五或初二、十六牙祭）以及傳統民俗節日皆依循陰曆與二十四節氣。一般以西曆為主的資料庫完全無法進行農漁產銷分析與物候預警。
 
-`G40 時間時序、辦公日曆與農曆節氣基石器` 內建人事行政總處跨越 16 年權威行事曆、100% 純 Python 緊湊農曆天文演演演演算法（1900-2100 年雙向解算）與零 Token 日期清洗管線，徹底終結政府時序混亂。
+`G40 時間時序、辦公日曆與農曆節氣基石器` 內建人事行政總處跨越 16 年權威行事曆、100% 純 Python 緊湊農曆天文演演演演演算法（1900-2100 年雙向解算）與零 Token 日期清洗管線，徹底終結政府時序混亂。
 
 ---
 
@@ -2158,11 +2160,11 @@ CREATE INDEX IF NOT EXISTS idx_cal_minguo ON calendar_registry(minguo_year);
 
 ---
 
-## 5. 核心指標計算與演演演演演算法引擎實作 (Metrics, UDF & Rules)
+## 5. 核心指標計算與演演演演演演算法引擎實作 (Metrics, UDF & Rules)
 
-1. **法定工作天跨度計算演演演演演算法 (`calc_working_days`)**：
+1. **法定工作天跨度計算演演演演演演算法 (`calc_working_days`)**：
    - 區間統計：精確扣除週末與國定假日，並自動補入彈性調移之「補行上班日」，支援工程合約履約日倒數。
-2. **純 Python 緊湊農曆與節氣演演演演演算法 (`lunar_engine`)**：
+2. **純 Python 緊湊農曆與節氣演演演演演演算法 (`lunar_engine`)**：
    - 以位元掩碼 (Bitmask) 壓縮 1900～2100 年每月大小與閏月資訊，解算速度達百微秒級。
    - 支援精確回傳天干地支（如「甲辰年」）、生肖（「龍」）與傳統二十四節氣（「處暑」）。
 3. **全政府異質日期正則自動辨識 (`clean_date_string`)**：
@@ -2178,7 +2180,7 @@ CREATE INDEX IF NOT EXISTS idx_cal_minguo ON calendar_registry(minguo_year);
 1. **多流輸入探測 (`-i -` 或標準管道)**：
    支援使用 `-i -` 顯式聲明從 `stdin` 讀取資料，亦可自適應非阻塞管線，支援每秒數萬行的極速日期正則轉譯。
 2. **無鎖純記憶體解算**：
-   農曆天干地支與節氣解算演演演演算法封裝在純 Python 模組中，管線處理過程中無需頻繁連線 SQLite，完全消除檔案鎖定與競爭條件。
+   農曆天干地支與節氣解算演演演演演算法封裝在純 Python 模組中，管線處理過程中無需頻繁連線 SQLite，完全消除檔案鎖定與競爭條件。
 3. **Pipeline Purity 保證**：
    清洗後的標準 ISO-8601 日期與西元/民國年份由 `stdout` 串流發出，各類假別註記或解析警告由 `stderr` 隔離輸出。
 
@@ -2307,7 +2309,7 @@ printf "2024-08-22\n2024-08-24\n" |   while read d; do ./pa g50 check-day "$d" -
 
 本專章不僅服務人類工程師，更是 **AI Agent (LLM 代理程式)** 發動跨部會資料連網的核心指南：
 
-1. **Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt注入**：每個部會小節均提供精確的 Agent Prompt，引導 LLM 正確理解該部會資料集中異質欄位與 `GOV-300` 通用基石的對應關係。
+1. **Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt注入**：每個部會小節均提供精確的 Agent Prompt，引導 LLM 正確理解該部會資料集中異質欄位與 `GOV-300` 通用基石的對應關係。
 2. **Workflow 自動化流程 (DAG)**：定義多 Agent 協同作業時的標準 Task 順序（例如：`抓取氣象測站` ➔ `對齊地籍段號` ➔ `產出農害評估`）。
 3. **Agent Skill 附件連結**：將 `.agent/skills/` 技能資產物件化，提供 AI Agent 開箱即用的自動化導航能力。
 
@@ -2390,7 +2392,7 @@ printf "2024-08-22\n2024-08-24\n" |   while read d; do ./pa g50 check-day "$d" -
 
 ## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
 
-### 6.1 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt範例
+### 6.1 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt範例
 ```text
 [System Prompt for GOV-A09 Query]
 你是一個精通台灣經濟部商業與水利資料的 AI Agent。當使用者查詢公司統編或水庫水情時：
@@ -2509,7 +2511,7 @@ output = resolver.run_domain_cli("GOV-A09", "company", ["--tax-id", "22570177"])
 
 ## 6. AI Agent 協同導航與工作流資訊 (AI & Agentic Workflow & Skill)
 
-### 6.1 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt範例
+### 6.1 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt範例
 ```text
 [System Prompt for GOV-A13 Query]
 你是一個精通台灣內政部國土與地政資料的 AI Agent。當使用者詢問門牌地碼或地籍劃分時：
@@ -2743,7 +2745,7 @@ graph TD
 
 ### 3.2 權威 Spec 與專書檔案位置說明
 * 📘 **子專案權威基礎業務 Spec**：位於同層專案 `tw-agro-db` 根目錄之 `A00_SPECIFICATION.md` *(100% 由子專案獨立維護)*
-* 🔬 **子專案權威進階設計 Spec**：位於同層專案 `tw-agro-db` 根目錄之 `A00_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演演演演演演算法規格)*
+* 🔬 **子專案權威進階設計 Spec**：位於同層專案 `tw-agro-db` 根目錄之 `A00_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演演演演演演演算法規格)*
 * 📖 **子專案權威專書圖鑑**：位於同層專案 `tw-agro-db` 之 `book/FULL_BOOK_TAIWAN_AGRO_DB.md` *(已就位專書白皮書)*
 * 📗 **母專案共享協同合約**：位於母專案 `GOV_A19_SYNERGY_SPEC.md` *(透過軟連結 Symlink 共享讀取)*
 
@@ -2811,7 +2813,7 @@ sequenceDiagram
 - 📡 **母專案寫給 A19 的 Prompt 契約**：[book/04_synergy_contracts/prompts/PROMPT_TO_SUBMODULE_A19.md](prompts/PROMPT_TO_SUBMODULE_A19.md)
 - 📡 **A19 寫給母專案的對接 Prompt 契約**：位於子專案 `synergies/PROMPT_TO_MASTER_G300.md`
 
-### 6.2 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt範例
+### 6.2 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt範例
 ```text
 [System Prompt for GOV-A19 Query]
 你是一個精通台灣農業部開放資料的 AI Agent。當使用者詢問農藥安全採收期或農會輔導資訊時：
@@ -2952,7 +2954,7 @@ graph TD
 
 ### 3.2 權威 Spec 與專書檔案位置說明
 * 📘 **子專案權威基礎業務 Spec**：位於子專案 `synergies/A21_SPECIFICATION.md` *(100% 由子專案獨立維護)*
-* 🔬 **子專案權威進階設計 Spec**：位於子專案 `synergies/A21_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演演演演演演算法規格)*
+* 🔬 **子專案權威進階設計 Spec**：位於子專案 `synergies/A21_ADVANCED_DESIGN_SPEC.md` *(跨多 DB 融合演演演演演演演演算法規格)*
 * 📖 **子專案權威技術專書**：位於子專案 `book/00_toc.md` *(BGS v2.0 專書首發版 v1.1.0)*
 * 📗 **母專案共享協同合約**：位於母專案 `book/04_synergy_contracts/4.A21_spec_gov_a21_synergy.md` *(透過軟連結 Symlink 共享)*
 
@@ -2990,7 +2992,7 @@ graph TD
 - 📡 **母專案寫給 A21 的 Prompt 契約**：`events-2026Q3/gov-db-in/tw-gov-db/book/04_synergy_contracts/prompts/PROMPT_TO_SUBMODULE_A21.md`
 - 📡 **A21 寫給母專案的對接 Prompt 契約**：位於子專案 `synergies/PROMPT_TO_MASTER_G300.md`
 
-### 6.2 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt範例
+### 6.2 Agent Prompt 提示詞/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt/Prompt範例
 ```text
 [System Prompt for GOV-A21 Query]
 你是一個精通台灣金管會開放資料與金融監理的 AI Agent。當使用者詢問金融機構裁罰紀錄或 VASP 合規地位時：
@@ -3046,7 +3048,7 @@ output = resolver.run_domain_cli("GOV-A21", "bank", ["credit-card"])
 ## 1. 服務合約基本資訊 (Contract Metadata)
 `GOV-300` 作為全台灣政府開放資料的大腦中樞，承諾向所有部會子專案提供 **「五大通用基石 (Universal Keys)」** 的微秒級解析、驗證與消歧義服務：
 
-| 基石程式碼 | 維度器模組 | 權威實體資料表 / 核心演演演算法 | SLA 服務承諾 |
+| 基石程式碼 | 維度器模組 | 權威實體資料表 / 核心演演演演算法 | SLA 服務承諾 |
 | :--- | :--- | :--- | :--- |
 | **基石一** | **G10 (`g10_mandate_indexer`)** | `master_agencies.sqlite`<br>8,908 機關 OID 與處務規程 | 毫秒級機關權責反查、組織樹上下溯源 |
 | **基石二** | **G20 (`g20_spatial_indexer`)** | `universal_keys.sqlite` (`admin_codes`, `zipcode_registry`) | 台灣門牌正規化解析、3+2/3+3 郵遞區號對位 |
@@ -3102,7 +3104,7 @@ cat tender_doc.txt | ./pa g40 pipe -q | ./pa g40 lookup --tsv
 
 ## 🎭 5.0 本章導覽與 Playbook 4 大業務寫作結構
 
-本章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系系系系系系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
+本章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系系系系系系系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
 
 本章每一個類別的小節均遵從以下 **4 大業務寫作結構**：
 
@@ -3214,7 +3216,7 @@ flowchart LR
 * **應用場景**：進行全台數萬家供應商、經銷商的身份驗證、商業登記審查與合約簽署。
 
 ### 2. 面臨的核心痛苦與困境
-* **業務痛苦**：簽約前極度害怕查到「舊快照」或「已解散/註銷/登出/登出/登出/登出/登出的人頭公司」，面臨巨大法律冒名與合約詐欺風險；若要連線政府資料，又害怕抓取龐大檔案導致內部審查流程延宕。
+* **業務痛苦**：簽約前極度害怕查到「舊快照」或「已解散/註銷/登出/登出/登出/登出/登出/登出的人頭公司」，面臨巨大法律冒名與合約詐欺風險；若要連線政府資料，又害怕抓取龐大檔案導致內部審查流程延宕。
 
 ### 3. 實務操作流程與使用體驗
 1. **輸入企業統編**：法務同仁在合規系統輸入供應商 8 碼統一編號（如 `22570177`）。
@@ -3328,7 +3330,7 @@ flowchart LR
 
 ## 🎭 5.0.1 本章使命與 7 大不可替代業務類別
 
-第 5 章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系系系系系系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
+第 5 章摒棄工程技術維度的重複程式碼說明，**100% 站在終端使用者的業務視角 (User-Centric & Problem-Solving Perspective)**，針對全台灣開放資料生態系系系系系系系中的 **7 大不可替代業務類別 (7 Essential Categories)**，提供專屬的實戰操作劇本 (Playbooks)。
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -3579,7 +3581,7 @@ flowchart TD
 
 企業法務與合規團隊在執行審查時，面臨以下直接威脅企業營運安全的核心痛苦：
 
-1. **害怕抓到「舊快照」或已註銷/登出/登出/登出/登出/登出人頭公司，面臨重大合約詐欺風險**：
+1. **害怕抓到「舊快照」或已註銷/登出/登出/登出/登出/登出/登出人頭公司，面臨重大合約詐欺風險**：
    若依賴幾個月前下載的靜態開放資料檔，一旦合作對象在近期已申請解散、破產或變更負責人，法務將可能與已失效的法人簽署合約，面臨百萬甚至千萬元的法律詐欺與追討無門風險。
 2. **人工前往經濟部網站逐筆查詢，效率低下無法自動化**：
    法務人員被迫手動前往經濟部商業發展署網站，逐一輸入統一編號進行人工比對與截圖存證，無法整合進企業內部的 ERP/CRM 簽核系統中。
@@ -3945,7 +3947,7 @@ python src/cli/main.py doctor
 
 ---
 
-# 🏛️ 第 7 章：結語與跨部會生態系系系系系展望 (07_conclusion.md)
+# 🏛️ 第 7 章：結語與跨部會生態系系系系系系展望 (07_conclusion.md)
 
 * **專案名稱**：`tw-gov-db` (台灣政府開放資料通用基石對照庫)
 * **專案代號**：`GOV-300` (方案 A 權威機關簡碼 `300000000A`)
@@ -3964,9 +3966,9 @@ python src/cli/main.py doctor
 
 ---
 
-## 7.2 延伸展望：從 `GOV-300` 到全台大資料黃金三角生態系系系系系系
+## 7.2 延伸展望：從 `GOV-300` 到全台大資料黃金三角生態系系系系系系系
 
-`GOV-300` 作為總母大腦，並非孤立運作的資料庫，而是全台灣跨部會資料生態系系系系系系的核心樞紐。
+`GOV-300` 作為總母大腦，並非孤立運作的資料庫，而是全台灣跨部會資料生態系系系系系系系的核心樞紐。
 
 未來將持續深化與 **`GOV-A19` (農業部 `tw-agro-db`)**、**`GOV-A13` (內政部 `tw-moi-db`)**、**`GOV-A09` (經濟部 `tw-moea-db`)** 等部會子專案的分散式協同，構建「全台灣開放資料黃金三角大聯盟」：
 
@@ -3977,7 +3979,7 @@ graph TD
     end
 
     subgraph Child1["GOV-A19 農業部 (tw-agro-db)"]
-        A19["tw-agro-db 農業生態系系系系系庫<br>(農藥安全網 / 342 農會 / 災損)"]
+        A19["tw-agro-db 農業生態系系系系系系庫<br>(農藥安全網 / 342 農會 / 災損)"]
     end
 
     subgraph Child2["GOV-A13 內政部 (tw-moi-db)"]

@@ -68,14 +68,19 @@ def ensure_tables(conn: sqlite3.Connection):
         station_type VARCHAR(32),
         agency_name VARCHAR(128),
         river_code VARCHAR(32),
+        basin_code VARCHAR(32),
         admin_code VARCHAR(8),
         latitude FLOAT,
         longitude FLOAT,
+        alignment_status VARCHAR(24) DEFAULT 'UNASSIGNED',
+        attributes_json TEXT DEFAULT '{}',
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """)
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_station_river ON station_registry(river_code);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_station_basin ON station_registry(basin_code);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_station_type ON station_registry(station_type);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_station_align_status ON station_registry(alignment_status);")
 
     # 3. 同步歷史審計表
     cursor.execute("""
@@ -156,8 +161,9 @@ def sync_wra_civ_rivers(
                 code, name, basin, parent, topo, order, is_civ, county, None, office, lon, lat, "ACTIVE"
             ))
 
-    # 原子交易寫入
+    # 原子交易寫入 (清空舊水脈以保證已廢止的重複民間代碼徹底被清除)
     cursor.execute("BEGIN TRANSACTION;")
+    cursor.execute("DELETE FROM river_registry;")
     cursor.executemany("""
     INSERT OR REPLACE INTO river_registry (
         river_code, river_name, basin_name, parent_code, topology_path, stream_order,
@@ -170,15 +176,17 @@ def sync_wra_civ_rivers(
     st_count = cursor.fetchone()[0]
     if st_count == 0:
         seed_stations = [
-            ("C0A980", "芎林雨量站", "RAINFALL", "中央氣象署", "130000-C04", "10004080", 24.7744, 121.0772),
-            ("1300H01", "竹東水位站", "WATER_LEVEL", "經濟部水利署", "130000", "10004030", 24.7333, 121.0890),
-            ("1140H02", "新店溪秀朗橋水位站", "WATER_LEVEL", "經濟部水利署", "114020", "65000030", 24.9961, 121.5333),
-            ("C0AH00", "烏來雨量站", "RAINFALL", "中央氣象署", "114021", "65000290", 24.8653, 121.5503),
-            ("1510H01", "濁水溪集集水位站", "WATER_LEVEL", "經濟部水利署", "151000", "10008130", 23.8242, 120.7853)
+            ("C0A980", "芎林雨量站", "RAINFALL", "中央氣象署", "130000-C04", "130000", "10004080", 24.7744, 121.0772, "VERIFIED", '{"spec_version":"0.3.0","authority_level":"CENTRAL","relation_type":"DRAINS_INTO_BASIN","confidence_score":1.0,"unassigned_reason":null}'),
+            ("1300H01", "竹東水位站", "WATER_LEVEL", "經濟部水利署", "130000", "130000", "10004030", 24.7333, 121.0890, "VERIFIED", '{"spec_version":"0.3.0","authority_level":"CENTRAL","relation_type":"LOCATED_ON_RIVER","confidence_score":1.0,"unassigned_reason":null}'),
+            ("1140H02", "新店溪秀朗橋水位站", "WATER_LEVEL", "經濟部水利署", "114020", "114000", "65000030", 24.9961, 121.5333, "VERIFIED", '{"spec_version":"0.3.0","authority_level":"CENTRAL","relation_type":"LOCATED_ON_RIVER","confidence_score":1.0,"unassigned_reason":null}'),
+            ("C0AH00", "烏來雨量站", "RAINFALL", "中央氣象署", "114021", "114000", "65000290", 24.8653, 121.5503, "VERIFIED", '{"spec_version":"0.3.0","authority_level":"CENTRAL","relation_type":"DRAINS_INTO_BASIN","confidence_score":1.0,"unassigned_reason":null}'),
+            ("1510H01", "濁水溪集集水位站", "WATER_LEVEL", "經濟部水利署", "151000", "151000", "10008130", 23.8242, 120.7853, "VERIFIED", '{"spec_version":"0.3.0","authority_level":"CENTRAL","relation_type":"LOCATED_ON_RIVER","confidence_score":1.0,"unassigned_reason":null}')
         ]
         cursor.executemany("""
-        INSERT OR REPLACE INTO station_registry (station_id, station_name, station_type, agency_name, river_code, admin_code, latitude, longitude)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+        INSERT OR REPLACE INTO station_registry (
+            station_id, station_name, station_type, agency_name, river_code, basin_code, admin_code,
+            latitude, longitude, alignment_status, attributes_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """, seed_stations)
 
     # 記錄審計

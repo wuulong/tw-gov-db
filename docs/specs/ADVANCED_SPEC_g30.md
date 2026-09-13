@@ -1,10 +1,10 @@
-# G30 高級延伸與跨模組協同規格書 (ADVANCED_SPEC_g50)
+# G30 高級延伸與跨模組協同規格書 (ADVANCED_SPEC_g30)
 
 - **模組名稱**: `g30_hydrology_indexer`
 - **所屬專案**: `tw-gov-db` / `GOV-300` (全政府通用基石對照庫)
 - **規範版本**: `CGS v2.4` (Pipeline-Native UNIX Standard)
 - **關聯基石**: 基石三 (Cornerstone 3: 水系與環境 Hydrology & Environmental Sensors)
-- **上游核心**: WRA-Civ (1,397+ 筆水脈拓樸與 3D 幾何)
+- **上游核心**: WRA-Civ (1,380 筆純化水脈拓樸與 3D 幾何)
 
 ---
 
@@ -29,40 +29,42 @@ G30 在水文流域治理中扮演「水理與行政基石的轉譯中樞」。
 * **情境**：搜尋頭前溪水系全量水脈，動態注入 G20 行政區劃與 G30 管轄分署，並進行地緣聚合。
 * **管線指令**：
   ```bash
-  python3 events/AIBooks/RiverExploration/scripts/river_cli.py search -b "頭前溪" -f jsonl |     ./pa g50 hydrate -i - |     jq -r '.plugins.gov_db | [.g20_district, .g30_competent_agency] | @tsv' | sort | uniq -c
+  python3 events/AIBooks/RiverExploration/scripts/river_cli.py search -b "頭前溪" -f jsonl | \
+    ./pa g30 hydrate -i - | \
+    jq -r '.plugins.gov_db | [.g20_district, .g30_competent_agency] | @tsv' | sort | uniq -c
   ```
 
 ### 配方二：野溪祖先沿線追溯 ➔ 沿岸水利署水情測站聯防
 * **情境**：給定山區野溪（如鹿寮坑溪 `130000-C04`），沿 `@` 向上/向下切片出所有親緣水脈，管道傳入 G30 自動抽出沿線所有雨量站與水位測站。
 * **管線指令**：
   ```bash
-  ./pa g50 trace "130000-C04" --downstream -j | ./pa g50 stations -i - | jq .
+  ./pa g30 trace "130000-C04" --downstream -j | ./pa g30 stations -i - | jq .
   ```
 
-### 配方三：颱風豪雨時序 (G40) ➔ 水位暴漲警戒水脈 ➔ 影響灌區農會 (G60)
-* **情境**：結合 G40 歷史颱風停班停課事件，沿著水系拓樸反推受影響的支流，並經由 G30 對齊農田水利署灌區農會。
+### 配方三：颱風豪雨時序 (G50) ➔ 水位暴漲警戒水脈 ➔ 影響灌區農會 (G40)
+* **情境**：結合 G50 歷史颱風停班停課事件，沿著水系拓樸反推受影響的支流，並經由 G30 對齊農田水利署灌區農會。
 * **管線指令**：
   ```bash
-  ./pa g40 check 2024-07-25 -j | ./pa g50 risk-basins --level HIGH -j | ./pa g60 resolve -i -
+  ./pa g50 check 2024-07-25 -j | ./pa g30 risk-basins --level HIGH -j | ./pa g40 resolve -i -
   ```
 
 ### 配方四：高程落差運算 ➔ 淹水潛勢與地籍門牌對位 (G20)
 * **情境**：計算野溪匯流點高程落差，過濾低窪衝擊區，秒級轉入 G20 反查門牌地號。
 * **管線指令**：
   ```bash
-  ./pa g50 search -c "新竹縣" --max-elevation 30 -j | ./pa g20 cadastral -i -
+  ./pa g30 search -c "新竹縣" --max-elevation 30 -j | ./pa g20 cadastral -i -
   ```
 
 ### 配方五：WRA-Civ 上游水脈版本同步與差異審計
 * **情境**：當 WRA-Civ 發布新版資料時，執行原子同步與差異報告。
 * **管線指令**：
   ```bash
-  ./pa g50 sync-rivers --check -j
+  ./pa g30 sync-rivers --check -j
   ```
 
 ---
 
-## 🔄 3. 版本同步演演演算法與防護機制 (sync-rivers)
+## 🔄 3. 版本同步演演演演算法與防護機制 (sync-rivers)
 
 1. **SHA-256 內容指紋探測**:
    - 計算上游 JSONL 之 Hash，若與 `spec_version_registry` 記錄相同則直接略過。

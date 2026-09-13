@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 [metadata]
-title: 全政府水系流域與水情測站維度器 CLI (G50)
-description: 提供全台 1,397+ 筆 WRA-Civ 水文拓樸微秒級追溯、上下游親緣展開、水情測站關聯、版本同步與 CGS v2.4 串流管道控制台。
+title: 全政府水系流域與水情測站維度器 CLI (G30)
+description: 提供全台 1,380 筆 WRA-Civ 純化水文拓樸微秒級追溯、上下游親緣展開、水情測站雙軌水理關聯、版本同步與 CGS v2.4 串流管道控制台。
 category: cli
 dependencies: sqlite3, select, sys, json
 spec: scripts/specs/g30_cli.spec.md
