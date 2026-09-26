@@ -1,0 +1,47 @@
+{
+  "pgs_spec_version": "3.2",
+  "project_id": "tw-gov-db",
+  "name": "tw-gov-db (GOV-300 全台灣政府通用基石對照庫)",
+  "description": "全台灣政府開放資料通用基石對照庫，涵蓋機關 OID、行政區劃與門牌地址、WRA-Civ 水文拓樸與測站、企業統編與農漁會、政府辦公日曆與研究報告索引",
+  "lifecycle_state": "ACTIVE",
+  "domain_tags": [
+    "政府開放資料",
+    "行政院",
+    "GOV-300",
+    "tw-gov-db",
+    "通用基石",
+    "OID",
+    "水文拓樸",
+    "地址正規化",
+    "日曆節氣",
+    "CGS-v2.4",
+    "PGS-v3.2",
+    "DGS-v2.0"
+  ],
+  "owner": "Antigravity & wuulong",
+  "created_at": "2026-08-22 08:00:00",
+  "aiif": {
+    "dir": "aiif",
+    "api": "aiif/prompt_for_api.md",
+    "db": "aiif/prompt_for_db.md"
+  },
+  "seman": {
+    "enabled": true,
+    "entry_point": "sys_eng/00_buildlogs/OVERVIEW.md",
+    "aliases": ["gov", "govdb", "tw-gov-db", "GOV-300"]
+  },
+  "dbs": [
+    "/Volumes/D2024/data/gov-db-in/db/universal_keys.sqlite",
+    "/Volumes/D2024/data/gov-db-in/db/master_agencies.sqlite"
+  ],
+  "scripts": [
+    "scripts/govdb_cli.py"
+  ],
+  "relations": {
+    "public_repo": "tw-gov-db",
+    "books": [
+      "book/00_toc.md"
+    ],
+    "parent_project": "events-2026Q3/gov-db-in"
+  }
+}
